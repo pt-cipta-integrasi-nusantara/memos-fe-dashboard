@@ -5,7 +5,7 @@ import { useAuth } from "../utils/auth/providers";
 
 // ----------------------------------------------------------------------
 
-// Authenticated Pages
+// Unauthenticated Pages
 export const SignInPage = lazy(() => import("../pages/login/index"));
 export const SignUpPage = lazy(() => import("../pages/index"));
 export const SignUpStepOnePage = lazy(
@@ -24,6 +24,7 @@ export const SignUpSummaryFinishPage = lazy(
   () => import("../pages/registration/summary/finish")
 );
 
+// Authenticated Pages
 export const DashboardHomePage = lazy(() => import("../pages/dashboard/index"));
 export const DashboardSubscriptionPage = lazy(
   () => import("../pages/dashboard/subscription/index")
