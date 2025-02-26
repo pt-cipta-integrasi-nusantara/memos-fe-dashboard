@@ -94,7 +94,7 @@ function Navmenu() {
   );
 }
 
-export function MenubarBottom() {
+export function BottomMenuBar() {
   return (
     <div className="block lg:hidden fixed bottom-0 w-full flex">
       <Navmenu />

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Router } from "./routes/sections";
-import { MenubarBottom, Navbar, Sidebar } from "./components";
+import { BottomMenuBar, Navbar, SideMenuBar } from "./components";
 import { Toaster } from "react-hot-toast";
 import { useLocation } from "react-router-dom";
 
@@ -26,11 +26,11 @@ export default function App() {
       <section className="w-full mx-auto text-neutral-500">
         <Navbar setIsExpandedMenubar={setIsExpandedMenubar} />
         <div className="flex">
-          {isLoggedIn && <Sidebar isExpandedMenubar={isExpandedMenubar} />}
+          {isLoggedIn && <SideMenuBar isExpandedMenubar={isExpandedMenubar} />}
           <div className="w-full lg:mt-0">
             <Router />
           </div>
-          {isLoggedIn && <MenubarBottom />}
+          {isLoggedIn && <BottomMenuBar />}
         </div>
       </section>
       <Toaster position="top-right" />
