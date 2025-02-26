@@ -1,4 +1,4 @@
-import { PaymentSuccessContent } from "../../../../../components/Pages/Dashboard";
+import { PaymentSuccessContent } from "../../../../../sections/payment/payment-success-view";
 
 export default function PaymentSuccessPage() {
   return (

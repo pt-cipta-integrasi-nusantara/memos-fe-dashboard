@@ -1,4 +1,4 @@
-import { PaymentInProgressContent } from "../../../../../components/Pages/Dashboard";
+import { PaymentInProgressContent } from "../../../../../sections/payment/payment-in-progress-view";
 
 export default function PaymentInProgressPage() {
   return (

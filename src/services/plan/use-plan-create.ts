@@ -1,7 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
 import { http } from "../../utils/http";
-import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 
 interface StorePlanParams {
     name?: string;
@@ -12,7 +10,6 @@ interface StorePlanParams {
 }
 
 export function useCreatePlan() {
-    const navigate = useNavigate()
     return useMutation(
       async (formData: StorePlanParams) => {
         const {name, description, price, duration, discount} = formData
