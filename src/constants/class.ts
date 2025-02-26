@@ -1,0 +1,1 @@
+export const maxWidthContainer = "max-w-[100rem] mx-auto"
