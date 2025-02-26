@@ -219,7 +219,7 @@ export function SignupContent() {
                 Daftar dengan Google
               </button>
               <div
-                onClick={() => router.push("/login")}
+                onClick={() => navigate("/login")}
                 className="mt-4 text-center cursor-pointer"
               >
                 <span>
