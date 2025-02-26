@@ -11,7 +11,7 @@ export function LoginContent() {
   const { login } = useAuth();
   const [isHidePassword, setIsHidePassword] = useState(true);
 
-  const { register, handleSubmit, watch } = useForm<any>();
+  const { register, handleSubmit } = useForm<any>();
   const form = useRef() as any;
 
   const onSubmit: SubmitHandler<any> = async (formData: any) => {
@@ -26,12 +26,6 @@ export function LoginContent() {
     }
     // TODO: login function
   };
-
-  const onClickHome = () => {
-    navigate("/");
-  };
-
-  const censoredEmail = watch("email");
 
   return (
     <div

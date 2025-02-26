@@ -1,5 +1,6 @@
+/* eslint-disable no-empty-pattern */
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment } from "react";
 import { ArrowDownIcon, GlobeIcon } from "../Icons";
 
 interface DropdownProps {
@@ -50,7 +51,7 @@ export function Dropdown({
         <Menu.Items className="absolute right-0 mt-2 w-36 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
           <div className="px-1 py-1 ">
             <Menu.Item>
-              {({ active }) => {
+              {({}) => {
                 return (
                   <div className="flex flex-col gap-3">
                     {languages?.map((language) => (

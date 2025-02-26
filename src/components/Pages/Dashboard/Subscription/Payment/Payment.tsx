@@ -1,6 +1,6 @@
 import { Listbox, Transition } from "@headlessui/react";
-import React, { ChangeEvent, Fragment, useRef, useState } from "react";
-import { set, SubmitHandler, useForm } from "react-hook-form";
+import { ChangeEvent, Fragment, useState } from "react";
+import { useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 import { Button, Card } from "../../../../Ui";
 import { ArrowDownIcon } from "../../../../Icons";
@@ -14,14 +14,9 @@ interface SelectProps {
 
 export function PaymentContent() {
   const navigate = useNavigate();
-  const [isChecked, setIsChecked] = React.useState(false);
-  const { register, handleSubmit, watch } = useForm<any>();
+  const { register } = useForm<any>();
   const [selectedBank, setSelectedBank] = useState<SelectProps>();
   const [buktiTransfer, setBuktiTransfer] = useState<File>();
-
-  const onCheckAgreement = () => {
-    setIsChecked((prev) => !prev);
-  };
 
   const onFinishRegistration = () => {
     navigate("/registration/summary/finish");

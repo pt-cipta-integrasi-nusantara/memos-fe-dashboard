@@ -104,9 +104,7 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
               <Listbox.Options className="z-10 absolute mt-1  w-[90%] -translate-x-1/2 left-1/2 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
                 <div className="p-4">Organisasi saat ini</div>
                 <Listbox.Option
-                  className={({ active }) =>
-                    `relative cursor-default select-none p-4`
-                  }
+                  className={() => `relative cursor-default select-none p-4`}
                   value={selectedOrg}
                 >
                   {({ selected }) => (
@@ -148,7 +146,7 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
                   .map((org, idx) => (
                     <Listbox.Option
                       key={idx}
-                      className={({ active }) =>
+                      className={() =>
                         `relative cursor-default select-none p-4`
                       }
                       value={org}
@@ -202,7 +200,7 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
         </Listbox>
         <div className="relative">
           <Disclosure>
-            {({ open }) => (
+            {() => (
               <>
                 <Disclosure.Button className="py-4 flex items-center w-full cursor-pointer px-8">
                   <span className="block truncate">

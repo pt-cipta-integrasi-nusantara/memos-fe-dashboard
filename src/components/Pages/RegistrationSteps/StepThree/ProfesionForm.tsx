@@ -18,33 +18,19 @@ interface SelectProps {
   label: string;
   id: string;
 }
-
-interface Province {
-  id: number;
-  name: string;
-}
-
-interface City {
-  id: number;
-  name: string;
-  province_id: number;
-}
 interface ProfesionProps {
   label: string;
   id: number;
 }
 export function ProfesionForm() {
   const navigate = useNavigate();
-  const { formData, setFormData, resetFormData } = useRegistrationFormStore();
-  const { register, handleSubmit, watch } = useForm<any>();
+  const { formData, setFormData } = useRegistrationFormStore();
+  const { register, handleSubmit } = useForm<any>();
   const form = useRef() as any;
   const [selectedProfesion, setSelectedProfesion] = useState<ProfesionProps>();
   const [selectedSpesialis, setSelectedSpesialis] = useState<ProfesionProps>();
   const [selectedBusiness, setSelectedBusiness] = useState<SelectProps>();
 
-  const [isHidePassword, setIsHidePassword] = useState(true);
-  const [noStrFile, setNoStrFile] = useState<File>();
-  const [fotoUsaha, setFotoUsaha] = useState<File>();
   useEffect(() => {
     setSelectedProfesion(
       profesions?.find((item) => item?.id === formData["profession_id"])

@@ -1,4 +1,4 @@
-import { Dialog, Listbox, Transition } from "@headlessui/react";
+import { Dialog, Transition } from "@headlessui/react";
 
 import React, { Fragment, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -19,23 +19,14 @@ export function SignupContent() {
   const navigate = useNavigate();
   const { mutate: registerEmail } = useRegisterEmail();
   const { mutate: requestAuthCode } = useRequestAuthCode();
-  const { mutate: verifyAuthCode, isError } = useVerifyAuthCode();
+  const { mutate: verifyAuthCode } = useVerifyAuthCode();
   const [initialTime, setInitialTime] = React.useState(150);
-  const [isSubmitted, setIsSubmitted] = React.useState(false);
   const [isShowOTPModal, setIsShowOTPModal] = React.useState(false);
   const [isRequested, setIsRequested] = React.useState(false);
   const [isShouldRequestOtp, setIsShouldRequestOtp] = React.useState(false);
 
   const { register, handleSubmit, watch, formState } = useForm<any>();
   const form = useRef() as any;
-
-  React.useEffect(() => {
-    setIsSubmitted(false);
-  }, []);
-
-  const formValues = {
-    email: watch("email"),
-  };
 
   const onSubmit: SubmitHandler<any> = async (formData: any) => {
     if (!isShouldRequestOtp) {

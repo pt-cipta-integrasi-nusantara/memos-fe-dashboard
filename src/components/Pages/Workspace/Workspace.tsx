@@ -1,6 +1,5 @@
 import { Listbox, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import { ArrowDownIcon } from "../../Icons";
 import { Card } from "../../Ui";
@@ -35,17 +34,8 @@ interface SelectProps {
   logo: string;
 }
 export function WorkspaceContent() {
-  const navigate = useNavigate();
   const [selectedOrg, setSelectedOrg] = useState<SelectProps>(orgList[0]);
   const [selectedWorkspace, setSelectedWorkspace] = useState<SelectProps>();
-  const [isWorkspaceModal, setIsWorkspaceModal] = useState(false);
-  const onToDetail = () => {
-    navigate("/dashboard/subscription");
-  };
-
-  const onAcceptWorkspace = () => {
-    setIsWorkspaceModal(true);
-  };
 
   return (
     <div

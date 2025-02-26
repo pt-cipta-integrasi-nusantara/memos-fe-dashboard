@@ -125,12 +125,12 @@ function NavMenuDesktop({
   onClickLogo,
   visible,
   onClickToLogin,
-  setIsExpandedMenubar,
+  // setIsExpandedMenubar,
   handleLogout,
 }: NavMenuDesktopProps) {
-  const onToggleMenubar = () => {
-    setIsExpandedMenubar((prev) => !prev);
-  };
+  // const onToggleMenubar = () => {
+  //   setIsExpandedMenubar((prev) => !prev);
+  // };
   return (
     <div
       className={`transition-all sticky z-2 ${

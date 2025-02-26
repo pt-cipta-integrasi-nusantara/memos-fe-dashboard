@@ -19,36 +19,6 @@ import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-const orgList = [
-  {
-    id: "1",
-    label: "PT. Setio Husodo",
-    logo: "/assets/images/logo-setio.png",
-    workspaces: [
-      {
-        id: "1",
-        label: "RS Setio Husodo Yogya",
-      },
-
-      {
-        id: "2",
-        label: "RS Setio Husodo Medan",
-      },
-    ],
-  },
-  {
-    id: "2",
-    label: "PT. Healthy",
-    logo: "/assets/images/logo-healthy.png",
-  },
-];
-
-interface SelectProps {
-  label: string;
-  id: string;
-  logo: string;
-}
-
 interface AccountContainerProps {
   form: any;
   handleSubmit: UseFormHandleSubmit<any, undefined>;
@@ -257,8 +227,7 @@ function AccountContainer({
 }
 
 export function ProfileContent() {
-  const navigate = useNavigate();
-  const { register, handleSubmit, watch } = useForm<any>();
+  const { register, handleSubmit } = useForm<any>();
   const [openedSection, setOpenedSection] = useState("profile");
   const form = useRef() as any;
 

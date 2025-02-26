@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes, ReactElement } from "react";
+import { ButtonHTMLAttributes, ReactElement } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface ButtonParams {

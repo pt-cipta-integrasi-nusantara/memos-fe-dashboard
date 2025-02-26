@@ -14,21 +14,10 @@ interface SelectProps {
   id: string;
 }
 
-interface Province {
-  id: number;
-  name: string;
-}
-
-interface City {
-  id: number;
-  name: string;
-  province_id: number;
-}
-
 export function IdentityForm() {
   const navigate = useNavigate();
-  const { formData, setFormData, resetFormData } = useRegistrationFormStore();
-  const { register, handleSubmit, watch } = useForm<any>();
+  const { formData, setFormData } = useRegistrationFormStore();
+  const { register, handleSubmit } = useForm<any>();
   const form = useRef() as any;
   const [selectedGender, setSelectedGender] = useState<SelectProps>();
 
