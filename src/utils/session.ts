@@ -1,4 +1,3 @@
-import { API_URL } from "./http";
 
 const STORAGE_KEY = 'session';
 

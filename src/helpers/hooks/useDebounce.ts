@@ -1,4 +1,4 @@
-import React, { SetStateAction } from "react";
+import React from "react";
 
 export function useSearchDebounce(delay = 500) {
     const [search, setSearch] = React.useState<string>("");

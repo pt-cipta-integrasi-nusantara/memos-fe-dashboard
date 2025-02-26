@@ -15,7 +15,6 @@ import {
   WorkIcon,
 } from "../../Icons";
 import { Button } from "../../Ui";
-import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 

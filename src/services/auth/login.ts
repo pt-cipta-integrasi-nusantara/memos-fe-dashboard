@@ -17,9 +17,6 @@ export interface LoginCredentialsDTO {
    metadata: any
   }
 
-  interface Data {
-    token: string
-  }
   
   export async function loginUser(formData: LoginCredentialsDTO) {
     return http<LoginResponse>('/account/login', {

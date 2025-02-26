@@ -1,5 +1,5 @@
 import { joinURL, withQuery, type QueryObject } from 'ufo';
-import { flushStorage, getSession } from './session';
+import { getSession } from './session';
 
 export const API_URL = "https://7720-182-253-162-178.ngrok-free.app/v1"
 

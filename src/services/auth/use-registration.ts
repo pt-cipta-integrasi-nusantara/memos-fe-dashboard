@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { http } from "../../utils/http";
 
 interface RegistrationParams {
@@ -6,7 +6,6 @@ interface RegistrationParams {
 }
 
 export function useRegisterEmail() {
-    const queryClient = useQueryClient();
     return useMutation(
       async (formData: RegistrationParams) => {
         const { email} = formData
@@ -20,9 +19,7 @@ export function useRegisterEmail() {
       {
         onSuccess: () => {
         },
-        onError: (error) => {
-          const reason =
-            error instanceof Error ? error.message : 'Something went wrong';
+        onError: () => {
   
         },
       }
@@ -36,7 +33,6 @@ export function useRegisterEmail() {
   }
   
 export function useRequestAuthCode() {
-    const queryClient = useQueryClient();
     return useMutation(
       async (formData: RequestAuthParams) => {
         const { contact_type, contact_value , token_type} = formData
@@ -51,9 +47,7 @@ export function useRequestAuthCode() {
       {
           onSuccess: () => {
         },
-        onError: (error) => {
-          const reason =
-            error instanceof Error ? error.message : 'Something went wrong';
+        onError: (_error) => {
   
         },
       }
@@ -62,7 +56,6 @@ export function useRequestAuthCode() {
   
   
 export function useVerifyAuthCode() {
-    const queryClient = useQueryClient();
     return useMutation(
       async (formData: RequestAuthParams & {token: string}) => {
         const { contact_type, contact_value , token_type, token} = formData
@@ -78,9 +71,7 @@ export function useVerifyAuthCode() {
       {
           onSuccess: () => {
         },
-        onError: (error) => {
-          const reason =
-            error instanceof Error ? error.message : 'Something went wrong';
+        onError: (_error) => {
   
         },
       }
@@ -89,7 +80,6 @@ export function useVerifyAuthCode() {
 
   
 export function useRegister() {
-  const queryClient = useQueryClient();
   return useMutation(
     async (formData: any) => {
       return http(`account/register-clinix`, {
@@ -99,9 +89,7 @@ export function useRegister() {
     {
         onSuccess: () => {
       },
-      onError: (error) => {
-        const reason =
-          error instanceof Error ? error.message : 'Something went wrong';
+      onError: (_error) => {
 
       },
     }

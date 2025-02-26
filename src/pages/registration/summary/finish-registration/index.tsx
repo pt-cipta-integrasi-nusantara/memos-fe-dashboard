@@ -1,4 +1,4 @@
-import { SummaryFinishRegistrationContent } from "../../../../components/Pages/RegistrationSteps/Summary/SummaryFinishRegistration";
+import { SummaryFinishContent } from "../../../../components/Pages/RegistrationSteps/Summary/SummaryFinish";
 
 export default function SummaryFinishRegistrationPage() {
   return (
@@ -13,7 +13,7 @@ export default function SummaryFinishRegistrationPage() {
       </head>
 
       <main className="mt-[1.5rem]">
-        <SummaryFinishRegistrationContent />
+        <SummaryFinishContent />
       </main>
     </div>
   );
