@@ -1,4 +1,4 @@
-import { ProfesionForm } from "../../../components/Pages/RegistrationSteps";
+import { ProfesionForm } from "../../../sections/auth/registration/step-three-view";
 
 export default function RegistrationStepTwo() {
   return (

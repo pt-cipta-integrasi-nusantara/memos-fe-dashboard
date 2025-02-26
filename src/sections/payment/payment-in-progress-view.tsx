@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-import { Button, Card } from "../../../../../Ui";
+import { Button, Card } from "../../components/ui";
 import { useNavigate } from "react-router-dom";
 
 export function PaymentInProgressContent() {

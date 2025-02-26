@@ -1,4 +1,4 @@
-import { TermsConditionContent } from "../../../components/Pages/RegistrationSteps";
+import { TermsConditionContent } from "../../../sections/auth/registration/step-one-view";
 
 export default function RegistrationStepOne() {
   return (

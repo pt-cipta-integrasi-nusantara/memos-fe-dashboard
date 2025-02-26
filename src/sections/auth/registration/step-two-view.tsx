@@ -1,13 +1,16 @@
 import { useNavigate } from "react-router-dom";
-import { useRegistrationFormStore } from "../../../../stores/useRegistrationFormStore";
+import { useRegistrationFormStore } from "../../../stores/useRegistrationFormStore";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ChangeEvent, Fragment, useEffect, useRef, useState } from "react";
-import { BASE_URL_STORAGE, genders } from "../../../constants/constants";
-import { uploadImage } from "../../../../services/utils/uploadImage";
+import {
+  BASE_URL_STORAGE,
+  genders,
+} from "../../../components/constants/constants";
+import { uploadImage } from "../../../services/utils/uploadImage";
 import { twMerge } from "tailwind-merge";
-import { Button, Card } from "../../../Ui";
+import { Button, Card } from "../../../components/ui";
 import { Listbox, Transition } from "@headlessui/react";
-import { ArrowDownIcon } from "../../../Icons";
+import { ArrowDownIcon } from "../../../components/icons";
 
 interface SelectProps {
   label: string;

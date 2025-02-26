@@ -1,10 +1,10 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
-import { Button, Card } from "../../../Ui";
-import { useRegistrationFormStore } from "../../../../stores/useRegistrationFormStore";
-import { useRegister } from "../../../../services/auth/use-registration";
+import { Button, Card } from "../../../components/ui";
+import { useRegistrationFormStore } from "../../../stores/useRegistrationFormStore";
+import { useRegister } from "../../../services/auth/use-registration";
 import toast from "react-hot-toast";
-import * as sessionService from "../../../../utils/session";
+import * as sessionService from "../../../utils/session";
 import { useNavigate } from "react-router-dom";
 
 export function SummaryContent() {

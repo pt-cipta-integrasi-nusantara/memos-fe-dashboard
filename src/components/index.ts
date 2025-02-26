@@ -1,4 +1,2 @@
-export * from "./Layout"
-export * from "./Ui"
-export * from "./Pages"
-export * from "./SearchBox/SearchBox"
+export * from "./layout"
+export * from "./ui"

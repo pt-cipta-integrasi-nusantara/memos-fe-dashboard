@@ -2,9 +2,9 @@ import { Listbox, Transition } from "@headlessui/react";
 import { ChangeEvent, Fragment, useState } from "react";
 import { useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
-import { Button, Card } from "../../../../Ui";
-import { ArrowDownIcon } from "../../../../Icons";
-import { bankList } from "../../../../constants/constants";
+import { Button, Card } from "../../components/ui";
+import { ArrowDownIcon } from "../../components/icons";
+import { bankList } from "../../components/constants/constants";
 import { useNavigate } from "react-router-dom";
 
 interface SelectProps {

@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
-import { Button, Card } from "../../../Ui";
-import { useMe } from "../../../../services/auth/use-me";
+import { Button, Card } from "../../components/ui";
+import { useMe } from "../../services/auth/use-me";
 import { useNavigate } from "react-router-dom";
-import { usePlanList } from "../../../../services/plan/use-plan-list";
-import { formatRupiah } from "../../../../helpers/format-currency";
-import { Plan } from "../../../../services/plan/types";
-import { useCreatePlan } from "../../../../services/plan/use-plan-create";
+import { usePlanList } from "../../services/plan/use-plan-list";
+import { formatRupiah } from "../../helpers/format-currency";
+import { Plan } from "../../services/plan/types";
+import { useCreatePlan } from "../../services/plan/use-plan-create";
 import toast from "react-hot-toast";
 
 export function SubscriptionContent() {

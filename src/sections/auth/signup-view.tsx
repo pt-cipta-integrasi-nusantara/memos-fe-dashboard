@@ -3,16 +3,16 @@ import { Dialog, Transition } from "@headlessui/react";
 import React, { Fragment, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
-import { Button, Card } from "../../Ui";
-import Countdown from "../../../helpers/countdown";
-import PinInput from "../../Ui/Pin";
+import { Button, Card } from "../../components/ui";
+import Countdown from "../../helpers/countdown";
+import PinInput from "../../components/ui/Pin";
 import {
   useRegisterEmail,
   useRequestAuthCode,
   useVerifyAuthCode,
-} from "../../../services/auth/use-registration";
+} from "../../services/auth/use-registration";
 import toast from "react-hot-toast";
-import * as sessionService from "../../../utils/session";
+import * as sessionService from "../../utils/session";
 import { useNavigate } from "react-router-dom";
 
 export function SignupContent() {

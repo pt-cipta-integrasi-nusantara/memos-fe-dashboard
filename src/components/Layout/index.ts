@@ -1,3 +1,3 @@
-export * from "./Header"
-export * from "./Sidebar"
-export * from "./MenubarBottom"
+export * from "./navbar"
+export * from "./sidebar"
+export * from "./menubarBottom"

@@ -1,4 +1,4 @@
-import { SummaryFinishContent } from "../../../../components/Pages/RegistrationSteps/Summary/SummaryFinish";
+import { SummaryFinishContent } from "../../../../sections/auth/registration/registration-summary-finish-view";
 
 export default function SummaryFinishPage() {
   return (
