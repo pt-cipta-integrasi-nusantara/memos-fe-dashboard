@@ -50,7 +50,7 @@ const PinInput: React.FC<PinInputProps> = ({
           value={digit}
           onChange={(e) => handleChange(e.target.value, index)}
           onKeyDown={(e) => handleKeyDown(e, index)}
-          ref={(el) => (inputRefs.current[index] = el)}
+          ref={(el: any) => (inputRefs.current[index] = el)}
           className={`border-b-2 w-10 h-14 focus:outline-none text-center text-4xl pb-6 font-bold ${
             isClinix ? "border-green-500" : "border-primary-500"
           }`}

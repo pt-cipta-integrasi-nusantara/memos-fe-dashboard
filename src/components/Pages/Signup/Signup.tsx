@@ -45,7 +45,7 @@ export function SignupContent() {
               token_type: "email_verification",
             });
           },
-          onError: (error: any) => {
+          onError: (_error: any) => {
             setIsShouldRequestOtp(true);
             setInitialTime(150);
           },
