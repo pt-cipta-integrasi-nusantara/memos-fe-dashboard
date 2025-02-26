@@ -3,9 +3,9 @@ import { Dialog, Transition } from "@headlessui/react";
 import React, { Fragment, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
-import { Button, Card } from "../../components/ui";
+import { Button, Card } from "../../components/uiComponent";
 import Countdown from "../../helpers/countdown";
-import PinInput from "../../components/ui/Pin";
+import PinInput from "../../components/uiComponent/pinInput";
 import {
   useRegisterEmail,
   useRequestAuthCode,

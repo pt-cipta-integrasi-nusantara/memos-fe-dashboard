@@ -13,8 +13,8 @@ import {
   ProfileIcon,
   ProfileMenuIcon,
   WorkIcon,
-} from "../../components/icons";
-import { Button } from "../../components/ui";
+} from "../../components/iconsComponent";
+import { Button } from "../../components/uiComponent";
 import { useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 

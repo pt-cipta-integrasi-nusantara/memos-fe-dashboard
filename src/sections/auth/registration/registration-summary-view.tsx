@@ -1,6 +1,6 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
-import { Button, Card } from "../../../components/ui";
+import { Button, Card } from "../../../components/uiComponent";
 import { useRegistrationFormStore } from "../../../stores/useRegistrationFormStore";
 import { useRegister } from "../../../services/auth/use-registration";
 import toast from "react-hot-toast";

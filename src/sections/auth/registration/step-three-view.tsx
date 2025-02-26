@@ -8,9 +8,9 @@ import {
 import { uploadImage } from "../../../services/utils/uploadImage";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
-import { Button, Card } from "../../../components/ui";
+import { Button, Card } from "../../../components/uiComponent";
 import { Listbox, Transition } from "@headlessui/react";
-import { ArrowDownIcon } from "../../../components/icons";
+import { ArrowDownIcon } from "../../../components/iconsComponent";
 import { useNavigate } from "react-router-dom";
 import { useRegistrationFormStore } from "../../../stores/useRegistrationFormStore";
 

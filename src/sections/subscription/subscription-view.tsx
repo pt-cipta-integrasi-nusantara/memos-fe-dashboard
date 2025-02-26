@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
-import { Button, Card } from "../../components/ui";
+import { Button, Card } from "../../components/uiComponent";
 import { useMe } from "../../services/auth/use-me";
 import { useNavigate } from "react-router-dom";
 import { usePlanList } from "../../services/plan/use-plan-list";

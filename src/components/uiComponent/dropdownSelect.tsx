@@ -1,7 +1,7 @@
 /* eslint-disable no-empty-pattern */
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
-import { ArrowDownIcon, GlobeIcon } from "../icons";
+import { ArrowDownIcon, GlobeIcon } from "../iconsComponent";
 
 interface DropdownProps {
   currentLanguage: string;

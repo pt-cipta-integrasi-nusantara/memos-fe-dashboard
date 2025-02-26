@@ -8,9 +8,9 @@ import {
 } from "../../../components/constants/constants";
 import { uploadImage } from "../../../services/utils/uploadImage";
 import { twMerge } from "tailwind-merge";
-import { Button, Card } from "../../../components/ui";
+import { Button, Card } from "../../../components/uiComponent";
 import { Listbox, Transition } from "@headlessui/react";
-import { ArrowDownIcon } from "../../../components/icons";
+import { ArrowDownIcon } from "../../../components/iconsComponent";
 
 interface SelectProps {
   label: string;
