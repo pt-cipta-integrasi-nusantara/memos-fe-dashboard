@@ -26,7 +26,7 @@ export function SignupContent() {
   const [isShouldRequestOtp, setIsShouldRequestOtp] = React.useState(false);
 
   const { register, handleSubmit, watch, formState } = useForm<any>();
-  const form = useRef() as any;
+  const form = useRef(null) as any;
 
   const onSubmit: SubmitHandler<any> = async (formData: any) => {
     if (!isShouldRequestOtp) {

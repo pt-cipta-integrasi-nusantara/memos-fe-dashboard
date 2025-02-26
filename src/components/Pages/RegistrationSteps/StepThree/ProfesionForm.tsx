@@ -26,7 +26,7 @@ export function ProfesionForm() {
   const navigate = useNavigate();
   const { formData, setFormData } = useRegistrationFormStore();
   const { register, handleSubmit } = useForm<any>();
-  const form = useRef() as any;
+  const form = useRef(null) as any;
   const [selectedProfesion, setSelectedProfesion] = useState<ProfesionProps>();
   const [selectedSpesialis, setSelectedSpesialis] = useState<ProfesionProps>();
   const [selectedBusiness, setSelectedBusiness] = useState<SelectProps>();

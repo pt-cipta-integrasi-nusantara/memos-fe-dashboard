@@ -229,7 +229,7 @@ function AccountContainer({
 export function ProfileContent() {
   const { register, handleSubmit } = useForm<any>();
   const [openedSection, setOpenedSection] = useState("profile");
-  const form = useRef() as any;
+  const form = useRef(null) as any;
 
   const onClickMenu = (path: string) => {
     setOpenedSection(path);

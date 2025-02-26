@@ -12,7 +12,7 @@ export function LoginContent() {
   const [isHidePassword, setIsHidePassword] = useState(true);
 
   const { register, handleSubmit } = useForm<any>();
-  const form = useRef() as any;
+  const form = useRef(null) as any;
 
   const onSubmit: SubmitHandler<any> = async (formData: any) => {
     console.log(formData, "formlogin");

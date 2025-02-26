@@ -18,7 +18,7 @@ export function IdentityForm() {
   const navigate = useNavigate();
   const { formData, setFormData } = useRegistrationFormStore();
   const { register, handleSubmit } = useForm<any>();
-  const form = useRef() as any;
+  const form = useRef(null) as any;
   const [selectedGender, setSelectedGender] = useState<SelectProps>();
 
   // Wilayah
