@@ -1,4 +1,4 @@
-import { WorkspaceContent } from "../../components";
+import { WorkspaceContent } from "../../sections/workspace/workspace-view";
 
 export default function WorkspacePage() {
   return (

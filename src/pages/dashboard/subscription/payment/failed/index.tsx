@@ -1,4 +1,4 @@
-import { PaymentFailedContent } from "../../../../../components/Pages/Dashboard";
+import { PaymentFailedContent } from "../../../../../sections/payment/payment-failed-view";
 
 export default function PaymentFailedPage() {
   return (
