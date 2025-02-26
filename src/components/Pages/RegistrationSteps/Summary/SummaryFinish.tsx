@@ -1,25 +1,14 @@
-import { Dialog, Listbox, Transition } from "@headlessui/react";
-import emailjs from "@emailjs/browser";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import React, { useRef } from "react";
-import { set, SubmitHandler, useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
-import { TFunction } from "i18next";
-import Image from "next/image";
 import { Button, Card } from "../../../Ui";
 import { useRegistrationFormStore } from "../../../../stores/useRegistrationFormStore";
+import { useNavigate } from "react-router-dom";
 
-interface SummaryFinishContentProps {
-  t: TFunction<"common", undefined>;
-}
-
-export function SummaryFinishContent({ t }: SummaryFinishContentProps) {
-  const router = useRouter();
+export function SummaryFinishContent() {
+  const navigate = useNavigate();
   const { formData } = useRegistrationFormStore();
 
   const onClickToHome = () => {
-    router.push("/");
+    navigate("/");
   };
   return (
     <div
@@ -30,7 +19,7 @@ export function SummaryFinishContent({ t }: SummaryFinishContentProps) {
         <div>
           <Card>
             <div className="text-center">
-              <Image
+              <img
                 src="/assets/icons/registration-finish.svg"
                 width={250}
                 height={200}

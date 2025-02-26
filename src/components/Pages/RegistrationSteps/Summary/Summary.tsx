@@ -1,24 +1,14 @@
-import { Dialog, Listbox, Transition } from "@headlessui/react";
-import emailjs from "@emailjs/browser";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import React, { useRef } from "react";
-import { set, SubmitHandler, useForm } from "react-hook-form";
+import React from "react";
 import { twMerge } from "tailwind-merge";
-import { TFunction } from "i18next";
-import Image from "next/image";
 import { Button, Card } from "../../../Ui";
 import { useRegistrationFormStore } from "../../../../stores/useRegistrationFormStore";
 import { useRegister } from "../../../../services/auth/use-registration";
 import toast from "react-hot-toast";
 import * as sessionService from "../../../../utils/session";
+import { useNavigate } from "react-router-dom";
 
-interface SummaryContentProps {
-  t: TFunction<"common", undefined>;
-}
-
-export function SummaryContent({ t }: SummaryContentProps) {
-  const router = useRouter();
+export function SummaryContent() {
+  const navigate = useNavigate();
   const { formData } = useRegistrationFormStore();
   const { mutate: registerAccount } = useRegister();
   const [isChecked, setIsChecked] = React.useState(false);
@@ -28,7 +18,7 @@ export function SummaryContent({ t }: SummaryContentProps) {
   };
 
   const onClickToEdit = () => {
-    router.push("/registration/step/2");
+    navigate("/registration/step/2");
   };
 
   const onFinishRegistration = () => {
@@ -90,7 +80,7 @@ export function SummaryContent({ t }: SummaryContentProps) {
     registerAccount(payload, {
       onSuccess: () => {
         sessionService.flushSession();
-        router.push("/registration/summary/finish");
+        navigate("/registration/summary/finish");
       },
       onError: (error: any) => {
         const reason = error?.message

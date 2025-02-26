@@ -1,78 +1,36 @@
 import { lazy, Suspense } from "react";
 import { Outlet, Navigate, useRoutes } from "react-router-dom";
+import { Loader } from "../components";
 
 // ----------------------------------------------------------------------
 
 // Authenticated Pages
 export const SignInPage = lazy(() => import("../pages/login/index"));
 export const SignUpPage = lazy(() => import("../pages/index"));
+export const SignUpStepOnePage = lazy(
+  () => import("../pages/registration/step/1")
+);
+export const SignUpStepTwoPage = lazy(
+  () => import("../pages/registration/step/2")
+);
+export const SignUpStepThreePage = lazy(
+  () => import("../pages/registration/step/3")
+);
+export const SignUpSummaryPage = lazy(
+  () => import("../pages/registration/summary")
+);
+export const SignUpSummaryFinishPage = lazy(
+  () => import("../pages/registration/summary/finish")
+);
 
 export const DashboardHomePage = lazy(() => import("../pages/dashboard/index"));
+export const DashboardSubscriptionPage = lazy(
+  () => import("../pages/dashboard/subscription/index")
+);
 
 const renderFallback = (
   <div className="flex items-center justify-center h-full">
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 200 200"
-      style={{
-        width: 100,
-      }}
-    >
-      <circle
-        fill="#45A03F"
-        stroke="#45A03F"
-        stroke-width="15"
-        r="15"
-        cx="40"
-        cy="100"
-      >
-        <animate
-          attributeName="opacity"
-          calcMode="spline"
-          dur="2"
-          values="1;0;1;"
-          keySplines=".5 0 .5 1;.5 0 .5 1"
-          repeatCount="indefinite"
-          begin="-.4"
-        ></animate>
-      </circle>
-      <circle
-        fill="#45A03F"
-        stroke="#45A03F"
-        stroke-width="15"
-        r="15"
-        cx="100"
-        cy="100"
-      >
-        <animate
-          attributeName="opacity"
-          calcMode="spline"
-          dur="2"
-          values="1;0;1;"
-          keySplines=".5 0 .5 1;.5 0 .5 1"
-          repeatCount="indefinite"
-          begin="-.2"
-        ></animate>
-      </circle>
-      <circle
-        fill="#45A03F"
-        stroke="#45A03F"
-        stroke-width="15"
-        r="15"
-        cx="160"
-        cy="100"
-      >
-        <animate
-          attributeName="opacity"
-          calcMode="spline"
-          dur="2"
-          values="1;0;1;"
-          keySplines=".5 0 .5 1;.5 0 .5 1"
-          repeatCount="indefinite"
-          begin="0"
-        ></animate>
-      </circle>
-    </svg>
+    <Loader />
   </div>
 );
 
@@ -84,11 +42,37 @@ export function Router() {
           <Outlet />
         </Suspense>
       ),
-      children: [{ path: "dashboard", element: <DashboardHomePage /> }],
+      children: [
+        { path: "dashboard", element: <DashboardHomePage /> },
+        {
+          path: "dashboard/subscription",
+          element: <DashboardSubscriptionPage />,
+        },
+      ],
     },
     {
       path: "/",
       element: <SignUpPage />,
+    },
+    {
+      path: "/registration/step/1",
+      element: <SignUpStepOnePage />,
+    },
+    {
+      path: "/registration/step/2",
+      element: <SignUpStepTwoPage />,
+    },
+    {
+      path: "/registration/step/3",
+      element: <SignUpStepThreePage />,
+    },
+    {
+      path: "/registration/summary",
+      element: <SignUpSummaryPage />,
+    },
+    {
+      path: "/registration/summary/finish",
+      element: <SignUpSummaryFinishPage />,
     },
     {
       path: "/login",

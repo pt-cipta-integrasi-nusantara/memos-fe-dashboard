@@ -1,17 +1,9 @@
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "next-i18next";
-import { GetStaticProps } from "next";
 import { ProfileContent } from "../../components";
 
 export default function ProfilePage() {
-  const { t } = useTranslation("common");
-  const router = useRouter();
-  const { query } = router;
   return (
     <div>
-      <Head>
+      <head>
         <title>Profile - Memos Healthcare CRM</title>
         <meta
           name="description"
@@ -23,10 +15,10 @@ export default function ProfilePage() {
           as="image"
           href="/assets/images/dokter-hero-mobile.webp"
         />
-      </Head>
+      </head>
 
       <main>
-        <ProfileContent t={t} />
+        <ProfileContent />
       </main>
     </div>
   );

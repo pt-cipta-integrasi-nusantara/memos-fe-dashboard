@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import { API_URL, http } from "../../utils/http";
+import { http } from "../../utils/http";
 
 async function fetchMe() {
-    ;
-    const endpointUrl = new URL('/account/me', API_URL);
+  const baseUrl = window.location.origin;
+
+    const endpointUrl = new URL('/account/me', baseUrl);
   
     const { data } = await http<{data: any}>(
-      endpointUrl.toString().replace(API_URL, '')
+      endpointUrl.toString().replace(baseUrl, '')
     )
   
     return data

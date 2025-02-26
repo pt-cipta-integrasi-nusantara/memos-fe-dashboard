@@ -1,4 +1,4 @@
-import { ChangeEvent, Fragment, useEffect } from "react";
+import { ChangeEvent, Fragment, useEffect, useRef, useState } from "react";
 import {
   BASE_URL_STORAGE,
   businesses,
@@ -6,11 +6,13 @@ import {
   spesialisData,
 } from "../../../constants/constants";
 import { uploadImage } from "../../../../services/utils/uploadImage";
-import { SubmitHandler } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 import { Button, Card } from "../../../Ui";
 import { Listbox, Transition } from "@headlessui/react";
 import { ArrowDownIcon } from "../../../Icons";
+import { useNavigate } from "react-router-dom";
+import { useRegistrationFormStore } from "../../../../stores/useRegistrationFormStore";
 
 interface SelectProps {
   label: string;
@@ -32,7 +34,7 @@ interface ProfesionProps {
   id: number;
 }
 export function ProfesionForm() {
-  const router = useRouter();
+  const navigate = useNavigate();
   const { formData, setFormData, resetFormData } = useRegistrationFormStore();
   const { register, handleSubmit, watch } = useForm<any>();
   const form = useRef() as any;
@@ -56,11 +58,11 @@ export function ProfesionForm() {
   }, []);
 
   const onNextStep = () => {
-    router.push("/registration/summary");
+    navigate("/registration/summary");
   };
 
   const onPreviousStep = () => {
-    router.push("/registration/step/2");
+    navigate("/registration/step/2");
   };
 
   const handleSTRNoChange = (e: ChangeEvent<HTMLInputElement>) => {

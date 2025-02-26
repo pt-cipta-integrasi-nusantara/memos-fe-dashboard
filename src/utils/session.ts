@@ -16,13 +16,13 @@ export function flushStorage() {
 
 export async function flushSession() {
   // use `fetch` instead of `http` from `utils` to prevent circular dependency
-  await window.fetch(`${API_URL}/logout`, {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      Authorization: `Bearer ${typeof window !== "undefined" ? getSession() : ""}`,
-    },
-  });
+  // await window.fetch(`${API_URL}/logout`, {
+  //   method: 'POST',
+  //   headers: {
+  //     Accept: 'application/json',
+  //     Authorization: `Bearer ${typeof window !== "undefined" ? getSession() : ""}`,
+  //   },
+  // });
 
   flushStorage();
 }

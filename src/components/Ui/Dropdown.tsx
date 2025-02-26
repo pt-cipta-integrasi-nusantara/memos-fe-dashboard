@@ -1,5 +1,4 @@
 import { Menu, Transition } from "@headlessui/react";
-import Image from "next/image";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { ArrowDownIcon, GlobeIcon } from "../Icons";
 

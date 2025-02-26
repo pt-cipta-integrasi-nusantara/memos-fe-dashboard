@@ -112,7 +112,7 @@ export function SignupContent() {
           const { token } = data?.data;
           sessionService.setSession(token);
           setTimeout(() => {
-            router.push("/registration/step/1");
+            navigate("/registration/step/1");
           }, 1000);
         },
         onError: (error: any) => {
@@ -123,10 +123,6 @@ export function SignupContent() {
         },
       }
     );
-  };
-
-  const onClickHome = () => {
-    router.push("/");
   };
 
   const censoredEmail = watch("email");

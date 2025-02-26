@@ -1,16 +1,9 @@
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "next-i18next";
-import { GetStaticProps } from "next";
 import { PaymentInProgressContent } from "../../../../../components/Pages/Dashboard";
 
 export default function PaymentInProgressPage() {
-  const { t } = useTranslation("common");
-  const router = useRouter();
   return (
     <div>
-      <Head>
+      <head>
         <title>Dashboard - Memos Healthcare CRM</title>
         <meta
           name="description"
@@ -22,18 +15,11 @@ export default function PaymentInProgressPage() {
           as="image"
           href="/assets/images/dokter-hero-mobile.webp"
         />
-      </Head>
+      </head>
 
       <main className="mt-[1.5rem]">
-        <PaymentInProgressContent t={t} />
+        <PaymentInProgressContent />
       </main>
     </div>
   );
 }
-
-export const getStaticProps: GetStaticProps<any> = async ({ locale }) => ({
-  props: {
-    locale,
-    ...(await serverSideTranslations(locale ?? "id", ["common"])),
-  },
-});

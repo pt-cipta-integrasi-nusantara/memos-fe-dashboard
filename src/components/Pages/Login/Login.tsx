@@ -28,7 +28,7 @@ export function LoginContent() {
   };
 
   const onClickHome = () => {
-    router.push("/");
+    navigate("/");
   };
 
   const censoredEmail = watch("email");

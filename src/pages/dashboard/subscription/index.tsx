@@ -1,16 +1,10 @@
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { useTranslation } from "next-i18next";
-import { GetStaticProps } from "next";
+import { Suspense } from "react";
 import { SubscriptionContent } from "../../../components/Pages/Dashboard";
 
 export default function SubscriptionPage() {
-  const { t } = useTranslation("common");
-  const router = useRouter();
   return (
     <div>
-      <Head>
+      <head>
         <title>Dashboard - Memos Healthcare CRM</title>
         <meta
           name="description"
@@ -22,18 +16,13 @@ export default function SubscriptionPage() {
           as="image"
           href="/assets/images/dokter-hero-mobile.webp"
         />
-      </Head>
+      </head>
 
       <main className="mt-[1.5rem]">
-        <SubscriptionContent t={t} />
+        <Suspense>
+          <SubscriptionContent />
+        </Suspense>
       </main>
     </div>
   );
 }
-
-export const getStaticProps: GetStaticProps<any> = async ({ locale }) => ({
-  props: {
-    locale,
-    ...(await serverSideTranslations(locale ?? "id", ["common"])),
-  },
-});
