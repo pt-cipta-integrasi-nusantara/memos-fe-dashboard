@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react";
 import { Outlet, Navigate, useRoutes } from "react-router-dom";
 import { Loader } from "../components";
+import { useAuth } from "../utils/auth/providers";
 
 // ----------------------------------------------------------------------
 
@@ -35,7 +36,9 @@ const renderFallback = (
 );
 
 export function Router() {
-  return useRoutes([
+  const { isAuth } = useAuth();
+
+  const authenticatedRoutes = useRoutes([
     {
       element: (
         <Suspense fallback={renderFallback}>
@@ -43,13 +46,20 @@ export function Router() {
         </Suspense>
       ),
       children: [
-        { path: "dashboard", element: <DashboardHomePage /> },
+        { path: "/dashboard", element: <DashboardHomePage /> },
         {
           path: "dashboard/subscription",
           element: <DashboardSubscriptionPage />,
         },
+        {
+          path: "*",
+          element: <Navigate to="/404" replace />,
+        },
       ],
     },
+  ]);
+
+  const unAuthenticatedRoutes = useRoutes([
     {
       path: "/",
       element: <SignUpPage />,
@@ -83,4 +93,6 @@ export function Router() {
       element: <Navigate to="/404" replace />,
     },
   ]);
+
+  return isAuth ? authenticatedRoutes : unAuthenticatedRoutes;
 }

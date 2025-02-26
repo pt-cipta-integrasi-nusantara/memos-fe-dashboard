@@ -1,5 +1,5 @@
 import { Disclosure, Listbox, Transition } from "@headlessui/react";
-import { ArrowDownIcon, DashboardIcon, ProfileIcon, WorkIcon } from "../Icons";
+import { ArrowDownIcon, DashboardIcon, ProfileIcon, WorkIcon } from "../icons";
 import { Fragment, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 

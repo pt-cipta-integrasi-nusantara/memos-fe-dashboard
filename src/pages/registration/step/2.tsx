@@ -1,4 +1,4 @@
-import { IdentityForm } from "../../../components/Pages/RegistrationSteps";
+import { IdentityForm } from "../../../sections/auth/registration/step-two-view";
 
 export default function RegistrationStepTwo() {
   return (

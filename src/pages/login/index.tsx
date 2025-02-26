@@ -1,4 +1,4 @@
-import { LoginContent } from "../../components";
+import { LoginContent } from "../../sections/auth/login-view";
 
 export default function LoginPage() {
   return (

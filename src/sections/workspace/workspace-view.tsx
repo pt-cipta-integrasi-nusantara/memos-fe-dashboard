@@ -1,8 +1,8 @@
 import { Listbox, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { ArrowDownIcon } from "../../Icons";
-import { Card } from "../../Ui";
+import { ArrowDownIcon } from "../../components/icons";
+import { Card } from "../../components/ui";
 
 const orgList = [
   {

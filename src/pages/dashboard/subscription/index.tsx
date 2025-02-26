@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { SubscriptionContent } from "../../../components/Pages/Dashboard";
+import { SubscriptionContent } from "../../../sections/subscription/subscription-view";
 
 export default function SubscriptionPage() {
   return (

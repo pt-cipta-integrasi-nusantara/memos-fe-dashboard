@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { CloseIcon, DownloadIcon } from "../../Icons";
+import { CloseIcon, DownloadIcon } from "../../components/icons";
 import { Fragment, useState } from "react";
-import { Button, Card } from "../../Ui";
+import { Button, Card } from "../../components/ui";
 import { twMerge } from "tailwind-merge";
 import { Dialog, Transition } from "@headlessui/react";
 

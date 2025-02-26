@@ -1,8 +1,8 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react/jsx-runtime";
-import { LogoutIcon, ProfileIcon } from "../Icons";
+import { LogoutIcon, ProfileIcon } from "../icons";
 import React, { Dispatch, SetStateAction } from "react";
-import { Button } from "../Ui";
+import { Button } from "../ui";
 import { useAuth } from "../../utils/auth/providers";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -182,7 +182,7 @@ function NavMenuDesktop({
   );
 }
 
-export function Header({
+export function Navbar({
   setIsExpandedMenubar,
 }: {
   setIsExpandedMenubar: Dispatch<SetStateAction<boolean>>;

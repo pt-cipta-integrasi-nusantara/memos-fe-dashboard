@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../utils/auth/providers";
+import { useAuth } from "../../utils/auth/providers";
 import { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { twMerge } from "tailwind-merge";
-import { Button, Card } from "../../Ui";
+import { Button, Card } from "../../components/ui";
 
 export function LoginContent() {
   const navigate = useNavigate();

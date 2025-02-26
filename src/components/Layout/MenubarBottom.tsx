@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { HomeIcon, ProfileIcon, SocialIcon, WorkIcon } from "../Icons";
+import { HomeIcon, ProfileIcon, SocialIcon, WorkIcon } from "../icons";
 
 function Navmenu() {
   const location = useLocation();

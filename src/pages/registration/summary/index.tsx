@@ -1,4 +1,4 @@
-import { SummaryContent } from "../../../components/Pages/RegistrationSteps/Summary/Summary";
+import { SummaryContent } from "../../../sections/auth/registration/registration-summary-view";
 
 export default function SummaryPage() {
   return (
