@@ -5,9 +5,6 @@ import { Button, Card } from "../../components/uiComponent";
 import { twMerge } from "tailwind-merge";
 import { Dialog, Transition } from "@headlessui/react";
 import { useMe } from "../../services/auth/use-me";
-import { useSubscriptionList } from "../../services/subscription/use-subscription-list";
-import { usePaymentList } from "../../services/payment/use-payment-list";
-
 const activities = [
   {
     title: "Akun Berhasil Dibuat",
@@ -48,9 +45,6 @@ const activities = [
 export function DashboardContent() {
   const navigate = useNavigate();
   const { data: me } = useMe();
-  const { data: paymentList } = usePaymentList();
-  const { data: subscriptionList } = useSubscriptionList();
-  console.log(paymentList, "paymentList");
   const [isWorkspaceModal, setIsWorkspaceModal] = useState(false);
   const [isDetailWorkspaceModal, setIsDetailWorkspaceModal] = useState(false);
   const onToDetail = () => {
@@ -74,7 +68,7 @@ export function DashboardContent() {
         <Card className="p-4 flex flex-col md:flex-row justify-between">
           <div className="flex flex-col gap-2">
             <h1 className="text-[24px] font-bold">
-              Halo, Dr. {me?.user?.full_name}!
+              Halo, Dr. {me?.full_name}!
             </h1>
             <p>
               Selamat datang di Memos, ruang untuk bekerja dengan nyaman dan

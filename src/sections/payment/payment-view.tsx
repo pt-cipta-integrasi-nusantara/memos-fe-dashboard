@@ -11,6 +11,7 @@ import { formatRupiah } from "../../helpers/format-currency";
 import { useMe } from "../../services/auth/use-me";
 import { uploadImage } from "../../services/utils/uploadImage";
 import { useCreatePayment } from "../../services/payment/use-payment-create";
+import { useBankList } from "../../services/bank/use-bank-list";
 
 interface BankAccountProps {
   bank_name: string;
@@ -22,6 +23,8 @@ export function PaymentContent() {
   const { subscriptionData, formData, setFormData, setSubscriptionData } =
     useSubscriptionStore();
   const { mutate: createPayment } = useCreatePayment();
+  const { data: bankData } = useBankList();
+  console.log(bankData, "bankdata");
   const navigate = useNavigate();
   const { data: me } = useMe();
   const { register, handleSubmit } = useForm<any>();

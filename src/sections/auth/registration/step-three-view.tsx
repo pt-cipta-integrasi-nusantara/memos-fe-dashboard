@@ -1,6 +1,5 @@
 import { ChangeEvent, Fragment, useEffect, useRef, useState } from "react";
 import {
-  BASE_URL_STORAGE,
   businesses,
   profesions,
   spesialisData,
