@@ -12,7 +12,7 @@ import { Button, Card } from "../../../components/uiComponent";
 import { Listbox, Transition } from "@headlessui/react";
 import { ArrowDownIcon } from "../../../components/iconsComponent";
 import { useNavigate } from "react-router-dom";
-import { useRegistrationFormStore } from "../../../stores/useRegistrationFormStore";
+import { useRegistrationFormStore } from "../../../stores/registration/useRegistrationFormStore";
 
 interface SelectProps {
   label: string;

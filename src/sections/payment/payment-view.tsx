@@ -6,6 +6,10 @@ import { Button, Card } from "../../components/uiComponent";
 import { ArrowDownIcon } from "../../components/iconsComponent";
 import { bankList } from "../../components/constants/constants";
 import { useNavigate } from "react-router-dom";
+import { useSubscriptionList } from "../../services/subscription/use-subscription-list";
+import { useSubscriptionStore } from "../../stores/subscription/useSubscriptionStore";
+import { formatRupiah } from "../../helpers/format-currency";
+import { useMe } from "../../services/auth/use-me";
 
 interface SelectProps {
   label: string;
@@ -13,10 +17,17 @@ interface SelectProps {
 }
 
 export function PaymentContent() {
+  const { subscriptionData } = useSubscriptionStore();
+
   const navigate = useNavigate();
+  const { data } = useSubscriptionList();
+  const { data: myProfile } = useMe();
+  console.log(data, "data");
   const { register } = useForm<any>();
   const [selectedBank, setSelectedBank] = useState<SelectProps>();
   const [buktiTransfer, setBuktiTransfer] = useState<File>();
+
+  console.log(subscriptionData, "subscriptionData");
 
   const onFinishRegistration = () => {
     navigate("/registration/summary/finish");
@@ -96,7 +107,8 @@ export function PaymentContent() {
                       className="cursor-pointer"
                     />
                     <span className="font-bold text-primary-500 text-[20px]">
-                      3 Bulan – Rp297.000
+                      {subscriptionData?.duration} –{" "}
+                      {formatRupiah(subscriptionData?.price)}
                     </span>
                     <span className="text-primary-500 underline cursor-pointer">
                       Ubah
@@ -105,7 +117,7 @@ export function PaymentContent() {
                 </div>
                 <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
                   <span>Tagihan Kepada</span>
-                  <span>Dr. John Doe - Yogyakarta</span>
+                  <span>{myProfile?.full_name}</span>
                 </div>
                 <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
                   <span>Metode Pembayaran</span>
@@ -115,12 +127,16 @@ export function PaymentContent() {
 
                 <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-2">
                   <span>Subtotal</span>
-                  <span className="text-[12px]">IDR 99.000</span>
+                  <span className="text-[12px]">
+                    {formatRupiah(subscriptionData?.price)}
+                  </span>
                 </div>
 
                 <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-2">
                   <span>Total</span>
-                  <span className="text-[14px] font-bold">IDR 99.000</span>
+                  <span className="text-[14px] font-bold">
+                    {formatRupiah(subscriptionData?.price)}
+                  </span>
                 </div>
               </div>
             </div>

@@ -7,14 +7,16 @@ import { useNavigate } from "react-router-dom";
 import { usePlanList } from "../../services/plan/use-plan-list";
 import { formatRupiah } from "../../helpers/format-currency";
 import { Plan } from "../../services/plan/types";
-import { useCreatePlan } from "../../services/plan/use-plan-create";
 import toast from "react-hot-toast";
+import { useCreateSubscription } from "../../services/subscription/use-subscription-create";
+import { useSubscriptionStore } from "../../stores/subscription/useSubscriptionStore";
 
 export function SubscriptionContent() {
   const navigate = useNavigate();
   const { data: myProfile } = useMe();
   const { data: planList } = usePlanList();
-  const { mutate: createPlan } = useCreatePlan();
+  const { setSubscriptionData } = useSubscriptionStore();
+  const { mutate: submitSubscription } = useCreateSubscription();
   const { register } = useForm<any>();
 
   const [selectedItem, setSelectedItem] = useState<Plan | null>(null);
@@ -33,13 +35,10 @@ export function SubscriptionContent() {
   };
 
   const onSubmitPlan = async () => {
-    createPlan(
+    setSubscriptionData(selectedItem);
+    submitSubscription(
       {
-        name: selectedItem?.name,
-        description: selectedItem?.description,
-        price: selectedItem?.price,
-        duration: selectedItem?.duration,
-        discount: selectedItem?.discount,
+        plan_id: selectedItem?.id,
       },
       {
         onSuccess: () => {

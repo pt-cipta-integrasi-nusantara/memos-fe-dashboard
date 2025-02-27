@@ -1,6 +1,6 @@
 import { twMerge } from "tailwind-merge";
 import { Button, Card } from "../../../components/uiComponent";
-import { useRegistrationFormStore } from "../../../stores/useRegistrationFormStore";
+import { useRegistrationFormStore } from "../../../stores/registration/useRegistrationFormStore";
 import { useNavigate } from "react-router-dom";
 
 export function SummaryFinishContent() {

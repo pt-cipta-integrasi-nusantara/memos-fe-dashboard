@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useRegistrationFormStore } from "../../../stores/useRegistrationFormStore";
+import { useRegistrationFormStore } from "../../../stores/registration/useRegistrationFormStore";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ChangeEvent, Fragment, useEffect, useRef, useState } from "react";
 import {
