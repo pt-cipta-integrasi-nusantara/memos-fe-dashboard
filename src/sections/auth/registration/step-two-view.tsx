@@ -131,8 +131,9 @@ export function IdentityForm() {
       const imageData = new FormData();
       imageData.append("file", file as unknown as File);
       uploadImage(imageData).then((res) => {
+        const { file_url } = res;
         setFormData({
-          identity_photo: `${BASE_URL_STORAGE}${res}`,
+          identity_photo: file_url,
         });
       });
       setFormData({

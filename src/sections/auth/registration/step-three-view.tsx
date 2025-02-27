@@ -58,8 +58,9 @@ export function ProfesionForm() {
       const imageData = new FormData();
       imageData.append("file", file as unknown as File);
       uploadImage(imageData).then((res) => {
+        const { file_url } = res;
         setFormData({
-          str_photo: `${BASE_URL_STORAGE}${res}`,
+          str_photo: file_url,
         });
       });
       setFormData({
@@ -75,8 +76,9 @@ export function ProfesionForm() {
       const imageData = new FormData();
       imageData.append("file", file as unknown as File);
       uploadImage(imageData).then((res) => {
+        const { file_url } = res;
         setFormData({
-          facility_photo: `${BASE_URL_STORAGE}${res}`,
+          facility_photo: file_url,
         });
       });
 

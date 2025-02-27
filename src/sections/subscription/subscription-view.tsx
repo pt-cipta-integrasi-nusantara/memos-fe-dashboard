@@ -41,7 +41,12 @@ export function SubscriptionContent() {
         plan_id: selectedItem?.id,
       },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
+          console.log(data, "datanya sub");
+          setSubscriptionData((prev: any) => ({
+            ...prev,
+            id: data?.data?.id,
+          }));
           navigate("/dashboard/subscription/payment");
         },
         onError: (error: any) => {
