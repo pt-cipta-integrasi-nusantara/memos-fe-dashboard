@@ -1,12 +1,26 @@
 import { twMerge } from "tailwind-merge";
-import { Button, Card } from "../../components/ui";
+import { Button, Card } from "../../components/uiComponent";
 import { useNavigate } from "react-router-dom";
+import { useSubscriptionStore } from "../../stores/subscription/useSubscriptionStore";
+import { formatRupiah } from "../../helpers/format-currency";
+import dayjs from "dayjs";
+import { useEffect } from "react";
 
 export function PaymentSuccessContent() {
+  const { subscriptionData, formData, resetFormData, resetSubscriptionData } =
+    useSubscriptionStore();
   const navigate = useNavigate();
   const onBackToHome = () => {
     navigate("/dashboard");
+    resetFormData();
+    resetSubscriptionData();
   };
+
+  useEffect(() => {
+    if (Object.keys(subscriptionData).length === 0) {
+      navigate("/dashboard");
+    }
+  }, []);
 
   return (
     <div
@@ -37,9 +51,12 @@ export function PaymentSuccessContent() {
             <div className="flex flex-col gap-1 items-center mt-4">
               <p>Jumlah</p>
               <p className="text-[20px] text-primary-500 font-bold">
-                IDR 297.000
+                {formatRupiah(subscriptionData?.price)}
               </p>
-              <p>14 Oct 2024 • Pembayaran 82302393</p>
+              <p>
+                {dayjs(subscriptionData?.pay_date).format("DD MMMM YYYY")} •
+                Pembayaran 82302393
+              </p>
             </div>
 
             <div className="mt-8 text-[14px]">
@@ -58,13 +75,14 @@ export function PaymentSuccessContent() {
                       className="cursor-pointer"
                     />
                     <span className="font-bold text-primary-500 text-[20px]">
-                      3 Bulan – Rp297.000
+                      {subscriptionData?.duration} –{" "}
+                      {formatRupiah(subscriptionData?.price)}
                     </span>
                   </div>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Tagihan Kepada</span>
-                  <span>Dr. John Doe - Yogyakarta</span>
+                  <span>{formData?.bankAccount?.owner_name}</span>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Metode Pembayaran</span>
@@ -72,25 +90,27 @@ export function PaymentSuccessContent() {
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Nama Pemilik Rekening</span>
-                  <span>PT Cipta Integrasi Nusantara</span>
+                  <span>{formData?.bankAccount?.owner_name}</span>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Nama Bank</span>
-                  <span>BCA</span>
+                  <span>{formData?.bankAccount?.bank_name}</span>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>No. Rekening</span>
-                  <span>1234-5678-9890</span>
+                  <span>{formData?.bankAccount?.account_number}</span>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Bukti Transfer</span>
                   <span className="underline text-link cursor-pointer">
-                    8734.png
+                    {formData?.payment_proof_name}
                   </span>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Total Pembayaran</span>
-                  <span className="text-[14px] font-bold">IDR 99.000</span>
+                  <span className="text-[14px] font-bold">
+                    {formatRupiah(subscriptionData?.price)}
+                  </span>
                 </div>
               </div>
             </div>

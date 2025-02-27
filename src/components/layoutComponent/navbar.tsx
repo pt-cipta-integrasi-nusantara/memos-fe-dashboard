@@ -1,8 +1,8 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react/jsx-runtime";
-import { LogoutIcon, ProfileIcon } from "../icons";
+import { LogoutIcon, ProfileIcon } from "../iconsComponent";
 import React, { Dispatch, SetStateAction } from "react";
-import { Button } from "../ui";
+import { Button } from "../uiComponent";
 import { useAuth } from "../../utils/auth/providers";
 import { useLocation, useNavigate } from "react-router-dom";
 

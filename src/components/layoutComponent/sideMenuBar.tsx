@@ -1,5 +1,10 @@
 import { Disclosure, Listbox, Transition } from "@headlessui/react";
-import { ArrowDownIcon, DashboardIcon, ProfileIcon, WorkIcon } from "../icons";
+import {
+  ArrowDownIcon,
+  DashboardIcon,
+  ProfileIcon,
+  WorkIcon,
+} from "../iconsComponent";
 import { Fragment, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -317,7 +322,11 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
   );
 }
 
-export function Sidebar({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
+export function SideMenuBar({
+  isExpandedMenubar,
+}: {
+  isExpandedMenubar: boolean;
+}) {
   return (
     <div
       className={`transition-all hidden lg:block pt-[2rem] h-screen border-r border-neutral-250 w-0 ${

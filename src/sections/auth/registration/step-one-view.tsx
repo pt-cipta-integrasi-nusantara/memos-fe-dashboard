@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
-import { Button, Card } from "../../../components/ui";
+import { Button, Card } from "../../../components/uiComponent";
 
 export function TermsConditionContent() {
   const navigate = useNavigate();

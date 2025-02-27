@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { twMerge } from "tailwind-merge";
-import { Button, Card } from "../../components/ui";
+import { Button, Card } from "../../components/uiComponent";
 
 export function LoginContent() {
   const navigate = useNavigate();

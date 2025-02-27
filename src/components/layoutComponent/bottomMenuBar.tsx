@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { HomeIcon, ProfileIcon, SocialIcon, WorkIcon } from "../icons";
+import { HomeIcon, ProfileIcon, SocialIcon, WorkIcon } from "../iconsComponent";
 
 function Navmenu() {
   const location = useLocation();
@@ -94,7 +94,7 @@ function Navmenu() {
   );
 }
 
-export function MenubarBottom() {
+export function BottomMenuBar() {
   return (
     <div className="block lg:hidden fixed bottom-0 w-full flex">
       <Navmenu />

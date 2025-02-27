@@ -29,6 +29,19 @@ export const DashboardHomePage = lazy(() => import("../pages/dashboard/index"));
 export const DashboardSubscriptionPage = lazy(
   () => import("../pages/dashboard/subscription/index")
 );
+export const DashboardSubscriptionPaymentPage = lazy(
+  () => import("../pages/dashboard/subscription/payment")
+);
+
+export const DashboardSubscriptionPaymentSuccessPage = lazy(
+  () => import("../pages/dashboard/subscription/payment/success")
+);
+export const DashboardSubscriptionPaymentFailedPage = lazy(
+  () => import("../pages/dashboard/subscription/payment/failed")
+);
+export const DashboardSubscriptionPaymentInProgressPage = lazy(
+  () => import("../pages/dashboard/subscription/payment/in-progress")
+);
 
 const renderFallback = (
   <div className="flex items-center justify-center h-full">
@@ -51,6 +64,22 @@ export function Router() {
         {
           path: "dashboard/subscription",
           element: <DashboardSubscriptionPage />,
+        },
+        {
+          path: "dashboard/subscription/payment",
+          element: <DashboardSubscriptionPaymentPage />,
+        },
+        {
+          path: "dashboard/subscription/payment/success",
+          element: <DashboardSubscriptionPaymentSuccessPage />,
+        },
+        {
+          path: "dashboard/subscription/payment/failed",
+          element: <DashboardSubscriptionPaymentFailedPage />,
+        },
+        {
+          path: "dashboard/subscription/payment/pending",
+          element: <DashboardSubscriptionPaymentInProgressPage />,
         },
         {
           path: "*",

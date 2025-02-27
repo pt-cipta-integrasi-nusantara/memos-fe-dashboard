@@ -8,11 +8,11 @@ import {
 import { uploadImage } from "../../../services/utils/uploadImage";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
-import { Button, Card } from "../../../components/ui";
+import { Button, Card } from "../../../components/uiComponent";
 import { Listbox, Transition } from "@headlessui/react";
-import { ArrowDownIcon } from "../../../components/icons";
+import { ArrowDownIcon } from "../../../components/iconsComponent";
 import { useNavigate } from "react-router-dom";
-import { useRegistrationFormStore } from "../../../stores/useRegistrationFormStore";
+import { useRegistrationFormStore } from "../../../stores/registration/useRegistrationFormStore";
 
 interface SelectProps {
   label: string;
@@ -58,8 +58,9 @@ export function ProfesionForm() {
       const imageData = new FormData();
       imageData.append("file", file as unknown as File);
       uploadImage(imageData).then((res) => {
+        const { file_url } = res;
         setFormData({
-          str_photo: `${BASE_URL_STORAGE}${res}`,
+          str_photo: file_url,
         });
       });
       setFormData({
@@ -75,8 +76,9 @@ export function ProfesionForm() {
       const imageData = new FormData();
       imageData.append("file", file as unknown as File);
       uploadImage(imageData).then((res) => {
+        const { file_url } = res;
         setFormData({
-          facility_photo: `${BASE_URL_STORAGE}${res}`,
+          facility_photo: file_url,
         });
       });
 
