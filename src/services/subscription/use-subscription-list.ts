@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { http } from "../../utils/http";
+import type { Subscription } from "./types";
 
 
 async function fetchSubscriptionList() {
@@ -8,7 +9,7 @@ async function fetchSubscriptionList() {
 
 
 
-  const { data } = await http<{data: any}>(
+  const { data } = await http<{data: Subscription}>(
     endpointUrl.toString().replace(baseUrl, '')
   )
 

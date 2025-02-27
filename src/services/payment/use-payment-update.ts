@@ -13,12 +13,14 @@ interface StorePaymentParams {
     payment_proof: string;
 }
 
-export function useCreatePayment() {
+export function useUpdatePayment() {
     return useMutation(
-      async (formData: StorePaymentParams) => {
-        return http(`payments`, {
+      async (formData: StorePaymentParams & {id: number}) => {
+        const {id, ...form} = formData
+        return http(`payments/${id}`, {
+          method: "PUT",
           data: {
-            ...formData
+            ...form
           }
         },);
       },

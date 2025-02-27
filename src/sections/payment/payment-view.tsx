@@ -4,10 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 import { Button, Card } from "../../components/uiComponent";
 import { ArrowDownIcon } from "../../components/iconsComponent";
-import {
-  bankList,
-  BASE_URL_STORAGE,
-} from "../../components/constants/constants";
+import { bankList } from "../../components/constants/constants";
 import { useNavigate } from "react-router-dom";
 import { useSubscriptionStore } from "../../stores/subscription/useSubscriptionStore";
 import { formatRupiah } from "../../helpers/format-currency";
@@ -22,10 +19,11 @@ interface BankAccountProps {
 }
 
 export function PaymentContent() {
-  const { subscriptionData, formData, setFormData } = useSubscriptionStore();
+  const { subscriptionData, formData, setFormData, setSubscriptionData } =
+    useSubscriptionStore();
   const { mutate: createPayment } = useCreatePayment();
   const navigate = useNavigate();
-  const { data: myProfile } = useMe();
+  const { data: me } = useMe();
   const { register, handleSubmit } = useForm<any>();
   const [selectedBank, setSelectedBank] = useState<BankAccountProps>();
   const form = useRef(null) as any;
@@ -75,8 +73,15 @@ export function PaymentContent() {
 
     console.log(payload, "payload");
     createPayment(payload, {
-      onSuccess: () => {
-        navigate("/dashboard/subscription/payment/success");
+      onSuccess: (data) => {
+        setSubscriptionData({
+          pay_date: data?.data?.pay_date,
+        });
+        if (data?.data?.status === "Pending") {
+          navigate("/dashboard/subscription/payment/pending");
+        } else {
+          navigate("/dashboard/subscription/payment/success");
+        }
       },
       onError: () => {
         navigate("/dashboard/subscription/payment/failed");
@@ -159,7 +164,7 @@ export function PaymentContent() {
                   </div>
                   <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
                     <span>Tagihan Kepada</span>
-                    <span>{myProfile?.full_name}</span>
+                    <span>{me?.full_name}</span>
                   </div>
                   <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
                     <span>Metode Pembayaran</span>

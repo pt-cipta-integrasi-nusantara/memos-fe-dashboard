@@ -78,7 +78,7 @@ export function Router() {
           element: <DashboardSubscriptionPaymentFailedPage />,
         },
         {
-          path: "dashboard/subscription/payment/in-progress",
+          path: "dashboard/subscription/payment/pending",
           element: <DashboardSubscriptionPaymentInProgressPage />,
         },
         {

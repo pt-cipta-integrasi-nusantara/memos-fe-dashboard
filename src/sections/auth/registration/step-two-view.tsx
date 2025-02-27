@@ -2,10 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useRegistrationFormStore } from "../../../stores/registration/useRegistrationFormStore";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ChangeEvent, Fragment, useEffect, useRef, useState } from "react";
-import {
-  BASE_URL_STORAGE,
-  genders,
-} from "../../../components/constants/constants";
+import { genders } from "../../../components/constants/constants";
 import { uploadImage } from "../../../services/utils/uploadImage";
 import { twMerge } from "tailwind-merge";
 import { Button, Card } from "../../../components/uiComponent";
