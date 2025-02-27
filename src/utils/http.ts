@@ -1,7 +1,6 @@
 import { joinURL, withQuery, type QueryObject } from 'ufo';
 import { getSession } from './session';
-
-export const API_URL = "https://7720-182-253-162-178.ngrok-free.app/v1"
+import { API_URL } from '../constants/constants';
 
 export interface RequestInitClient extends Omit<RequestInit, 'body'> {
   data?: Record<string, unknown> | FormData;
