@@ -5,6 +5,8 @@ import { Button, Card } from "../../components/uiComponent";
 import { twMerge } from "tailwind-merge";
 import { Dialog, Transition } from "@headlessui/react";
 import { useMe } from "../../services/auth/use-me";
+import { useMyActivityList } from "../../services/my-activity/use-my-activity-list";
+import dayjs from "dayjs";
 const activities = [
   {
     title: "Akun Berhasil Dibuat",
@@ -45,10 +47,16 @@ const activities = [
 export function DashboardContent() {
   const navigate = useNavigate();
   const { data: me } = useMe();
+  const { data: myActivity } = useMyActivityList();
+  console.log(myActivity, "myActivity");
   const [isWorkspaceModal, setIsWorkspaceModal] = useState(false);
   const [isDetailWorkspaceModal, setIsDetailWorkspaceModal] = useState(false);
   const onToDetail = () => {
     navigate("/dashboard/subscription");
+  };
+
+  const onToDetailRegistration = () => {
+    navigate("/dashboard/subscription/payment/pending");
   };
 
   const onAcceptWorkspace = (mode: string) => {
@@ -93,7 +101,7 @@ export function DashboardContent() {
           </div>
 
           <div id="aktivitas-content">
-            {activities?.map((activity, index) => (
+            {myActivity?.map((activity, index) => (
               <div className="flex flex-col md:flex-row justify-between  py-4 px-8 ">
                 <div
                   className={`flex gap-2 ${
@@ -112,13 +120,25 @@ export function DashboardContent() {
                   <div>
                     <div>
                       <span className="text-[12px] font-bold">
-                        {activity?.title}
+                        {activity?.details}
                       </span>
                     </div>
-                    {activity?.created_at && (
+                    {activity?.timestamp && (
                       <div>
                         <span className="text-[12px] text-neutral-300">
-                          {activity?.created_at}
+                          {dayjs(activity?.timestamp).format(
+                            "DD - MMMM - YYYY - hh:mm"
+                          )}
+                        </span>
+                      </div>
+                    )}
+                    {activity?.event_type === "Registrasi" && (
+                      <div>
+                        <span
+                          className="cursor-pointer text-[14px] text-primary-500"
+                          onClick={onToDetailRegistration}
+                        >
+                          Lihat detail
                         </span>
                       </div>
                     )}
