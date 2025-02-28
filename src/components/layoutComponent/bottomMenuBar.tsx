@@ -6,12 +6,12 @@ function Navmenu() {
   const asPath = location.pathname + location.search;
   const menus = [
     {
-      path: "/dashboard",
+      path: "/",
       label: "Home",
       icon: (
         <HomeIcon
           className={`mt-4 w-[20px] h-[20px] ${
-            asPath.includes("/dashboard") ? "text-primary-500" : ""
+            asPath === "/" ? "text-primary-500" : ""
           }`}
         />
       ),

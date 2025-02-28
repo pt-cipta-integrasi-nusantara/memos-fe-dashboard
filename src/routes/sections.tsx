@@ -60,25 +60,25 @@ export function Router() {
         </Suspense>
       ),
       children: [
-        { path: "/dashboard", element: <DashboardHomePage /> },
+        { path: "/", element: <DashboardHomePage />, index: true },
         {
-          path: "dashboard/subscription",
+          path: "/subscription",
           element: <DashboardSubscriptionPage />,
         },
         {
-          path: "dashboard/subscription/payment",
+          path: "/subscription/payment",
           element: <DashboardSubscriptionPaymentPage />,
         },
         {
-          path: "dashboard/subscription/payment/success",
+          path: "/subscription/payment/success",
           element: <DashboardSubscriptionPaymentSuccessPage />,
         },
         {
-          path: "dashboard/subscription/payment/failed",
+          path: "/subscription/payment/failed",
           element: <DashboardSubscriptionPaymentFailedPage />,
         },
         {
-          path: "dashboard/subscription/payment/pending",
+          path: "/subscription/payment/pending",
           element: <DashboardSubscriptionPaymentInProgressPage />,
         },
         {

@@ -7,42 +7,6 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useMe } from "../../services/auth/use-me";
 import { useMyActivityList } from "../../services/my-activity/use-my-activity-list";
 import dayjs from "dayjs";
-const activities = [
-  {
-    title: "Akun Berhasil Dibuat",
-    created_at: "19 Desember 2024 - 09:00 WIB",
-    extra: null,
-  },
-  {
-    title: "Permintaan Berlangganan Terkonfirmasi",
-    created_at: "19 Desember 2024 - 14:00 WIB",
-    extra: null,
-  },
-  {
-    title: "Order langganan Clinix Anda masih menunggu pembayaran",
-    created_at: "19 Desember 2024 - 17:00 WIB",
-    extra: "Pilih Paket",
-  },
-  {
-    image: "/assets/images/dummy-ava-2.png",
-    title: "Workspace RS Setio Husodo tersedia!",
-    content:
-      "HR telah mengirim undangan, pilih konfirmasi untuk mulai bekerja!",
-    actions: {
-      value: true,
-      label: "Terima",
-    },
-  },
-  {
-    image: "/assets/images/dummy-ava-2.png",
-    title: "Workspace RS Setio Husodo tersedia!",
-    content: "HR Setio Husodo telah mengirim perjanjian kerjasama",
-    actions: {
-      value: true,
-      label: "Lihat Detail",
-    },
-  },
-];
 
 export function DashboardContent() {
   const navigate = useNavigate();
@@ -52,11 +16,11 @@ export function DashboardContent() {
   const [isWorkspaceModal, setIsWorkspaceModal] = useState(false);
   const [isDetailWorkspaceModal, setIsDetailWorkspaceModal] = useState(false);
   const onToDetail = () => {
-    navigate("/dashboard/subscription");
+    navigate("/subscription");
   };
 
   const onToDetailRegistration = () => {
-    navigate("/dashboard/subscription/payment/pending");
+    navigate("/subscription/payment/pending");
   };
 
   const onAcceptWorkspace = (mode: string) => {

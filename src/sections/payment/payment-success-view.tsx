@@ -11,14 +11,14 @@ export function PaymentSuccessContent() {
     useSubscriptionStore();
   const navigate = useNavigate();
   const onBackToHome = () => {
-    navigate("/dashboard");
+    navigate("/");
     resetFormData();
     resetSubscriptionData();
   };
 
   useEffect(() => {
     if (Object.keys(subscriptionData).length === 0) {
-      navigate("/dashboard");
+      navigate("/");
     }
   }, []);
 

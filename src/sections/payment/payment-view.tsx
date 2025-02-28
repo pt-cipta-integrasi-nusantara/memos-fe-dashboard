@@ -32,7 +32,7 @@ export function PaymentContent() {
   const form = useRef(null) as any;
 
   const onPreviousStep = () => {
-    navigate("/dashboard/subscription");
+    navigate("//subscription");
   };
 
   const handleFotoBuktiBayar = (e: ChangeEvent<HTMLInputElement>) => {
@@ -81,13 +81,13 @@ export function PaymentContent() {
           pay_date: data?.data?.pay_date,
         });
         if (data?.data?.status === "Pending") {
-          navigate("/dashboard/subscription/payment/pending");
+          navigate("/subscription/payment/pending");
         } else {
-          navigate("/dashboard/subscription/payment/success");
+          navigate("/subscription/payment/success");
         }
       },
       onError: () => {
-        navigate("/dashboard/subscription/payment/failed");
+        navigate("/subscription/payment/failed");
       },
     });
     // TODO Submit handler

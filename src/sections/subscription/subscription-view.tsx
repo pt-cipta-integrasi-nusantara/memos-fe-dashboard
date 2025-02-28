@@ -47,7 +47,7 @@ export function SubscriptionContent() {
             ...prev,
             id: data?.data?.id,
           }));
-          navigate("/dashboard/subscription/payment");
+          navigate("/subscription/payment");
         },
         onError: (error: any) => {
           const reason = error?.message
