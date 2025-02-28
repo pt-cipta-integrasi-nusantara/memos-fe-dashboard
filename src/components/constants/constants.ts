@@ -166,14 +166,10 @@ export const businesses = [
 
 export const bankList = [
   {
-    "owner_name": "John Doe",
-    "account_number": "1234567890",
     "bank_name": "BCA"
   },
   
   {
-    "owner_name": "John Doe",
-    "account_number": "1234567890",
     "bank_name": "Mandiri"
   }
 ]
