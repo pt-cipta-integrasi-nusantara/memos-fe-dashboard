@@ -41,10 +41,10 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
     <nav>
       <ul className="list-style-none flex flex-col gap-4">
         <li
-          onClick={() => navigate("/dashboard")}
+          onClick={() => navigate("/")}
           className="py-4 flex items-center w-full cursor-pointer border-b border-neutral-250 pb-6"
         >
-          {asPath.includes("/dashboard") && (
+          {asPath === "/" && (
             <img
               src="/assets/icons/side-menu.svg"
               width={4}
@@ -55,13 +55,13 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
           <div className="ml-8 flex items-center gap-3">
             <DashboardIcon
               className={`w-[18px] h-[18px] ${
-                asPath.includes("/dashboard") ? "text-primary-500" : ""
+                asPath === "/" ? "text-primary-500" : ""
               }`}
             />
             {isExpandedMenubar && (
               <span
                 className={`font-bold ${
-                  asPath.includes("/dashboard") ? "text-primary-500" : ""
+                  asPath === "/" ? "text-primary-500" : ""
                 } `}
               >
                 Dashboard

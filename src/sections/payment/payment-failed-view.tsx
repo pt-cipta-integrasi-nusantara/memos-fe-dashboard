@@ -6,7 +6,7 @@ export function PaymentFailedContent() {
   const navigate = useNavigate();
 
   const onBackToHome = () => {
-    navigate("/dashboard");
+    navigate("/");
   };
 
   return (

@@ -32,7 +32,7 @@ export function AuthProvider(props: React.PropsWithChildren) {
     const { token } = data;
     sessionService.setSession(token);
     setAccessToken(token);
-    navigate("/dashboard");
+    navigate("/");
   }
 
   async function logout() {
