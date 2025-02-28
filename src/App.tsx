@@ -3,10 +3,13 @@ import { Router } from "./routes/sections";
 import { BottomMenuBar, Navbar, SideMenuBar } from "./components";
 import { Toaster } from "react-hot-toast";
 import { useAuth } from "./utils/auth/providers";
+import { useLocation } from "react-router-dom";
 
 // ----------------------------------------------------------------------
 
 export default function App() {
+  const location = useLocation();
+  const asPath = location.pathname + location.search;
   const { isAuth } = useAuth();
   const [isExpandedMenubar, setIsExpandedMenubar] = React.useState(true);
   return (
@@ -20,7 +23,9 @@ export default function App() {
       <section className="w-full mx-auto text-neutral-500">
         <Navbar setIsExpandedMenubar={setIsExpandedMenubar} />
         <div className="flex">
-          {isAuth && <SideMenuBar isExpandedMenubar={isExpandedMenubar} />}
+          {isAuth && !asPath.includes("/subscription") && (
+            <SideMenuBar isExpandedMenubar={isExpandedMenubar} />
+          )}
           <div className="w-full lg:mt-0">
             <Router />
           </div>

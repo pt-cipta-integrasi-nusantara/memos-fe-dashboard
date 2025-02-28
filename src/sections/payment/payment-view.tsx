@@ -12,11 +12,10 @@ import { useMe } from "../../services/auth/use-me";
 import { uploadImage } from "../../services/utils/uploadImage";
 import { useCreatePayment } from "../../services/payment/use-payment-create";
 import { useBankList } from "../../services/bank/use-bank-list";
+import dayjs from "dayjs";
 
 interface BankAccountProps {
   bank_name: string;
-  account_number: string;
-  owner_name: string;
 }
 
 export function PaymentContent() {
@@ -56,7 +55,7 @@ export function PaymentContent() {
   useEffect(() => {
     setSelectedBank(
       bankList?.find(
-        (item) => item?.owner_name === formData?.bankAccount?.owner_name
+        (item) => item?.bank_name === formData?.bankAccount?.bank_name
       )
     );
   }, []);
@@ -65,12 +64,12 @@ export function PaymentContent() {
     const payload = {
       subscription_id: subscriptionData?.id,
       bank_account: {
-        owner_name: formData?.bankAccount?.owner_name,
-        account_number: formData?.bankAccount?.account_number,
+        owner_name: formData?.owner_name,
+        account_number: formData?.account_number,
         bank_name: formData?.bankAccount?.bank_name,
       },
-      pay_amount: 100.0,
-      pay_date: "2024-02-29",
+      pay_amount: subscriptionData?.price,
+      pay_date: dayjs().format("YYYY-MM-DD"),
       payment_proof: formData?.payment_proof,
     };
 
@@ -211,9 +210,9 @@ export function PaymentContent() {
                       className="rounded-[8px] p-4 border border-neutral-100 focus:outline-none"
                       placeholder="Masukkan Nama Lengkap"
                       onChange={(e) =>
-                        setFormData({ identity_number: e.target.value })
+                        setFormData({ owner_name: e.target.value })
                       }
-                      defaultValue={formData["identity_number"]}
+                      defaultValue={formData["owner_name"]}
                     />
                   </div>
 
@@ -228,10 +227,7 @@ export function PaymentContent() {
                         <Listbox.Button className="border border-neutral-100 relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none">
                           <span className="block truncate">
                             {selectedBank ? (
-                              <>
-                                {selectedBank?.bank_name} -{" "}
-                                {selectedBank?.owner_name}
-                              </>
+                              <>{selectedBank?.bank_name}</>
                             ) : (
                               <span className="text-neutral-400">
                                 Pilih Nama Bank
@@ -270,7 +266,7 @@ export function PaymentContent() {
                                         selected ? "font-medium" : "font-normal"
                                       }`}
                                     >
-                                      {bank?.bank_name} - {bank?.owner_name}
+                                      {bank?.bank_name}
                                     </span>
                                   </>
                                 )}
@@ -296,8 +292,10 @@ export function PaymentContent() {
                       type="text"
                       className="rounded-[8px] p-4 border border-neutral-100 focus:outline-none"
                       placeholder="Masukkan Nomor Rekening"
-                      readOnly
-                      defaultValue={formData?.bankAccount?.account_number}
+                      onChange={(e) =>
+                        setFormData({ account_number: e.target.value })
+                      }
+                      defaultValue={formData?.account_number}
                     />
                   </div>
 
