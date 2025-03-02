@@ -88,7 +88,7 @@ export function PaymentInProgressContent() {
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Tagihan Kepada</span>
-                  <span>{formData?.bankAccount?.owner_name}</span>
+                  <span>{formData?.owner_name}</span>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Metode Pembayaran</span>
@@ -96,7 +96,7 @@ export function PaymentInProgressContent() {
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Nama Pemilik Rekening</span>
-                  <span>{formData?.bankAccount?.owner_name}</span>
+                  <span>{formData?.owner_name}</span>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Nama Bank</span>
@@ -104,7 +104,7 @@ export function PaymentInProgressContent() {
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>No. Rekening</span>
-                  <span>{formData?.bankAccount?.account_number}</span>
+                  <span>{formData?.account_number}</span>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Bukti Transfer</span>
