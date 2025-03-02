@@ -1,20 +1,30 @@
 import { useNavigate } from "react-router-dom";
 import { CloseIcon, DownloadIcon } from "../../components/iconsComponent";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Button, Card } from "../../components/uiComponent";
 import { twMerge } from "tailwind-merge";
 import { Dialog, Transition } from "@headlessui/react";
 import { useMe } from "../../services/auth/use-me";
 import { useMyActivityList } from "../../services/my-activity/use-my-activity-list";
 import dayjs from "dayjs";
+import { getUserData, setUserData } from "../../utils/session";
 
 export function DashboardContent() {
   const navigate = useNavigate();
   const { data: me } = useMe();
   const { data: myActivity } = useMyActivityList();
-  console.log(myActivity, "myActivity");
   const [isWorkspaceModal, setIsWorkspaceModal] = useState(false);
   const [isDetailWorkspaceModal, setIsDetailWorkspaceModal] = useState(false);
+
+  const userData = JSON.parse(getUserData() ?? "");
+
+  useEffect(() => {
+    if (!userData) {
+      setUserData(me ?? {});
+      console.log("set user data");
+    }
+  }, [me, userData]);
+
   const onToDetail = () => {
     navigate("/subscription");
   };

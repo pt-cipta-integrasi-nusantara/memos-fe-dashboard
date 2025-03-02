@@ -5,55 +5,17 @@ import React, { Dispatch, SetStateAction } from "react";
 import { Button } from "../uiComponent";
 import { useAuth } from "../../utils/auth/providers";
 import { useLocation, useNavigate } from "react-router-dom";
+import { User } from "../../services/auth/types";
+import { useMe } from "../../services/auth/use-me";
+import { getUserData } from "../../utils/session";
 
-interface NavMenuMobileProps {
-  isOpen: boolean;
-  onClickLogo: () => void;
-  visible: boolean;
-}
-
-function NavMenuMobile({ isOpen, onClickLogo, visible }: NavMenuMobileProps) {
-  return (
-    <div
-      className={`transition-all sticky ${
-        isOpen ? "top-0" : visible ? "top-0" : "-top-[6rem]"
-      } w-full bg-white z-50 lg:hidden`}
-    >
-      <header className="lg:hidden w-full bg-white shadow-md  justify-between border-neutral-300 py-4 flex items-center mx-auto max-w-[100%] px-4">
-        {/* Logo */}
-        <div id="logo">
-          <img
-            src="/assets/logo/logo-clinix.png"
-            width={122}
-            height={48}
-            alt="logo-clinix"
-            onClick={onClickLogo}
-            className="cursor-pointer"
-          />
-          <img
-            src="/assets/logo/logo-memos.png"
-            width={112}
-            height={32}
-            alt="logo-memos"
-            onClick={onClickLogo}
-            className="cursor-pointer"
-          />
-        </div>
-
-        {/* TODO: Notification handler */}
-        <img
-          src="/assets/icons/notification.svg"
-          alt="notification"
-          width={24}
-          height={24}
-          className="cursor-pointer"
-        />
-      </header>
-    </div>
-  );
-}
-
-function UserAccount({ handleLogout }: { handleLogout: () => void }) {
+function UserAccount({
+  handleLogout,
+  me,
+}: {
+  handleLogout: () => void;
+  me: User;
+}) {
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -66,7 +28,7 @@ function UserAccount({ handleLogout }: { handleLogout: () => void }) {
             className="rounded-full"
           />
           <div className="flex flex-col gap-1 items-start">
-            <span className="font-bold">Dr. Tony Molly</span>
+            <span className="font-bold">Dr. {me?.full_name}</span>
             <span>Dokter Bedah</span>
           </div>
           <img
@@ -118,6 +80,7 @@ interface NavMenuDesktopProps {
   onClickToLogin: () => void;
   setIsExpandedMenubar: Dispatch<SetStateAction<boolean>>;
   handleLogout: () => void;
+  me: User;
 }
 
 function NavMenuDesktop({
@@ -127,6 +90,7 @@ function NavMenuDesktop({
   onClickToLogin,
   // setIsExpandedMenubar,
   handleLogout,
+  me,
 }: NavMenuDesktopProps) {
   // const onToggleMenubar = () => {
   //   setIsExpandedMenubar((prev) => !prev);
@@ -137,7 +101,7 @@ function NavMenuDesktop({
         visible ? "top-0" : "-top-[6rem]"
       }`}
     >
-      <header className="hidden lg:flex w-full bg-white shadow-md  justify-between border-neutral-300 py-4 items-center mx-auto max-w-[100%] px-8">
+      <header className="flex w-full bg-white shadow-md  justify-between border-neutral-300 py-4 items-center mx-auto max-w-[100%] px-8">
         {/* Logo */}
         <div id="logo" className="flex items-center gap-4">
           {/* <MenubarIcon className="cursor-pointer" onClick={onToggleMenubar} /> */}
@@ -169,7 +133,7 @@ function NavMenuDesktop({
               width={24}
               height={24}
             />
-            <UserAccount handleLogout={handleLogout} />
+            <UserAccount handleLogout={handleLogout} me={me} />
           </div>
         ) : (
           <div id="right" className="hidden lg:flex gap-3 items-center">
@@ -188,6 +152,9 @@ export function Navbar({
   setIsExpandedMenubar: Dispatch<SetStateAction<boolean>>;
 }) {
   const { isAuth, logout } = useAuth();
+  const me: User = JSON.parse(getUserData());
+
+  console.log(me, "me");
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
@@ -237,11 +204,7 @@ export function Navbar({
         onClickToLogin={onClickToLogin}
         setIsExpandedMenubar={setIsExpandedMenubar}
         handleLogout={handleLogout}
-      />
-      <NavMenuMobile
-        visible={visible}
-        isOpen={isOpen}
-        onClickLogo={onClickLogo}
+        me={me}
       />
     </>
   );

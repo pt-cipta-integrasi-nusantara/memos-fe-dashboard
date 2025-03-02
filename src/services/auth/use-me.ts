@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { useAuth } from "../../utils/auth/providers";
 import { http } from "../../utils/http";
 import { User } from "./types";
 
@@ -15,9 +16,12 @@ async function fetchMe() {
     }
   
     export function useMe() {
+      const {isAuth} = useAuth()
       const data = useQuery(
         ['me'],
-        () => fetchMe()
+        () => fetchMe() , {
+          enabled: isAuth
+        }
       );
     
       return data;
