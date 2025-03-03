@@ -16,14 +16,14 @@ export function DashboardContent() {
   const [isWorkspaceModal, setIsWorkspaceModal] = useState(false);
   const [isDetailWorkspaceModal, setIsDetailWorkspaceModal] = useState(false);
 
-  const userData = JSON.parse(getUserData() ?? "");
+  // const userData = JSON.parse(getUserData() ?? "");
 
-  useEffect(() => {
-    if (!userData) {
-      setUserData(me ?? {});
-      console.log("set user data");
-    }
-  }, [me, userData]);
+  // useEffect(() => {
+  //   if (!userData) {
+  //     setUserData(me ?? {});
+  //     console.log("set user data");
+  //   }
+  // }, [me, userData]);
 
   const onToDetail = () => {
     navigate("/subscription");
