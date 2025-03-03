@@ -1,13 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { CloseIcon, DownloadIcon } from "../../components/iconsComponent";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { Button, Card } from "../../components/uiComponent";
 import { twMerge } from "tailwind-merge";
 import { Dialog, Transition } from "@headlessui/react";
 import { useMe } from "../../services/auth/use-me";
 import { useMyActivityList } from "../../services/my-activity/use-my-activity-list";
 import dayjs from "dayjs";
-import { getUserData, setUserData } from "../../utils/session";
 
 export function DashboardContent() {
   const navigate = useNavigate();
