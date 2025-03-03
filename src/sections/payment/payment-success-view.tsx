@@ -16,11 +16,11 @@ export function PaymentSuccessContent() {
     resetSubscriptionData();
   };
 
-  useEffect(() => {
-    if (Object.keys(subscriptionData).length === 0) {
-      navigate("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (Object.keys(subscriptionData).length === 0) {
+  //     navigate("/");
+  //   }
+  // }, []);
 
   return (
     <div
