@@ -6,7 +6,6 @@ import { Button } from "../uiComponent";
 import { useAuth } from "../../utils/auth/providers";
 import { useLocation, useNavigate } from "react-router-dom";
 import { User } from "../../services/auth/types";
-import { useMe } from "../../services/auth/use-me";
 import { getUserData } from "../../utils/session";
 
 function UserAccount({
@@ -152,13 +151,12 @@ export function Navbar({
   setIsExpandedMenubar: Dispatch<SetStateAction<boolean>>;
 }) {
   const { isAuth, logout } = useAuth();
-  const me: User = JSON.parse(getUserData());
+  const me: User = JSON.parse(getUserData() as any);
 
-  console.log(me, "me");
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
-  const [isOpen, setOpen] = React.useState(false);
+  const [_, setOpen] = React.useState(false);
 
   const [prevScrollPos, setPrevScrollPos] = React.useState(0);
   const [visible, setVisible] = React.useState(true);
