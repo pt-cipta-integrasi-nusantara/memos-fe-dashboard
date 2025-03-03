@@ -43,6 +43,10 @@ export const DashboardSubscriptionPaymentInProgressPage = lazy(
   () => import("../pages/dashboard/subscription/payment/in-progress")
 );
 
+export const DashboardSubscriptionPaymentStatusPage = lazy(
+  () => import("../pages/dashboard/subscription/payment/status")
+);
+
 const renderFallback = (
   <div className="flex items-center justify-center h-full">
     <Loader />
@@ -80,6 +84,10 @@ export function Router() {
         {
           path: "/subscription/payment/pending",
           element: <DashboardSubscriptionPaymentInProgressPage />,
+        },
+        {
+          path: "/subscription/payment/:subscriptionId",
+          element: <DashboardSubscriptionPaymentStatusPage />,
         },
         {
           path: "*",

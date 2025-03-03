@@ -28,8 +28,10 @@ export function DashboardContent() {
     navigate("/subscription");
   };
 
-  const onToDetailRegistration = () => {
-    navigate("/subscription/payment/pending");
+  const onToDetailRegistration = (payload: any) => {
+    if (payload?.subscription_id) {
+      navigate(`/subscription/payment/${payload?.subscription_id}`);
+    }
   };
 
   const onAcceptWorkspace = (mode: string) => {
@@ -109,7 +111,9 @@ export function DashboardContent() {
                       <div>
                         <span
                           className="cursor-pointer text-[14px] text-primary-500"
-                          onClick={onToDetailRegistration}
+                          onClick={() =>
+                            onToDetailRegistration(activity?.payload)
+                          }
                         >
                           Lihat detail
                         </span>
