@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useRegistrationFormStore } from "../../../stores/registration/useRegistrationFormStore";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { ChangeEvent, Fragment, useEffect, useRef, useState } from "react";
 import { genders } from "../../../components/constants/constants";
 import { uploadImage } from "../../../services/utils/uploadImage";
@@ -16,8 +16,9 @@ interface SelectProps {
 
 export function IdentityForm() {
   const navigate = useNavigate();
-  const { formData, setFormData } = useRegistrationFormStore();
-  const { register, handleSubmit } = useForm<any>();
+  const { formData, setFormData, resetFormData } = useRegistrationFormStore();
+  const { watch, register, handleSubmit, formState, setValue, control } =
+    useForm<any>();
   const form = useRef(null) as any;
   const [selectedGender, setSelectedGender] = useState<SelectProps>();
 
@@ -113,10 +114,6 @@ export function IdentityForm() {
     }
   }, [selectedDistrict]);
 
-  const onNextStep = () => {
-    navigate("/registration/step/3");
-  };
-
   const onPreviousStep = () => {
     navigate("/registration/step/1");
   };
@@ -133,6 +130,7 @@ export function IdentityForm() {
           identity_photo: file_url,
         });
       });
+      setValue("identity_photo", file?.name, { shouldValidate: true });
       setFormData({
         identity_photo_name: file?.name,
       });
@@ -140,13 +138,18 @@ export function IdentityForm() {
   };
 
   const onSubmit: SubmitHandler<any> = async () => {
-    // TODO Submit handler
+    if (!formState?.errors) {
+      navigate("/registration/step/3");
+    }
   };
 
-  // useEffect(() => {
-  //   resetFormData();
-  // }, []);
+  console.log(formState.errors, "formstate");
 
+  useEffect(() => {
+    // resetFormData();
+  }, []);
+
+  console.log(watch(), "form value");
   console.log(formData, "formData");
 
   return (
@@ -189,20 +192,38 @@ export function IdentityForm() {
                       NIK
                       <span className="text-warning">*</span>
                     </label>
-                    <div className="relative rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2">
+                    <div
+                      className={`relative rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 ${
+                        formState.errors?.identity_number
+                          ? "border-primary-500"
+                          : "border-neutral0100"
+                      }`}
+                    >
                       <input
                         id="identity_number"
-                        {...register("identity_number", { required: true })}
-                        type="text"
+                        {...register("identity_number", {
+                          required: {
+                            value: true,
+                            message: "NIK wajib diisi",
+                          },
+                        })}
+                        type="number"
+                        onChange={(e) => {
+                          setValue("identity_number", e.target.value, {
+                            shouldValidate: true,
+                          });
+                          setFormData({ identity_number: e.target.value });
+                        }}
                         className="focus:outline-none w-full"
                         placeholder="Masukkan NIK"
-                        onChange={(e) =>
-                          setFormData({ identity_number: e.target.value })
-                        }
                         defaultValue={formData["identity_number"]}
                       />
-                      <div className="text-link cursor-pointer">Verifikasi</div>
                     </div>
+                    {formState?.errors?.identity_number && (
+                      <span className="text-primary-500">
+                        {formState?.errors?.identity_number?.message as any}
+                      </span>
+                    )}
                     <span className="text-[13px] text-neutral-300">
                       Digunakan hanya untuk keperluan verifikasi
                     </span>
@@ -210,14 +231,25 @@ export function IdentityForm() {
                   <div className="w-full flex flex-col gap-2">
                     <label
                       className="text-[14px] font-medium"
-                      htmlFor="unggah_foto_ktp"
+                      htmlFor="identity_photo"
                     >
                       Unggah Foto KTP
                       <span className="text-warning">*</span>
                     </label>
-                    <div className="relative rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2">
+                    <div
+                      className={`relative rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 ${
+                        formState.errors?.identity_photo
+                          ? "border-primary-500"
+                          : "border-neutral0100"
+                      }`}
+                    >
                       <input
-                        {...register("unggah_foto_ktp", { required: true })}
+                        {...register("identity_photo", {
+                          required: {
+                            value: true,
+                            message: "Foto wajib diisi",
+                          },
+                        })}
                         type="text"
                         className="focus:outline-none w-full"
                         placeholder="Unggah Foto KTP"
@@ -228,16 +260,22 @@ export function IdentityForm() {
                       <input
                         type="file"
                         hidden
-                        id="unggah_foto_ktp"
+                        id="identity_photo"
                         onChange={handleFotoKtpChange}
                       />
                       <label
-                        htmlFor="unggah_foto_ktp"
+                        htmlFor="identity_photo"
                         className="text-link cursor-pointer"
                       >
                         Unggah
                       </label>
                     </div>
+
+                    {formState?.errors?.identity_photo && (
+                      <span className="text-primary-500">
+                        {formState?.errors?.identity_photo?.message as any}
+                      </span>
+                    )}
                     <span className="text-[13px] text-neutral-300">
                       Digunakan hanya untuk keperluan verifikasi
                     </span>
@@ -256,15 +294,33 @@ export function IdentityForm() {
                     </label>
                     <input
                       id="full_name"
-                      {...register("full_name", { required: true })}
+                      {...register("full_name", {
+                        required: {
+                          value: true,
+                          message: "Nama lengkap wajib diisi",
+                        },
+                      })}
                       type="text"
-                      className="rounded-[8px] p-4 border border-neutral-100 focus:outline-none"
+                      className={`rounded-[8px] p-4 border focus:outline-none ${
+                        formState?.errors?.full_name
+                          ? "border-primary-500"
+                          : "border-neutral-100"
+                      }`}
                       placeholder="Masukkan Nama Lengkap"
-                      onChange={(e) =>
-                        setFormData({ full_name: e.target.value })
-                      }
+                      onChange={(e) => {
+                        setValue("full_name", e.target.value, {
+                          shouldValidate: true,
+                        });
+                        setFormData({ full_name: e.target.value });
+                      }}
                       defaultValue={formData["full_name"]}
                     />
+
+                    {formState?.errors?.full_name && (
+                      <span className="text-primary-500">
+                        {formState?.errors?.full_name?.message as any}
+                      </span>
+                    )}
                   </div>
                   <div className="w-full flex flex-col gap-2">
                     <label className="text-[14px] font-medium" htmlFor="gender">
@@ -272,62 +328,91 @@ export function IdentityForm() {
                       <span className="text-warning">*</span>
                     </label>
 
-                    <Listbox
-                      value={selectedGender}
-                      onChange={setSelectedGender}
-                    >
-                      <div className="relative">
-                        <Listbox.Button className="border border-neutral-100 relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none">
-                          <span className="block truncate">
-                            {selectedGender ? (
-                              selectedGender?.label
-                            ) : (
-                              <span className="text-neutral-400">
-                                Pilih Jenis Kelamin
-                              </span>
-                            )}
-                          </span>
-                          <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                            <ArrowDownIcon />
-                          </span>
-                        </Listbox.Button>
-                        <Transition
-                          as={Fragment}
-                          leave="transition ease-in duration-100"
-                          leaveFrom="opacity-100"
-                          leaveTo="opacity-0"
+                    <Controller
+                      name="gender"
+                      control={control}
+                      defaultValue={selectedGender}
+                      rules={{
+                        required: {
+                          value: true,
+                          message: "Jenis kelamin wajib diisi",
+                        },
+                      }}
+                      render={({ field }) => (
+                        <Listbox
+                          value={field.value}
+                          onChange={(val) => {
+                            setFormData({ gender: val?.id });
+                            setValue("gender", val, {
+                              shouldValidate: true,
+                            });
+                          }}
                         >
-                          <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                            {genders.map((gender, idx) => (
-                              <Listbox.Option
-                                onClick={() => {
-                                  setFormData({ gender: gender?.id });
-                                }}
-                                key={idx}
-                                className={({ active }) =>
-                                  `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                    active ? "bg-green-100" : ""
-                                  }`
-                                }
-                                value={gender}
-                              >
-                                {({ selected }) => (
-                                  <>
-                                    <span
-                                      className={`block truncate ${
-                                        selected ? "font-medium" : "font-normal"
-                                      }`}
-                                    >
-                                      {gender?.label}
-                                    </span>
-                                  </>
+                          <div className="relative">
+                            <Listbox.Button
+                              className={`border relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none ${
+                                formState?.errors?.gender
+                                  ? "border-primary-500"
+                                  : "border-neutral-100"
+                              }`}
+                            >
+                              <span className="block truncate">
+                                {field.value ? (
+                                  field.value.label
+                                ) : (
+                                  <span className="text-neutral-400">
+                                    Pilih Jenis Kelamin
+                                  </span>
                                 )}
-                              </Listbox.Option>
-                            ))}
-                          </Listbox.Options>
-                        </Transition>
-                      </div>
-                    </Listbox>
+                              </span>
+                              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                <ArrowDownIcon />
+                              </span>
+                            </Listbox.Button>
+                            <Transition
+                              as={Fragment}
+                              leave="transition ease-in duration-100"
+                              leaveFrom="opacity-100"
+                              leaveTo="opacity-0"
+                            >
+                              <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                                {genders.map((gender, idx) => (
+                                  <Listbox.Option
+                                    key={idx}
+                                    className={({ active }) =>
+                                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                        active ? "bg-green-100" : ""
+                                      }`
+                                    }
+                                    value={gender}
+                                  >
+                                    {({ selected }) => (
+                                      <>
+                                        <span
+                                          className={`block truncate ${
+                                            selected
+                                              ? "font-medium"
+                                              : "font-normal"
+                                          }`}
+                                        >
+                                          {gender?.label}
+                                        </span>
+                                      </>
+                                    )}
+                                  </Listbox.Option>
+                                ))}
+                              </Listbox.Options>
+                            </Transition>
+                          </div>
+                        </Listbox>
+                      )}
+                    />
+
+                    {formState?.errors?.gender && (
+                      <span className="text-primary-500">
+                        {formState?.errors?.gender?.message as any}
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -343,15 +428,33 @@ export function IdentityForm() {
                     </label>
                     <input
                       id="birth_place"
-                      {...register("birth_place", { required: true })}
+                      {...register("birth_place", {
+                        required: {
+                          value: true,
+                          message: "Tempat lahir wajib diisi",
+                        },
+                      })}
                       type="text"
-                      className="rounded-[8px] p-4 border border-neutral-100 focus:outline-none"
+                      className={`rounded-[8px] p-4 border focus:outline-none ${
+                        formState?.errors?.birth_place
+                          ? "border-primary-500"
+                          : "border-neutral-100"
+                      }`}
                       placeholder="Masukkan Tempat Lahir"
-                      onChange={(e) =>
-                        setFormData({ birth_place: e.target.value })
-                      }
+                      onChange={(e) => {
+                        setValue("birth_place", e.target.value, {
+                          shouldValidate: true,
+                        });
+                        setFormData({ birth_place: e.target.value });
+                      }}
                       defaultValue={formData["birth_place"]}
                     />
+
+                    {formState?.errors?.birth_place && (
+                      <span className="text-primary-500">
+                        {formState?.errors?.birth_place?.message as any}
+                      </span>
+                    )}
                   </div>
                   <div className="w-full flex flex-col gap-2">
                     <label
@@ -364,15 +467,32 @@ export function IdentityForm() {
 
                     <input
                       id="birth_date"
-                      {...register("birth_date", { required: true })}
+                      {...register("birth_date", {
+                        required: {
+                          value: true,
+                          message: "Tanggal lahir wajib diisi",
+                        },
+                      })}
                       type="date"
-                      className="rounded-[8px] p-4 border border-neutral-100 focus:outline-none"
+                      className={`rounded-[8px] p-4 border focus:outline-none ${
+                        formState?.errors?.birth_date
+                          ? "border-primary-500"
+                          : "border-neutral-100"
+                      }`}
                       placeholder="Masukkan Tanggal Lahir"
-                      onChange={(e) =>
-                        setFormData({ birth_date: e.target.value })
-                      }
+                      onChange={(e) => {
+                        setValue("birth_date", e.target.value, {
+                          shouldValidate: true,
+                        });
+                        setFormData({ birth_date: e.target.value });
+                      }}
                       defaultValue={formData["birth_date"]}
                     />
+                    {formState?.errors?.birth_date && (
+                      <span className="text-primary-500">
+                        {formState?.errors?.birth_date?.message as any}
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -384,7 +504,6 @@ export function IdentityForm() {
                       htmlFor="phone_number"
                     >
                       No. HP
-                      <span className="text-warning">*</span>
                     </label>
                     <div className="relative rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2">
                       <span>+62</span>
@@ -392,11 +511,14 @@ export function IdentityForm() {
                         id="phone_number"
                         {...register("phone_number", { required: true })}
                         type="text"
-                        className="focus:outline-none"
+                        className="focus:outline-none w-full"
                         placeholder="Masukkan No. HP"
-                        onChange={(e) =>
-                          setFormData({ phone_number: e.target.value })
-                        }
+                        onChange={(e) => {
+                          setValue("phone_number", e.target.value, {
+                            shouldValidate: true,
+                          });
+                          setFormData({ phone_number: e.target.value });
+                        }}
                         defaultValue={formData["phone_number"]}
                       />
                     </div>
@@ -410,16 +532,30 @@ export function IdentityForm() {
                       <span className="text-warning">*</span>
                     </label>
 
-                    <div className="relative rounded-[8px] p-4 border border-neutral-100 flex items-center justify-between gap-2">
+                    <div
+                      className={`relative rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 ${
+                        formState.errors?.password
+                          ? "border-primary-500"
+                          : "border-neutral0100"
+                      }`}
+                    >
                       <input
                         id="password"
-                        {...register("password", { required: true })}
+                        {...register("password", {
+                          required: {
+                            value: true,
+                            message: "Kata sandi wajib diisi",
+                          },
+                        })}
                         type={isHidePassword ? "password" : "text"}
-                        className="focus:outline-none"
+                        className="focus:outline-none w-full"
                         placeholder="Masukkan Kata Sandi"
-                        onChange={(e) =>
-                          setFormData({ password: e.target.value })
-                        }
+                        onChange={(e) => {
+                          setValue("password", e.target.value, {
+                            shouldValidate: true,
+                          });
+                          setFormData({ password: e.target.value });
+                        }}
                         defaultValue={formData["password"]}
                       />
 
@@ -432,6 +568,12 @@ export function IdentityForm() {
                         className="cursor-pointer"
                       />
                     </div>
+
+                    {formState?.errors?.password && (
+                      <span className="text-primary-500">
+                        {formState?.errors?.password?.message as any}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -449,62 +591,92 @@ export function IdentityForm() {
                       Provinsi <span className="text-warning">*</span>
                     </label>
 
-                    <Listbox
-                      value={selectedProvince}
-                      onChange={setSelectedProvince}
-                    >
-                      <div className="relative">
-                        <Listbox.Button className="border border-neutral-100 relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none">
-                          <span className="block truncate">
-                            {selectedProvince ? (
-                              selectedProvince?.name
-                            ) : (
-                              <span className="text-neutral-400">
-                                Masukkan Provinsi
-                              </span>
-                            )}
-                          </span>
-                          <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                            <ArrowDownIcon />
-                          </span>
-                        </Listbox.Button>
-                        <Transition
-                          as={Fragment}
-                          leave="transition ease-in duration-100"
-                          leaveFrom="opacity-100"
-                          leaveTo="opacity-0"
+                    <Controller
+                      name="province"
+                      control={control}
+                      defaultValue={selectedProvince}
+                      rules={{
+                        required: {
+                          value: true,
+                          message: "Provinsi wajib diisi",
+                        },
+                      }}
+                      render={({ field }) => (
+                        <Listbox
+                          value={field.value}
+                          onChange={(val) => {
+                            setFormData({ province: val?.id });
+                            setValue("province", val, {
+                              shouldValidate: true,
+                            });
+                          }}
                         >
-                          <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                            {provinceList.map((province, idx) => (
-                              <Listbox.Option
-                                onClick={() => {
-                                  setFormData({ province: province?.id });
-                                }}
-                                key={idx}
-                                className={({ active }) =>
-                                  `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                    active ? "bg-green-100" : ""
-                                  }`
-                                }
-                                value={province}
-                              >
-                                {({ selected }) => (
-                                  <>
-                                    <span
-                                      className={`block truncate ${
-                                        selected ? "font-medium" : "font-normal"
-                                      }`}
-                                    >
-                                      {province?.name}
-                                    </span>
-                                  </>
+                          <div className="relative">
+                            <Listbox.Button
+                              className={`border relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none ${
+                                formState?.errors?.province
+                                  ? "border-primary-500"
+                                  : "border-neutral-100"
+                              }`}
+                            >
+                              {" "}
+                              <span className="block truncate">
+                                {field.value ? (
+                                  field.value.name
+                                ) : (
+                                  <span className="text-neutral-400">
+                                    Masukkan Provinsi
+                                  </span>
                                 )}
-                              </Listbox.Option>
-                            ))}
-                          </Listbox.Options>
-                        </Transition>
-                      </div>
-                    </Listbox>
+                              </span>
+                              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                <ArrowDownIcon />
+                              </span>
+                            </Listbox.Button>
+                            <Transition
+                              as={Fragment}
+                              leave="transition ease-in duration-100"
+                              leaveFrom="opacity-100"
+                              leaveTo="opacity-0"
+                            >
+                              <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                                {provinceList.map((province, idx) => (
+                                  <Listbox.Option
+                                    key={idx}
+                                    className={({ active }) =>
+                                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                        active ? "bg-green-100" : ""
+                                      }`
+                                    }
+                                    value={province}
+                                  >
+                                    {({ selected }) => (
+                                      <>
+                                        <span
+                                          className={`block truncate ${
+                                            selected
+                                              ? "font-medium"
+                                              : "font-normal"
+                                          }`}
+                                        >
+                                          {province?.name}
+                                        </span>
+                                      </>
+                                    )}
+                                  </Listbox.Option>
+                                ))}
+                              </Listbox.Options>
+                            </Transition>
+                          </div>
+                        </Listbox>
+                      )}
+                    />
+
+                    {formState?.errors?.province && (
+                      <span className="text-primary-500">
+                        {formState?.errors?.province?.message as any}
+                      </span>
+                    )}
                   </div>
                   <div className="w-full flex flex-col gap-2">
                     <label className="text-[14px] font-medium" htmlFor="city">
@@ -869,7 +1041,7 @@ export function IdentityForm() {
           </Card>
           <Card className="mt-8">
             <Button
-              onClick={onNextStep}
+              type="submit"
               isClinix
               isPrimary
               className="w-full"

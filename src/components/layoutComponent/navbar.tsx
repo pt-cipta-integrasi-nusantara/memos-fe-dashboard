@@ -96,7 +96,7 @@ function NavMenuDesktop({
   // };
   return (
     <div
-      className={`transition-all sticky z-2 ${
+      className={`transition-all sticky z-50 ${
         visible ? "top-0" : "-top-[6rem]"
       }`}
     >
@@ -173,26 +173,10 @@ export function Navbar({
     setOpen(false);
   }, [pathname]);
 
-  const handleScroll = () => {
-    const currentScrollPos = window.scrollY;
-    if (currentScrollPos > prevScrollPos) {
-      setVisible(false);
-    } else {
-      setVisible(true);
-    }
-
-    setPrevScrollPos(currentScrollPos);
-  };
-
   const handleLogout = async () => {
     await logout();
   };
 
-  React.useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  });
   return (
     <>
       <NavMenuDesktop
