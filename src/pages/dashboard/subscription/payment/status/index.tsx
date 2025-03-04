@@ -4,7 +4,6 @@ import { PaymentFailedContent } from "../../../../../sections/payment/payment-fa
 import { PaymentInProgressContent } from "../../../../../sections/payment/payment-in-progress-view";
 import { PaymentSuccessContent } from "../../../../../sections/payment/payment-success-view";
 import { useSubscriptionById } from "../../../../../services/subscription/use-subscription-detail";
-import { usePlanById } from "../../../../../services/plan/use-plan-detail";
 
 export default function PaymentStatusPage() {
   const { subscriptionId } = useParams();

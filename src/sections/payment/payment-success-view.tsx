@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useSubscriptionStore } from "../../stores/subscription/useSubscriptionStore";
 import { formatRupiah } from "../../helpers/format-currency";
 import dayjs from "dayjs";
-import { useEffect } from "react";
 
 export function PaymentSuccessContent() {
   const { subscriptionData, formData, resetFormData, resetSubscriptionData } =
