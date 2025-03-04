@@ -3,7 +3,6 @@ import { Button, Card } from "../../components/uiComponent";
 import { useNavigate } from "react-router-dom";
 import { useSubscriptionStore } from "../../stores/subscription/useSubscriptionStore";
 import { formatRupiah } from "../../helpers/format-currency";
-import { useEffect } from "react";
 
 export function PaymentInProgressContent() {
   const { subscriptionData, formData, resetFormData, resetSubscriptionData } =
