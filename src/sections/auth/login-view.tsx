@@ -1,18 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../utils/auth/providers";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { twMerge } from "tailwind-merge";
 import { Button, Card } from "../../components/uiComponent";
+import { useRegistrationFormStore } from "../../stores/registration/useRegistrationFormStore";
 
 export function LoginContent() {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [isHidePassword, setIsHidePassword] = useState(true);
-
+  const { resetFormData } = useRegistrationFormStore();
   const { register, handleSubmit } = useForm<any>();
   const form = useRef(null) as any;
+
+  useEffect(() => {
+    resetFormData();
+  }, []);
 
   const onSubmit: SubmitHandler<any> = async (formData: any) => {
     console.log(formData, "formlogin");

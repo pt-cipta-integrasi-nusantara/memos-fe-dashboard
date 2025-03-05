@@ -6,6 +6,7 @@ import { useRegister } from "../../../services/auth/use-registration";
 import toast from "react-hot-toast";
 import * as sessionService from "../../../utils/session";
 import { useNavigate } from "react-router-dom";
+import { spesialisData } from "../../../components/constants/constants";
 
 export function SummaryContent() {
   const navigate = useNavigate();
@@ -172,7 +173,13 @@ export function SummaryContent() {
                 </div>
                 <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
                   <span>SMF</span>
-                  <span>{formData?.smf_id}</span>
+                  <span>
+                    {
+                      spesialisData?.find(
+                        (item) => item?.id === formData["smf_id"]
+                      )?.label
+                    }
+                  </span>
                 </div>
                 <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
                   <span>No. STR Aktif</span>

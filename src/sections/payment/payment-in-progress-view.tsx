@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useSubscriptionStore } from "../../stores/subscription/useSubscriptionStore";
 import { formatRupiah } from "../../helpers/format-currency";
 
-export function PaymentInProgressContent() {
+export function PaymentInProgressContent({ data }: { data: any }) {
   const { subscriptionData, formData, resetFormData, resetSubscriptionData } =
     useSubscriptionStore();
   const navigate = useNavigate();
@@ -80,14 +80,14 @@ export function PaymentInProgressContent() {
                       className="cursor-pointer"
                     />
                     <span className="font-bold text-primary-500 text-[20px]">
-                      {subscriptionData?.duration} –{" "}
-                      {formatRupiah(subscriptionData?.price)}
+                      {data?.plan?.duration?.months} –{" "}
+                      {formatRupiah(data?.plan?.price)}
                     </span>
                   </div>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Tagihan Kepada</span>
-                  <span>{formData?.owner_name}</span>
+                  <span>{data?.payment?.bank_account?.owner_name}</span>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Metode Pembayaran</span>
@@ -95,26 +95,26 @@ export function PaymentInProgressContent() {
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Nama Pemilik Rekening</span>
-                  <span>{formData?.owner_name}</span>
+                  <span>{data?.payment?.bank_account?.owner_name}</span>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Nama Bank</span>
-                  <span>{formData?.bankAccount?.bank_name}</span>
+                  <span>{data?.payment?.bank_account?.bank_name}</span>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>No. Rekening</span>
-                  <span>{formData?.account_number}</span>
+                  <span>{data?.payment?.bank_account?.account_number}</span>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Bukti Transfer</span>
                   <span className="underline text-link cursor-pointer">
-                    {formData?.payment_proof_name}
+                    <span>{data?.payment?.payment_proof}</span>
                   </span>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Total Pembayaran</span>
                   <span className="text-[14px] font-bold">
-                    {formatRupiah(subscriptionData?.price)}
+                    {formatRupiah(data?.payment?.pay_amount)}
                   </span>
                 </div>
               </div>

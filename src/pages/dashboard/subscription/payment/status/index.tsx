@@ -26,7 +26,7 @@ export default function PaymentStatusPage() {
 
       <main className="mt-[1.5rem]">
         {data?.status === "Pending" ? (
-          <PaymentInProgressContent />
+          <PaymentInProgressContent data={data} />
         ) : data?.status === "Success" ? (
           <PaymentSuccessContent />
         ) : (
