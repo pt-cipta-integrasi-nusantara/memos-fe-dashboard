@@ -41,7 +41,7 @@ const PinInput: React.FC<PinInputProps> = ({
   };
 
   return (
-    <div className="mt-12 flex justify-between gap-8">
+    <div className="mt-12 flex justify-between gap-2 lg:gap-8">
       {pin.map((digit, index) => (
         <input
           key={index}
@@ -51,7 +51,7 @@ const PinInput: React.FC<PinInputProps> = ({
           onChange={(e) => handleChange(e.target.value, index)}
           onKeyDown={(e) => handleKeyDown(e, index)}
           ref={(el: any) => (inputRefs.current[index] = el)}
-          className={`border-b-2 w-10 h-14 focus:outline-none text-center text-4xl pb-6 font-bold ${
+          className={`border-b-2 w-6 lg:w-10 h-14 focus:outline-none text-center text-xl lg:text-4xl pb-6 font-bold ${
             isClinix ? "border-green-500" : "border-primary-500"
           }`}
         />
