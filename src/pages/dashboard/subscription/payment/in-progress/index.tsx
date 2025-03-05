@@ -1,5 +1,3 @@
-import { PaymentInProgressContent } from "../../../../../sections/payment/payment-in-progress-view";
-
 export default function PaymentInProgressPage() {
   return (
     <div>
@@ -17,9 +15,7 @@ export default function PaymentInProgressPage() {
         />
       </head>
 
-      <main className="mt-[1.5rem]">
-        <PaymentInProgressContent />
-      </main>
+      <main className="mt-[1.5rem]">{/* <PaymentInProgressContent /> */}</main>
     </div>
   );
 }

@@ -16,7 +16,7 @@ interface SelectProps {
 
 export function IdentityForm() {
   const navigate = useNavigate();
-  const { formData, setFormData, resetFormData } = useRegistrationFormStore();
+  const { formData, setFormData } = useRegistrationFormStore();
   const { watch, register, handleSubmit, formState, setValue, control } =
     useForm<any>();
   const form = useRef(null) as any;

@@ -6,7 +6,6 @@ import { Button } from "../uiComponent";
 import { useAuth } from "../../utils/auth/providers";
 import { useLocation, useNavigate } from "react-router-dom";
 import { User } from "../../services/auth/types";
-import { getUserData } from "../../utils/session";
 import { useMe } from "../../services/auth/use-me";
 
 function UserAccount({
@@ -76,7 +75,6 @@ function UserAccount({
 interface NavMenuDesktopProps {
   isLoggedIn: boolean;
   onClickLogo: () => void;
-  visible: boolean;
   onClickToLogin: () => void;
   setIsExpandedMenubar: Dispatch<SetStateAction<boolean>>;
   handleLogout: () => void;
@@ -86,7 +84,6 @@ interface NavMenuDesktopProps {
 function NavMenuDesktop({
   isLoggedIn,
   onClickLogo,
-  visible,
   onClickToLogin,
   // setIsExpandedMenubar,
   handleLogout,
@@ -96,11 +93,7 @@ function NavMenuDesktop({
   //   setIsExpandedMenubar((prev) => !prev);
   // };
   return (
-    <div
-      className={`transition-all sticky z-50 ${
-        visible ? "top-0" : "-top-[6rem]"
-      }`}
-    >
+    <div className={`transition-all sticky z-50 top-0`}>
       <header className="flex w-full bg-white shadow-md  justify-between border-neutral-300 py-4 items-center mx-auto max-w-[100%] px-8">
         {/* Logo */}
         <div id="logo" className="flex items-center gap-4">
@@ -161,9 +154,6 @@ export function Navbar({
   const pathname = location.pathname;
   const [_, setOpen] = React.useState(false);
 
-  const [prevScrollPos, setPrevScrollPos] = React.useState(0);
-  const [visible, setVisible] = React.useState(true);
-
   const onClickLogo = () => {
     navigate("/");
   };
@@ -185,7 +175,6 @@ export function Navbar({
       <NavMenuDesktop
         isLoggedIn={isAuth}
         onClickLogo={onClickLogo}
-        visible={visible}
         onClickToLogin={onClickToLogin}
         setIsExpandedMenubar={setIsExpandedMenubar}
         handleLogout={handleLogout}
