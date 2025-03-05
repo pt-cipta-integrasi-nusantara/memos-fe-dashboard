@@ -35,11 +35,26 @@ export function ProfesionForm() {
     setSelectedProfesion(
       profesions?.find((item) => item?.id === formData["profession_id"])
     );
+    setValue(
+      "profession_id",
+      profesions?.find((item) => item?.id === formData["profession_id"]),
+      { shouldValidate: true }
+    );
     setSelectedSpesialis(
       spesialisData?.find((item) => item?.id === formData["smf_id"])
     );
+    setValue(
+      "smf_id",
+      spesialisData?.find((item) => item?.id === formData["smf_id"]),
+      { shouldValidate: true }
+    );
     setSelectedBusiness(
       businesses?.find((item) => item?.id === formData["facility_type"])
+    );
+    setValue(
+      "facility_type",
+      businesses?.find((item) => item?.id === formData["facility_type"]),
+      { shouldValidate: true }
     );
   }, []);
 
@@ -311,7 +326,7 @@ export function ProfesionForm() {
 
                 {/* Row 2 */}
                 <div className="flex items-start flex-col lg:flex-row justify-between gap-4">
-                  <div className="flex flex-col gap-2 lg:w-full">
+                  <div className="flex flex-col gap-2 w-full">
                     <label className="text-[14px] font-medium" htmlFor="str_no">
                       No. STR Aktif
                       <span className="text-warning">*</span>
@@ -348,7 +363,7 @@ export function ProfesionForm() {
                       Digunakan hanya untuk keperluan verifikasi
                     </span>
                   </div>
-                  <div className="flex items-start flex-col md:flex-row gap-2 lg:w-full">
+                  <div className="flex items-start flex-col md:flex-row gap-2 w-full">
                     <div className="w-full flex flex-col gap-2">
                       <label
                         className="text-[14px] font-medium"

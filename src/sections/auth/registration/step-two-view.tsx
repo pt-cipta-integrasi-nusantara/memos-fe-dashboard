@@ -45,45 +45,93 @@ export function IdentityForm() {
   const [isHidePassword, setIsHidePassword] = useState(true);
 
   useEffect(() => {
-    setSelectedGender(genders?.find((item) => item?.id === formData["gender"]));
     setValue(
       "gender",
       genders?.find((item) => item?.id === formData["gender"]),
       { shouldValidate: true }
     );
-    setSelectedProvince(
-      provinceList?.find((item: any) => item?.id === formData["province"])
-    );
+
     setValue(
       "province",
       provinceList?.find((item) => item?.id === formData["province"]),
       { shouldValidate: true }
     );
-    setSelectedCity(
-      cityList?.find((item: any) => item?.id === formData["city"])
-    );
+
     setValue(
       "city",
       cityList?.find((item) => item?.id === formData["city"]),
       { shouldValidate: true }
     );
-    setSelectedDistrict(
-      districtList?.find((item: any) => item?.id === formData["sub_district"])
-    );
+
     setValue(
       "sub_district",
       districtList?.find((item) => item?.id === formData["sub_district"]),
       { shouldValidate: true }
     );
-    setSelectedVillage(
-      villageList?.find((item: any) => item?.id === formData["village"])
-    );
+
     setValue(
       "village",
       villageList?.find((item) => item?.id === formData["village"]),
       { shouldValidate: true }
     );
   }, []);
+
+  useEffect(() => {
+    setSelectedGender(genders?.find((item) => item?.id === formData["gender"]));
+
+    setSelectedProvince(
+      provinceList?.find((item: any) => item?.id === formData["province"])
+    );
+    setSelectedCity(
+      cityList?.find((item: any) => item?.id === formData["city"])
+    );
+    setSelectedDistrict(
+      districtList?.find((item: any) => item?.id === formData["sub_district"])
+    );
+    setSelectedVillage(
+      villageList?.find((item: any) => item?.id === formData["village"])
+    );
+  });
+
+  useEffect(() => {
+    if (provinceList?.length > 0 && formData?.province) {
+      setValue(
+        "province",
+        provinceList?.find((item) => item?.id === formData["province"]),
+        { shouldValidate: true }
+      );
+    }
+  }, [provinceList]);
+
+  useEffect(() => {
+    if (cityList?.length > 0 && formData?.city) {
+      setValue(
+        "city",
+        cityList?.find((item) => item?.id === formData["city"]),
+        { shouldValidate: true }
+      );
+    }
+  }, [cityList]);
+
+  useEffect(() => {
+    if (districtList?.length > 0 && formData?.sub_district) {
+      setValue(
+        "sub_district",
+        districtList?.find((item) => item?.id === formData["sub_district"]),
+        { shouldValidate: true }
+      );
+    }
+  }, [districtList]);
+
+  useEffect(() => {
+    if (villageList?.length > 0 && formData?.village) {
+      setValue(
+        "village",
+        villageList?.find((item) => item?.id === formData["village"]),
+        { shouldValidate: true }
+      );
+    }
+  }, [villageList]);
 
   const getProvinces = async () => {
     await fetch(
@@ -128,22 +176,22 @@ export function IdentityForm() {
   }, []);
 
   useEffect(() => {
-    if (watch("province")) {
+    if (watch("province") || selectedProvince) {
       getCities();
     }
-  }, [watch("province")]);
+  }, [watch("province"), selectedProvince]);
 
   useEffect(() => {
-    if (watch("city")) {
+    if (watch("city") || selectedCity) {
       getDistricts();
     }
-  }, [watch("city")]);
+  }, [watch("city"), selectedCity]);
 
   useEffect(() => {
-    if (watch("sub_district")) {
+    if (watch("sub_district") || selectedDistrict) {
       getVillages();
     }
-  }, [watch("sub_district")]);
+  }, [watch("sub_district"), selectedDistrict]);
 
   const onPreviousStep = () => {
     navigate("/registration/step/1");
@@ -541,10 +589,11 @@ export function IdentityForm() {
                       <span>+62</span>
                       <input
                         id="phone_number"
-                        {...register("phone_number", { required: true })}
-                        type="text"
+                        {...register("phone_number")}
+                        type="number"
                         className="focus:outline-none w-full"
                         placeholder="Masukkan No. HP"
+                        min={0}
                         onChange={(e) => {
                           setValue("phone_number", e.target.value, {
                             shouldValidate: true,
@@ -1164,7 +1213,8 @@ export function IdentityForm() {
                       <input
                         id="telp"
                         {...register("telp", { required: false })}
-                        type="text"
+                        type="number"
+                        min={0}
                         className="focus:outline-none"
                         placeholder="Masukkan No. Telp"
                         onChange={(e) => setFormData({ telp: e.target.value })}
