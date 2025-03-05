@@ -8,6 +8,8 @@ import { twMerge } from "tailwind-merge";
 import { Button, Card } from "../../../components/uiComponent";
 import { Listbox, Transition } from "@headlessui/react";
 import { ArrowDownIcon } from "../../../components/iconsComponent";
+import { SearchBox } from "../../../components/uiComponent/searchBox";
+import { useSearchDebounce } from "../../../helpers/hooks";
 
 interface SelectProps {
   label: string;
@@ -41,6 +43,11 @@ export function IdentityForm() {
   const [selectedVillage, setSelectedVillage] = useState<
     Omit<SelectProps, "label"> & { name: string; district_id: number }
   >();
+
+  const [searchProvinceTerm, setSearchProvinceTerm] = useSearchDebounce();
+  const [searchCityTerm, setSearchCityTerm] = useSearchDebounce();
+  const [searchDistrictTerm, setSearchDistrictTerm] = useSearchDebounce();
+  const [searchVillageTerm, setSearchVillageTerm] = useSearchDebounce();
 
   const [isHidePassword, setIsHidePassword] = useState(true);
 
@@ -221,6 +228,26 @@ export function IdentityForm() {
         identity_photo_name: file?.name,
       });
     }
+  };
+
+  const onSearchProvince = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchProvinceTerm(value);
+  };
+
+  const onSearchCity = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchCityTerm(value);
+  };
+
+  const onSearchDistrict = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchDistrictTerm(value);
+  };
+
+  const onSearchVillage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchVillageTerm(value);
   };
 
   const onSubmit: SubmitHandler<any> = async () => {
@@ -728,31 +755,42 @@ export function IdentityForm() {
                               leaveTo="opacity-0"
                             >
                               <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                                {provinceList.map((province, idx) => (
-                                  <Listbox.Option
-                                    key={idx}
-                                    className={({ active }) =>
-                                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                        active ? "bg-green-100" : ""
-                                      }`
-                                    }
-                                    value={province}
-                                  >
-                                    {({ selected }) => (
-                                      <>
-                                        <span
-                                          className={`block truncate ${
-                                            selected
-                                              ? "font-medium"
-                                              : "font-normal"
-                                          }`}
-                                        >
-                                          {province?.name}
-                                        </span>
-                                      </>
-                                    )}
-                                  </Listbox.Option>
-                                ))}
+                                <div className="px-8 my-2">
+                                  <SearchBox onSearch={onSearchProvince} />
+                                </div>
+                                {provinceList
+                                  ?.filter((item) =>
+                                    item?.name
+                                      .toLowerCase()
+                                      .includes(
+                                        searchProvinceTerm.toLowerCase()
+                                      )
+                                  )
+                                  ?.map((province, idx) => (
+                                    <Listbox.Option
+                                      key={idx}
+                                      className={({ active }) =>
+                                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                          active ? "bg-green-100" : ""
+                                        }`
+                                      }
+                                      value={province}
+                                    >
+                                      {({ selected }) => (
+                                        <>
+                                          <span
+                                            className={`block truncate ${
+                                              selected
+                                                ? "font-medium"
+                                                : "font-normal"
+                                            }`}
+                                          >
+                                            {province?.name}
+                                          </span>
+                                        </>
+                                      )}
+                                    </Listbox.Option>
+                                  ))}
                               </Listbox.Options>
                             </Transition>
                           </div>
@@ -818,31 +856,40 @@ export function IdentityForm() {
                               leaveTo="opacity-0"
                             >
                               <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                                {cityList.map((city, idx) => (
-                                  <Listbox.Option
-                                    key={idx}
-                                    className={({ active }) =>
-                                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                        active ? "bg-green-100" : ""
-                                      }`
-                                    }
-                                    value={city}
-                                  >
-                                    {({ selected }) => (
-                                      <>
-                                        <span
-                                          className={`block truncate ${
-                                            selected
-                                              ? "font-medium"
-                                              : "font-normal"
-                                          }`}
-                                        >
-                                          {city?.name}
-                                        </span>
-                                      </>
-                                    )}
-                                  </Listbox.Option>
-                                ))}
+                                <div className="px-8 my-2">
+                                  <SearchBox onSearch={onSearchCity} />
+                                </div>
+                                {cityList
+                                  ?.filter((item) =>
+                                    item?.name
+                                      .toLowerCase()
+                                      .includes(searchCityTerm.toLowerCase())
+                                  )
+                                  ?.map((city, idx) => (
+                                    <Listbox.Option
+                                      key={idx}
+                                      className={({ active }) =>
+                                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                          active ? "bg-green-100" : ""
+                                        }`
+                                      }
+                                      value={city}
+                                    >
+                                      {({ selected }) => (
+                                        <>
+                                          <span
+                                            className={`block truncate ${
+                                              selected
+                                                ? "font-medium"
+                                                : "font-normal"
+                                            }`}
+                                          >
+                                            {city?.name}
+                                          </span>
+                                        </>
+                                      )}
+                                    </Listbox.Option>
+                                  ))}
                               </Listbox.Options>
                             </Transition>
                           </div>
@@ -915,31 +962,42 @@ export function IdentityForm() {
                               leaveTo="opacity-0"
                             >
                               <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                                {districtList.map((sub_district, idx) => (
-                                  <Listbox.Option
-                                    key={idx}
-                                    className={({ active }) =>
-                                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                        active ? "bg-green-100" : ""
-                                      }`
-                                    }
-                                    value={sub_district}
-                                  >
-                                    {({ selected }) => (
-                                      <>
-                                        <span
-                                          className={`block truncate ${
-                                            selected
-                                              ? "font-medium"
-                                              : "font-normal"
-                                          }`}
-                                        >
-                                          {sub_district?.name}
-                                        </span>
-                                      </>
-                                    )}
-                                  </Listbox.Option>
-                                ))}
+                                <div className="px-8 my-2">
+                                  <SearchBox onSearch={onSearchDistrict} />
+                                </div>
+                                {districtList
+                                  ?.filter((item) =>
+                                    item?.name
+                                      .toLowerCase()
+                                      .includes(
+                                        searchDistrictTerm.toLowerCase()
+                                      )
+                                  )
+                                  ?.map((sub_district, idx) => (
+                                    <Listbox.Option
+                                      key={idx}
+                                      className={({ active }) =>
+                                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                          active ? "bg-green-100" : ""
+                                        }`
+                                      }
+                                      value={sub_district}
+                                    >
+                                      {({ selected }) => (
+                                        <>
+                                          <span
+                                            className={`block truncate ${
+                                              selected
+                                                ? "font-medium"
+                                                : "font-normal"
+                                            }`}
+                                          >
+                                            {sub_district?.name}
+                                          </span>
+                                        </>
+                                      )}
+                                    </Listbox.Option>
+                                  ))}
                               </Listbox.Options>
                             </Transition>
                           </div>
@@ -1009,31 +1067,40 @@ export function IdentityForm() {
                               leaveTo="opacity-0"
                             >
                               <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                                {villageList.map((village, idx) => (
-                                  <Listbox.Option
-                                    key={idx}
-                                    className={({ active }) =>
-                                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                        active ? "bg-green-100" : ""
-                                      }`
-                                    }
-                                    value={village}
-                                  >
-                                    {({ selected }) => (
-                                      <>
-                                        <span
-                                          className={`block truncate ${
-                                            selected
-                                              ? "font-medium"
-                                              : "font-normal"
-                                          }`}
-                                        >
-                                          {village?.name}
-                                        </span>
-                                      </>
-                                    )}
-                                  </Listbox.Option>
-                                ))}
+                                <div className="px-8 my-2">
+                                  <SearchBox onSearch={onSearchVillage} />
+                                </div>
+                                {villageList
+                                  ?.filter((item) =>
+                                    item?.name
+                                      .toLowerCase()
+                                      .includes(searchVillageTerm.toLowerCase())
+                                  )
+                                  ?.map((village, idx) => (
+                                    <Listbox.Option
+                                      key={idx}
+                                      className={({ active }) =>
+                                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                          active ? "bg-green-100" : ""
+                                        }`
+                                      }
+                                      value={village}
+                                    >
+                                      {({ selected }) => (
+                                        <>
+                                          <span
+                                            className={`block truncate ${
+                                              selected
+                                                ? "font-medium"
+                                                : "font-normal"
+                                            }`}
+                                          >
+                                            {village?.name}
+                                          </span>
+                                        </>
+                                      )}
+                                    </Listbox.Option>
+                                  ))}
                               </Listbox.Options>
                             </Transition>
                           </div>
