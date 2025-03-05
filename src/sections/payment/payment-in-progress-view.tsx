@@ -5,8 +5,7 @@ import { useSubscriptionStore } from "../../stores/subscription/useSubscriptionS
 import { formatRupiah } from "../../helpers/format-currency";
 
 export function PaymentInProgressContent({ data }: { data: any }) {
-  const { subscriptionData, formData, resetFormData, resetSubscriptionData } =
-    useSubscriptionStore();
+  const { resetFormData, resetSubscriptionData } = useSubscriptionStore();
   const navigate = useNavigate();
   const onBackToHome = () => {
     navigate("/");
