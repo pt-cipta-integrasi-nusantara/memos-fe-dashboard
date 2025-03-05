@@ -3,6 +3,7 @@ import { createContext } from "../create.context";
 import * as sessionService from "../../utils/session";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../services/auth/login";
+import toast from "react-hot-toast";
 
 interface AuthContextValue {
   isAuth: boolean;
@@ -26,13 +27,19 @@ export function AuthProvider(props: React.PropsWithChildren) {
   const [accessToken, setAccessToken] = React.useState<string | null>(
     () => sessionService.getSession() ?? ""
   );
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   async function login(formField: LoginCredentialsDTO) {
     const { data } = await loginUser(formField);
-    const { token } = data;
-    sessionService.setSession(token);
-    setAccessToken(token);
-    navigate("/");
+    const { token, account } = data;
+    if (account?.is_approved === false) {
+      toast.error("Harap menunggu hingga akun terkonfirmasi oleh PT CIN");
+    } else {
+      sessionService.setSession(token);
+      setAccessToken(token);
+      setIsLoggedIn(true);
+      navigate("/");
+    }
   }
 
   async function logout() {
@@ -52,7 +59,7 @@ export function AuthProvider(props: React.PropsWithChildren) {
   return (
     <AuthInternalProvider
       value={{
-        isAuth: !!accessToken,
+        isAuth: !!accessToken && !!isLoggedIn,
         login,
         logout,
       }}

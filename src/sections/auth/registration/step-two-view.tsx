@@ -45,35 +45,42 @@ export function IdentityForm() {
   const [isHidePassword, setIsHidePassword] = useState(true);
 
   useEffect(() => {
-    setValue(
-      "gender",
-      genders?.find((item) => item?.id === formData["gender"]),
-      { shouldValidate: true }
-    );
+    if (formData?.gender) {
+      setValue(
+        "gender",
+        genders?.find((item) => item?.id === formData["gender"]),
+        { shouldValidate: true }
+      );
+    }
+    if (formData?.province) {
+      setValue(
+        "province",
+        provinceList?.find((item) => item?.id === formData["province"]),
+        { shouldValidate: true }
+      );
+    }
 
-    setValue(
-      "province",
-      provinceList?.find((item) => item?.id === formData["province"]),
-      { shouldValidate: true }
-    );
-
-    setValue(
-      "city",
-      cityList?.find((item) => item?.id === formData["city"]),
-      { shouldValidate: true }
-    );
-
-    setValue(
-      "sub_district",
-      districtList?.find((item) => item?.id === formData["sub_district"]),
-      { shouldValidate: true }
-    );
-
-    setValue(
-      "village",
-      villageList?.find((item) => item?.id === formData["village"]),
-      { shouldValidate: true }
-    );
+    if (formData?.city) {
+      setValue(
+        "city",
+        cityList?.find((item) => item?.id === formData["city"]),
+        { shouldValidate: true }
+      );
+    }
+    if (formData?.sub_district) {
+      setValue(
+        "sub_district",
+        districtList?.find((item) => item?.id === formData["sub_district"]),
+        { shouldValidate: true }
+      );
+    }
+    if (formData?.village) {
+      setValue(
+        "village",
+        villageList?.find((item) => item?.id === formData["village"]),
+        { shouldValidate: true }
+      );
+    }
   }, []);
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 
-import React, { Fragment, useRef } from "react";
+import React, { Fragment, useEffect, useRef } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 import { Button, Card } from "../../components/uiComponent";
@@ -14,9 +14,11 @@ import {
 import toast from "react-hot-toast";
 import * as sessionService from "../../utils/session";
 import { useNavigate } from "react-router-dom";
+import { useRegistrationFormStore } from "../../stores/registration/useRegistrationFormStore";
 
 export function SignupContent() {
   const navigate = useNavigate();
+  const { resetFormData } = useRegistrationFormStore();
   const { mutate: registerEmail } = useRegisterEmail();
   const { mutate: requestAuthCode } = useRequestAuthCode();
   const { mutate: verifyAuthCode } = useVerifyAuthCode();
@@ -27,6 +29,10 @@ export function SignupContent() {
 
   const { register, handleSubmit, watch, formState } = useForm<any>();
   const form = useRef(null) as any;
+
+  useEffect(() => {
+    resetFormData();
+  }, []);
 
   const onSubmit: SubmitHandler<any> = async (formData: any) => {
     if (!isShouldRequestOtp) {

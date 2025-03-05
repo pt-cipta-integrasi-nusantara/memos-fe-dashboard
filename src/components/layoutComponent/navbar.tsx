@@ -7,13 +7,14 @@ import { useAuth } from "../../utils/auth/providers";
 import { useLocation, useNavigate } from "react-router-dom";
 import { User } from "../../services/auth/types";
 import { getUserData } from "../../utils/session";
+import { useMe } from "../../services/auth/use-me";
 
 function UserAccount({
   handleLogout,
   me,
 }: {
   handleLogout: () => void;
-  me: User;
+  me: User | undefined;
 }) {
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -79,7 +80,7 @@ interface NavMenuDesktopProps {
   onClickToLogin: () => void;
   setIsExpandedMenubar: Dispatch<SetStateAction<boolean>>;
   handleLogout: () => void;
-  me: User;
+  me: User | undefined;
 }
 
 function NavMenuDesktop({
@@ -104,14 +105,16 @@ function NavMenuDesktop({
         {/* Logo */}
         <div id="logo" className="flex items-center gap-4">
           {/* <MenubarIcon className="cursor-pointer" onClick={onToggleMenubar} /> */}
-          <img
-            src="/assets/logo/logo-clinix.png"
-            width={122}
-            height={48}
-            alt="logo-clinix"
-            onClick={onClickLogo}
-            className="cursor-pointer"
-          />
+          {!isLoggedIn && (
+            <img
+              src="/assets/logo/logo-clinix.png"
+              width={122}
+              height={48}
+              alt="logo-clinix"
+              onClick={onClickLogo}
+              className="cursor-pointer"
+            />
+          )}
           <img
             src="/assets/logo/logo-memos.png"
             width={112}
@@ -151,7 +154,7 @@ export function Navbar({
   setIsExpandedMenubar: Dispatch<SetStateAction<boolean>>;
 }) {
   const { isAuth, logout } = useAuth();
-  const me: User = JSON.parse(getUserData() as any);
+  const { data: me } = useMe();
 
   const navigate = useNavigate();
   const location = useLocation();

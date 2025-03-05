@@ -1,4 +1,5 @@
 import { http } from "../../utils/http";
+import { User } from "./types";
 
 export interface LoginCredentialsDTO {
     email: string;
@@ -11,6 +12,7 @@ export interface LoginCredentialsDTO {
    message: string;
    timestamp: string;
    data: {
+    account: User;
     token: string;
     expires: string;
    }
