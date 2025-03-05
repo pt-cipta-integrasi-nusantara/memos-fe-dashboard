@@ -5,7 +5,7 @@ import {
   spesialisData,
 } from "../../../components/constants/constants";
 import { uploadImage } from "../../../services/utils/uploadImage";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
 import { Button, Card } from "../../../components/uiComponent";
 import { Listbox, Transition } from "@headlessui/react";
@@ -24,7 +24,8 @@ interface ProfesionProps {
 export function ProfesionForm() {
   const navigate = useNavigate();
   const { formData, setFormData } = useRegistrationFormStore();
-  const { register, handleSubmit } = useForm<any>();
+  const { register, handleSubmit, formState, watch, setValue, control } =
+    useForm<any>();
   const form = useRef(null) as any;
   const [selectedProfesion, setSelectedProfesion] = useState<ProfesionProps>();
   const [selectedSpesialis, setSelectedSpesialis] = useState<ProfesionProps>();
@@ -42,10 +43,6 @@ export function ProfesionForm() {
     );
   }, []);
 
-  const onNextStep = () => {
-    navigate("/registration/summary");
-  };
-
   const onPreviousStep = () => {
     navigate("/registration/step/2");
   };
@@ -62,6 +59,7 @@ export function ProfesionForm() {
           str_photo: file_url,
         });
       });
+      setValue("str_photo", file?.name, { shouldValidate: true });
       setFormData({
         str_photo_name: file?.name,
       });
@@ -80,7 +78,7 @@ export function ProfesionForm() {
           facility_photo: file_url,
         });
       });
-
+      setValue("facility_photo", file?.name, { shouldValidate: true });
       setFormData({
         facility_photo_name: file?.name,
       });
@@ -88,7 +86,9 @@ export function ProfesionForm() {
   };
 
   const onSubmit: SubmitHandler<any> = async () => {
-    // TODO SUBMIT HANDLER
+    if (Object.keys(formState?.errors).length === 0) {
+      navigate("/registration/summary");
+    }
   };
 
   console.log(formData, "formdata");
@@ -130,63 +130,91 @@ export function ProfesionForm() {
                       Profesi/Jabatan
                       <span className="text-warning">*</span>
                     </label>
-
-                    <Listbox
-                      value={selectedProfesion}
-                      onChange={setSelectedProfesion}
-                    >
-                      <div className="relative">
-                        <Listbox.Button className="border border-neutral-100 relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none">
-                          <span className="block truncate">
-                            {selectedProfesion ? (
-                              selectedProfesion?.label
-                            ) : (
-                              <span className="text-neutral-400">
-                                Pilih Profesi/Jabatan
-                              </span>
-                            )}
-                          </span>
-                          <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                            <ArrowDownIcon />
-                          </span>
-                        </Listbox.Button>
-                        <Transition
-                          as={Fragment}
-                          leave="transition ease-in duration-100"
-                          leaveFrom="opacity-100"
-                          leaveTo="opacity-0"
+                    <Controller
+                      name="profession_id"
+                      control={control}
+                      defaultValue={selectedProfesion}
+                      rules={{
+                        required: {
+                          value: true,
+                          message: "Profesi/Jabatan wajib diisi",
+                        },
+                      }}
+                      render={({ field }) => (
+                        <Listbox
+                          value={field.value}
+                          onChange={(val) => {
+                            setFormData({ profession_id: val?.id });
+                            setValue("profession_id", val, {
+                              shouldValidate: true,
+                            });
+                          }}
                         >
-                          <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                            {profesions.map((profesion, idx) => (
-                              <Listbox.Option
-                                onClick={() => {
-                                  setFormData({ profession_id: profesion?.id });
-                                }}
-                                key={idx}
-                                className={({ active }) =>
-                                  `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                    active ? "bg-green-100" : ""
-                                  }`
-                                }
-                                value={profesion}
-                              >
-                                {({ selected }) => (
-                                  <>
-                                    <span
-                                      className={`block truncate ${
-                                        selected ? "font-medium" : "font-normal"
-                                      }`}
-                                    >
-                                      {profesion?.label}
-                                    </span>
-                                  </>
+                          <div className="relative">
+                            <Listbox.Button
+                              className={`border relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none ${
+                                formState?.errors?.profession_id
+                                  ? "border-primary-500"
+                                  : "border-neutral-100"
+                              }`}
+                            >
+                              <span className="block truncate">
+                                {field.value ? (
+                                  field.value.label
+                                ) : (
+                                  <span className="text-neutral-400">
+                                    Pilih Profesi/Jabatan
+                                  </span>
                                 )}
-                              </Listbox.Option>
-                            ))}
-                          </Listbox.Options>
-                        </Transition>
-                      </div>
-                    </Listbox>
+                              </span>
+                              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                <ArrowDownIcon />
+                              </span>
+                            </Listbox.Button>
+                            <Transition
+                              as={Fragment}
+                              leave="transition ease-in duration-100"
+                              leaveFrom="opacity-100"
+                              leaveTo="opacity-0"
+                            >
+                              <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                                {profesions.map((profesion, idx) => (
+                                  <Listbox.Option
+                                    key={idx}
+                                    className={({ active }) =>
+                                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                        active ? "bg-green-100" : ""
+                                      }`
+                                    }
+                                    value={profesion}
+                                  >
+                                    {({ selected }) => (
+                                      <>
+                                        <span
+                                          className={`block truncate ${
+                                            selected
+                                              ? "font-medium"
+                                              : "font-normal"
+                                          }`}
+                                        >
+                                          {profesion?.label}
+                                        </span>
+                                      </>
+                                    )}
+                                  </Listbox.Option>
+                                ))}
+                              </Listbox.Options>
+                            </Transition>
+                          </div>
+                        </Listbox>
+                      )}
+                    />
+
+                    {formState?.errors?.profession_id && (
+                      <span className="text-primary-500">
+                        {formState?.errors?.profession_id?.message as any}
+                      </span>
+                    )}
                   </div>
                   <div className="w-full flex flex-col gap-2">
                     <label className="text-[14px] font-medium" htmlFor="gender">
@@ -194,67 +222,95 @@ export function ProfesionForm() {
                       <span className="text-warning">*</span>
                     </label>
 
-                    <Listbox
-                      value={selectedSpesialis}
-                      onChange={setSelectedSpesialis}
-                    >
-                      <div className="relative">
-                        <Listbox.Button className="border border-neutral-100 relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none">
-                          <span className="block truncate">
-                            {selectedSpesialis ? (
-                              selectedSpesialis?.label
-                            ) : (
-                              <span className="text-neutral-400">
-                                Pilih Spesialis
-                              </span>
-                            )}
-                          </span>
-                          <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                            <ArrowDownIcon />
-                          </span>
-                        </Listbox.Button>
-                        <Transition
-                          as={Fragment}
-                          leave="transition ease-in duration-100"
-                          leaveFrom="opacity-100"
-                          leaveTo="opacity-0"
+                    <Controller
+                      name="smf_id"
+                      control={control}
+                      defaultValue={selectedSpesialis}
+                      rules={{
+                        required: {
+                          value: true,
+                          message: "SMF wajib diisi",
+                        },
+                      }}
+                      render={({ field }) => (
+                        <Listbox
+                          value={field.value}
+                          onChange={(val) => {
+                            setFormData({ smf_id: val?.id });
+                            setValue("smf_id", val, {
+                              shouldValidate: true,
+                            });
+                          }}
                         >
-                          <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                            {spesialisData.map((spesialis, idx) => (
-                              <Listbox.Option
-                                onClick={() => {
-                                  setFormData({ smf_id: spesialis?.id });
-                                }}
-                                key={idx}
-                                className={({ active }) =>
-                                  `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                    active ? "bg-green-100" : ""
-                                  }`
-                                }
-                                value={spesialis}
-                              >
-                                {({ selected }) => (
-                                  <>
-                                    <span
-                                      className={`block truncate ${
-                                        selected ? "font-medium" : "font-normal"
-                                      }`}
-                                    >
-                                      {spesialis?.label}
-                                    </span>
-                                  </>
+                          <div className="relative">
+                            <Listbox.Button
+                              className={`border relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none ${
+                                formState?.errors?.smf_id
+                                  ? "border-primary-500"
+                                  : "border-neutral-100"
+                              }`}
+                            >
+                              <span className="block truncate">
+                                {field.value ? (
+                                  field.value.label
+                                ) : (
+                                  <span className="text-neutral-400">
+                                    Pilih Spesialis
+                                  </span>
                                 )}
-                              </Listbox.Option>
-                            ))}
-                          </Listbox.Options>
-                        </Transition>
-                      </div>
-                    </Listbox>
+                              </span>
+                              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                <ArrowDownIcon />
+                              </span>
+                            </Listbox.Button>
+                            <Transition
+                              as={Fragment}
+                              leave="transition ease-in duration-100"
+                              leaveFrom="opacity-100"
+                              leaveTo="opacity-0"
+                            >
+                              <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                                {spesialisData.map((spesialis, idx) => (
+                                  <Listbox.Option
+                                    key={idx}
+                                    className={({ active }) =>
+                                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                        active ? "bg-green-100" : ""
+                                      }`
+                                    }
+                                    value={spesialis}
+                                  >
+                                    {({ selected }) => (
+                                      <>
+                                        <span
+                                          className={`block truncate ${
+                                            selected
+                                              ? "font-medium"
+                                              : "font-normal"
+                                          }`}
+                                        >
+                                          {spesialis?.label}
+                                        </span>
+                                      </>
+                                    )}
+                                  </Listbox.Option>
+                                ))}
+                              </Listbox.Options>
+                            </Transition>
+                          </div>
+                        </Listbox>
+                      )}
+                    />
+                    {formState?.errors?.smf_id && (
+                      <span className="text-primary-500">
+                        {formState?.errors?.smf_id?.message as any}
+                      </span>
+                    )}
                   </div>
                 </div>
 
                 {/* Row 2 */}
-                <div className="flex flex-col lg:flex-row justify-between gap-4">
+                <div className="flex items-start flex-col lg:flex-row justify-between gap-4">
                   <div className="flex flex-col gap-2 lg:w-full">
                     <label className="text-[14px] font-medium" htmlFor="str_no">
                       No. STR Aktif
@@ -262,19 +318,37 @@ export function ProfesionForm() {
                     </label>
                     <input
                       id="str_no"
-                      {...register("str_no", { required: true })}
+                      {...register("str_no", {
+                        required: {
+                          value: true,
+                          message: "No. STR Aktif wajib diisi",
+                        },
+                      })}
                       type="text"
-                      className="rounded-[8px] p-4 border border-neutral-100 focus:outline-none"
+                      className={`rounded-[8px] p-4 border focus:outline-none ${
+                        formState?.errors?.str_no
+                          ? "border-primary-500"
+                          : "border-neutral-100"
+                      }`}
                       placeholder="Masukkan No. STR"
-                      onChange={(e) => setFormData({ str_no: e.target.value })}
+                      onChange={(e) => {
+                        setValue("str_no", e.target.value, {
+                          shouldValidate: true,
+                        });
+                        setFormData({ str_no: e.target.value });
+                      }}
                       defaultValue={formData["str_no"]}
                     />
-
+                    {formState?.errors?.str_no && (
+                      <span className="text-primary-500">
+                        {formState?.errors?.str_no?.message as any}
+                      </span>
+                    )}
                     <span className="text-[13px] text-neutral-300">
                       Digunakan hanya untuk keperluan verifikasi
                     </span>
                   </div>
-                  <div className="flex flex-col md:flex-row items-center gap-2 lg:w-full">
+                  <div className="flex items-start flex-col md:flex-row gap-2 lg:w-full">
                     <div className="w-full flex flex-col gap-2">
                       <label
                         className="text-[14px] font-medium"
@@ -286,48 +360,80 @@ export function ProfesionForm() {
 
                       <input
                         id="expires_date"
-                        {...register("expires_date", { required: true })}
+                        {...register("expires_date", {
+                          required: {
+                            value: true,
+                            message: "Tanggal Habis Berlaku wajib diisi",
+                          },
+                        })}
                         type="date"
-                        className="rounded-[8px] p-4 border border-neutral-100 focus:outline-none"
+                        className={`rounded-[8px] p-4 border focus:outline-none ${
+                          formState?.errors?.expires_date
+                            ? "border-primary-500"
+                            : "border-neutral-100"
+                        }`}
                         placeholder="Tanggal Habis Berlaku"
-                        onChange={(e) =>
-                          setFormData({ expires_date: e.target.value })
-                        }
+                        onChange={(e) => {
+                          setValue("expires_date", e.target.value, {
+                            shouldValidate: true,
+                          });
+                          setFormData({ expires_date: e.target.value });
+                        }}
                         defaultValue={formData["expires_date"]}
                       />
+                      {formState?.errors?.expires_date && (
+                        <span className="text-primary-500">
+                          {formState?.errors?.expires_date?.message as any}
+                        </span>
+                      )}
                     </div>
                     <div className="w-full flex flex-col gap-2">
                       <label
                         className="text-[14px] font-medium"
-                        htmlFor="no_str_file"
+                        htmlFor="str_photo"
                       >
                         Unggah STR Aktif
                         <span className="text-warning">*</span>
                       </label>
-
-                      <div className="relative rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2">
-                        <div
-                          className={`w-full ${
-                            formData?.str_photo_name
-                              ? "text-black"
-                              : "text-neutral-400"
-                          }`}
-                        >
-                          {formData?.str_photo_name ?? "Unggah No. STR"}
-                        </div>
+                      <div
+                        className={`relative rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 ${
+                          formState.errors?.str_photo
+                            ? "border-primary-500"
+                            : "border-neutral-100"
+                        }`}
+                      >
+                        <input
+                          {...register("str_photo", {
+                            required: {
+                              value: true,
+                              message: "STR Aktif wajib diisi",
+                            },
+                          })}
+                          type="text"
+                          className="focus:outline-none w-full"
+                          placeholder="Unggah No. STR"
+                          value={formData?.str_photo_name}
+                          readOnly
+                        />
                         <input
                           type="file"
                           hidden
-                          id="no_str_file"
+                          id="str_photo"
                           onChange={handleSTRNoChange}
                         />
                         <label
-                          htmlFor="no_str_file"
+                          htmlFor="str_photo"
                           className="text-link cursor-pointer"
                         >
                           Unggah
                         </label>
                       </div>
+
+                      {formState?.errors?.str_photo && (
+                        <span className="text-primary-500">
+                          {formState?.errors?.str_photo?.message as any}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -349,18 +455,36 @@ export function ProfesionForm() {
                   <input
                     id="facility_organization_name"
                     {...register("facility_organization_name", {
-                      required: true,
+                      required: {
+                        value: true,
+                        message: "Organisasi wajib diisi",
+                      },
                     })}
                     type="text"
-                    className="rounded-[8px] p-4 border border-neutral-100 focus:outline-none"
+                    className={`rounded-[8px] p-4 border focus:outline-none ${
+                      formState?.errors?.facility_organization_name
+                        ? "border-primary-500"
+                        : "border-neutral-100"
+                    }`}
                     placeholder="Masukkan nama organisasi"
-                    onChange={(e) =>
+                    onChange={(e) => {
+                      setValue("facility_organization_name", e.target.value, {
+                        shouldValidate: true,
+                      });
                       setFormData({
                         facility_organization_name: e.target.value,
-                      })
-                    }
+                      });
+                    }}
                     defaultValue={formData["facility_organization_name"]}
                   />
+                  {formState?.errors?.facility_organization_name && (
+                    <span className="text-primary-500">
+                      {
+                        formState?.errors?.facility_organization_name
+                          ?.message as any
+                      }
+                    </span>
+                  )}
                 </div>
                 <div className="w-full flex flex-col gap-2">
                   <label
@@ -372,15 +496,32 @@ export function ProfesionForm() {
                   </label>
                   <input
                     id="facility_name"
-                    {...register("facility_name", { required: true })}
+                    {...register("facility_name", {
+                      required: {
+                        value: true,
+                        message: "Nama Klinik/Usha wajib diisi",
+                      },
+                    })}
                     type="text"
-                    className="rounded-[8px] p-4 border border-neutral-100 focus:outline-none"
+                    className={`rounded-[8px] p-4 border focus:outline-none ${
+                      formState?.errors?.facility_name
+                        ? "border-primary-500"
+                        : "border-neutral-100"
+                    }`}
                     placeholder="Masukkan nama klinik/usaha"
-                    onChange={(e) =>
-                      setFormData({ facility_name: e.target.value })
-                    }
+                    onChange={(e) => {
+                      setValue("facility_name", e.target.value, {
+                        shouldValidate: true,
+                      });
+                      setFormData({ facility_name: e.target.value });
+                    }}
                     defaultValue={formData["facility_name"]}
                   />
+                  {formState?.errors?.facility_name && (
+                    <span className="text-primary-500">
+                      {formState?.errors?.facility_name?.message as any}
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -395,90 +536,123 @@ export function ProfesionForm() {
                     <span className="text-warning">*</span>
                   </label>
 
-                  <Listbox
-                    value={selectedBusiness}
-                    onChange={setSelectedBusiness}
-                  >
-                    <div className="relative">
-                      <Listbox.Button className="border border-neutral-100 relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none">
-                        <span className="block truncate">
-                          {selectedBusiness ? (
-                            selectedBusiness?.label
-                          ) : (
-                            <span className="text-neutral-400">
-                              Pilih Jenis Usaha
-                            </span>
-                          )}
-                        </span>
-                        <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                          <ArrowDownIcon />
-                        </span>
-                      </Listbox.Button>
-                      <Transition
-                        as={Fragment}
-                        leave="transition ease-in duration-100"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
+                  <Controller
+                    name="facility_type"
+                    control={control}
+                    defaultValue={selectedBusiness}
+                    rules={{
+                      required: {
+                        value: true,
+                        message: "Jenis Usaha wajib diisi",
+                      },
+                    }}
+                    render={({ field }) => (
+                      <Listbox
+                        value={field.value}
+                        onChange={(val) => {
+                          setFormData({ facility_type: val?.id });
+                          setValue("facility_type", val, {
+                            shouldValidate: true,
+                          });
+                        }}
                       >
-                        <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                          {businesses.map((business, idx) => (
-                            <Listbox.Option
-                              onClick={() => {
-                                setFormData({ facility_type: business?.id });
-                              }}
-                              key={idx}
-                              className={({ active }) =>
-                                `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                  active ? "bg-green-100" : ""
-                                }`
-                              }
-                              value={business}
-                            >
-                              {({ selected }) => (
-                                <>
-                                  <span
-                                    className={`block truncate ${
-                                      selected ? "font-medium" : "font-normal"
-                                    }`}
-                                  >
-                                    {business?.label}
-                                  </span>
-                                </>
+                        <div className="relative">
+                          <Listbox.Button
+                            className={`border relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none ${
+                              formState?.errors?.facility_type
+                                ? "border-primary-500"
+                                : "border-neutral-100"
+                            }`}
+                          >
+                            <span className="block truncate">
+                              {field.value ? (
+                                field.value.label
+                              ) : (
+                                <span className="text-neutral-400">
+                                  Pilih Jenis Usaha
+                                </span>
                               )}
-                            </Listbox.Option>
-                          ))}
-                        </Listbox.Options>
-                      </Transition>
-                    </div>
-                  </Listbox>
+                            </span>
+                            <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                              <ArrowDownIcon />
+                            </span>
+                          </Listbox.Button>
+                          <Transition
+                            as={Fragment}
+                            leave="transition ease-in duration-100"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                          >
+                            <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                              {businesses.map((business, idx) => (
+                                <Listbox.Option
+                                  key={idx}
+                                  className={({ active }) =>
+                                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                      active ? "bg-green-100" : ""
+                                    }`
+                                  }
+                                  value={business}
+                                >
+                                  {({ selected }) => (
+                                    <>
+                                      <span
+                                        className={`block truncate ${
+                                          selected
+                                            ? "font-medium"
+                                            : "font-normal"
+                                        }`}
+                                      >
+                                        {business?.label}
+                                      </span>
+                                    </>
+                                  )}
+                                </Listbox.Option>
+                              ))}
+                            </Listbox.Options>
+                          </Transition>
+                        </div>
+                      </Listbox>
+                    )}
+                  />
+                  {formState?.errors?.facility_type && (
+                    <span className="text-primary-500">
+                      {formState?.errors?.facility_type?.message as any}
+                    </span>
+                  )}
                 </div>
+
                 <div className="w-full flex flex-col gap-2">
                   <label
                     className="text-[14px] font-medium"
-                    htmlFor="no_str_file"
+                    htmlFor="identity_photo"
                   >
                     Unggah Foto Tempat Klinik/Usaha (Opsional)
                   </label>
-
-                  <div className="relative rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2">
-                    <div
-                      className={`w-full ${
-                        formData?.facility_photo_name
-                          ? "text-black"
-                          : "text-neutral-400"
-                      }`}
-                    >
-                      {formData?.facility_photo_name ??
-                        "Unggah Foto Tempat Praktek"}
-                    </div>
+                  <div
+                    className={`relative rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 ${
+                      formState.errors?.facility_photo
+                        ? "border-primary-500"
+                        : "border-neutral-100"
+                    }`}
+                  >
+                    <input
+                      {...register("facility_photo")}
+                      type="text"
+                      className="focus:outline-none w-full"
+                      placeholder="Unggah Foto Tempat Praktek"
+                      value={formData?.facility_photo_name}
+                      readOnly
+                    />
+                    {/* {fotoKtp?.name} */}
                     <input
                       type="file"
                       hidden
-                      id="foto_usaha"
+                      id="identity_photo"
                       onChange={handleFileFotoUsahaChange}
                     />
                     <label
-                      htmlFor="foto_usaha"
+                      htmlFor="identity_photo"
                       className="text-link cursor-pointer"
                     >
                       Unggah
@@ -502,7 +676,7 @@ export function ProfesionForm() {
           </Card>
           <Card className="mt-8">
             <Button
-              onClick={onNextStep}
+              type="submit"
               isClinix
               isPrimary
               className="w-full"
