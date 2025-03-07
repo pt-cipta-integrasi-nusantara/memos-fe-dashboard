@@ -10,6 +10,7 @@ import { Plan } from "../../services/plan/types";
 import toast from "react-hot-toast";
 import { useCreateSubscription } from "../../services/subscription/use-subscription-create";
 import { useSubscriptionStore } from "../../stores/subscription/useSubscriptionStore";
+import { formatDuration } from "../../helpers/format-duration";
 
 export function SubscriptionContent() {
   const navigate = useNavigate();
@@ -60,21 +61,6 @@ export function SubscriptionContent() {
   };
 
   const selectedPlan = planList?.find((item) => item?.id === selectedItem?.id);
-  function filterNonZeroTime(timeString: string): string {
-    const parts: string[] = timeString.split(" ");
-    const result: string[] = [];
-
-    for (let i = 0; i < parts.length; i += 2) {
-      const value: number = parseFloat(parts[i]);
-      const unit: string = parts[i + 1];
-
-      if (value !== 0) {
-        result.push(`${value} ${unit}`);
-      }
-    }
-
-    return result.length > 0 ? result.join(" ") : "0 secs"; // Default to "0 secs" if all values are 0
-  }
 
   return (
     <div
@@ -135,8 +121,7 @@ export function SubscriptionContent() {
                     selectedItem?.id === item?.id ? "text-primary-500" : ""
                   } font-bold mt-2`}
                 >
-                  {filterNonZeroTime(item?.duration)} -{" "}
-                  {formatRupiah(item?.price)}
+                  {formatDuration(item?.duration)} - {formatRupiah(item?.price)}
                 </div>
               </div>
             ))}
@@ -478,7 +463,7 @@ export function SubscriptionContent() {
                 className="cursor-pointer"
               />
               <span className="font-bold text-primary-500 text-[20px]">
-                {selectedPlan?.duration} -{" "}
+                {formatDuration(selectedPlan?.duration ?? "")} -{" "}
                 {formatRupiah(selectedPlan?.price ?? 0)}
               </span>
             </div>
