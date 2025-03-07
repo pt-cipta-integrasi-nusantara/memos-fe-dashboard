@@ -11,8 +11,9 @@ import { formatRupiah } from "../../helpers/format-currency";
 import { useMe } from "../../services/auth/use-me";
 import { uploadImage } from "../../services/utils/uploadImage";
 import { useCreatePayment } from "../../services/payment/use-payment-create";
-import { useBankList } from "../../services/bank/use-bank-list";
 import dayjs from "dayjs";
+import { formatDuration } from "../../helpers/format-duration";
+import { useSubscriptionById } from "../../services/subscription/use-subscription-detail";
 
 interface BankAccountProps {
   bank_name: string;
@@ -22,8 +23,8 @@ export function PaymentContent() {
   const { subscriptionData, formData, setFormData, setSubscriptionData } =
     useSubscriptionStore();
   const { mutate: createPayment } = useCreatePayment();
-  const { data: bankData } = useBankList();
-  console.log(bankData, "bankdata");
+  const { data: subscriptionDataById } = useSubscriptionById("6");
+  console.log(subscriptionDataById, "subscriptionData");
   const navigate = useNavigate();
   const { data: me } = useMe();
   const { register, handleSubmit } = useForm<any>();
@@ -156,7 +157,7 @@ export function PaymentContent() {
                         className="cursor-pointer"
                       />
                       <span className="font-bold text-primary-500 text-[20px]">
-                        {subscriptionData?.duration} –{" "}
+                        {formatDuration(subscriptionData?.duration)} –{" "}
                         {formatRupiah(subscriptionData?.price)}
                       </span>
                       <span className="text-primary-500 underline cursor-pointer">

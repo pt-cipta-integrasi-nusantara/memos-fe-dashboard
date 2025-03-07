@@ -452,22 +452,24 @@ export function SubscriptionContent() {
           )}
         </Card>
         <Card className="mt-8">
-          <div className="flex flex-col lg:flex-row justify-between lg:items-center pb-4 gap-2">
-            <h3 className="text-base font-bold">Paket Yang Dipilih</h3>
-            <div className="flex items-center gap-2">
-              <img
-                src="/assets/logo/logo-clinix.png"
-                width={81}
-                height={24}
-                alt="logo-clinix"
-                className="cursor-pointer"
-              />
-              <span className="font-bold text-primary-500 text-[20px]">
-                {formatDuration(selectedPlan?.duration ?? "")} -{" "}
-                {formatRupiah(selectedPlan?.price ?? 0)}
-              </span>
+          {selectedPlan && (
+            <div className="flex flex-col lg:flex-row justify-between lg:items-center pb-4 gap-2">
+              <h3 className="text-base font-bold">Paket Yang Dipilih</h3>
+              <div className="flex items-center gap-2">
+                <img
+                  src="/assets/logo/logo-clinix.png"
+                  width={81}
+                  height={24}
+                  alt="logo-clinix"
+                  className="cursor-pointer"
+                />
+                <span className="font-bold text-primary-500 text-[20px]">
+                  {formatDuration(selectedPlan?.duration ?? "")} -{" "}
+                  {formatRupiah(selectedPlan?.price ?? 0)}
+                </span>
+              </div>
             </div>
-          </div>
+          )}
           <div className="border-t-2 border-dashed border-neutral-250 w-full h-1"></div>
           <Button
             onClick={onSubmitPlan}
