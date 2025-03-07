@@ -59,7 +59,7 @@ export interface User {
             str_photo: string; 
             clinix_reg_verified_at: string; 
             clinix_reg_verified_by: string; 
-            addresses: string; 
+            addresses: any; 
             insurance: string; 
             facility:{
             created_at: string;
