@@ -15,6 +15,7 @@ export interface User {
     account_type: string; 
     is_email_verified: boolean;
     is_approved: boolean;
+    verified_status: string;
     signature: string; 
     bpjs:{
         created_at: string; 
