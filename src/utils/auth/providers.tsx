@@ -27,7 +27,9 @@ export function AuthProvider(props: React.PropsWithChildren) {
   const [accessToken, setAccessToken] = React.useState<string | null>(
     () => sessionService.getSession() ?? ""
   );
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [isLoggedIn, setIsLoggedIn] = React.useState<string | null>(
+    () => sessionService.getIsLoggedin() ?? ""
+  );
 
   async function login(formField: LoginCredentialsDTO) {
     const { data } = await loginUser(formField);
@@ -36,8 +38,9 @@ export function AuthProvider(props: React.PropsWithChildren) {
       toast.error("Harap menunggu hingga akun terkonfirmasi oleh PT CIN");
     } else {
       sessionService.setSession(token);
+      sessionService.setIsLoggedin("true");
       setAccessToken(token);
-      setIsLoggedIn(true);
+      setIsLoggedIn("true");
       navigate("/");
     }
   }

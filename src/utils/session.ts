@@ -2,13 +2,23 @@ import { User } from "../services/auth/types";
 
 const STORAGE_KEY = 'session';
 const USER_KEY = "user"
+const IS_LOGGEDIN_KEY = "isloggedin"
 
 export function getSession() {
     return window.localStorage.getItem(STORAGE_KEY);
 }
 
+export function getIsLoggedin() {
+  return window.localStorage.getItem(IS_LOGGEDIN_KEY);
+}
+
 export function setSession(newSession: string) {
   window.localStorage.setItem(STORAGE_KEY, newSession);
+}
+
+export function setIsLoggedin(isLoggedin: string) {
+  window.localStorage.setItem(IS_LOGGEDIN_KEY, isLoggedin);
+
 }
 
 export function getUserData() {
@@ -21,6 +31,7 @@ export function setUserData(userData: User | {}){
 
 export function flushStorage() {
   window.localStorage.removeItem(STORAGE_KEY);
+  window.localStorage.removeItem(IS_LOGGEDIN_KEY);
 }
 
 export async function flushSession() {
