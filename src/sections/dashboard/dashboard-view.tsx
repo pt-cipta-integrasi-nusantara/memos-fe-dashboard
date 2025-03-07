@@ -107,7 +107,7 @@ export function DashboardContent() {
                         </span>
                       </div>
                     )}
-                    {activity?.event_type === "Registrasi" && (
+                    {activity?.payload && !activity?.payload?.choose_plan && (
                       <div>
                         <span
                           className="cursor-pointer text-[14px] text-primary-500"
@@ -116,6 +116,16 @@ export function DashboardContent() {
                           }
                         >
                           Lihat detail
+                        </span>
+                      </div>
+                    )}
+                    {activity?.payload?.choose_plan === true && (
+                      <div>
+                        <span
+                          className="cursor-pointer text-[14px] text-primary-500"
+                          onClick={onToDetail}
+                        >
+                          Lihat Paket
                         </span>
                       </div>
                     )}

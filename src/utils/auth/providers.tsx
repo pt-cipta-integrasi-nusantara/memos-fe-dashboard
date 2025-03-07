@@ -32,7 +32,7 @@ export function AuthProvider(props: React.PropsWithChildren) {
   async function login(formField: LoginCredentialsDTO) {
     const { data } = await loginUser(formField);
     const { token, account } = data;
-    if (account?.is_approved === false) {
+    if (account?.verified_status === "Pending") {
       toast.error("Harap menunggu hingga akun terkonfirmasi oleh PT CIN");
     } else {
       sessionService.setSession(token);
