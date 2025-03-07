@@ -60,6 +60,21 @@ export function SubscriptionContent() {
   };
 
   const selectedPlan = planList?.find((item) => item?.id === selectedItem?.id);
+  function filterNonZeroTime(timeString: string): string {
+    const parts: string[] = timeString.split(" ");
+    const result: string[] = [];
+
+    for (let i = 0; i < parts.length; i += 2) {
+      const value: number = parseFloat(parts[i]);
+      const unit: string = parts[i + 1];
+
+      if (value !== 0) {
+        result.push(`${value} ${unit}`);
+      }
+    }
+
+    return result.length > 0 ? result.join(" ") : "0 secs"; // Default to "0 secs" if all values are 0
+  }
 
   return (
     <div
@@ -120,7 +135,8 @@ export function SubscriptionContent() {
                     selectedItem?.id === item?.id ? "text-primary-500" : ""
                   } font-bold mt-2`}
                 >
-                  {item?.duration} - {formatRupiah(item?.price)}
+                  {filterNonZeroTime(item?.duration)} -{" "}
+                  {formatRupiah(item?.price)}
                 </div>
               </div>
             ))}
@@ -251,7 +267,7 @@ export function SubscriptionContent() {
                     id="address"
                     {...register("address", { required: true })}
                     type="text"
-                    value={me?.user?.addresses}
+                    value={me?.user?.addresses[0]?.street_address}
                     className="text-neutral-300 rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 focus:outline-none w-full"
                     readOnly
                     disabled
