@@ -13,7 +13,7 @@ import {
 } from "../../services/auth/use-registration";
 import toast from "react-hot-toast";
 import * as sessionService from "../../utils/session";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRegistrationFormStore } from "../../stores/registration/useRegistrationFormStore";
 
 export function SignupContent() {
@@ -26,6 +26,7 @@ export function SignupContent() {
   const [isShowOTPModal, setIsShowOTPModal] = React.useState(false);
   const [isRequested, setIsRequested] = React.useState(false);
   const [isShouldRequestOtp, setIsShouldRequestOtp] = React.useState(false);
+  const [isShowLoginMessage, setIsShowLoginMessage] = React.useState(false);
 
   const { register, handleSubmit, watch, formState } = useForm<any>();
   const form = useRef(null) as any;
@@ -42,6 +43,7 @@ export function SignupContent() {
         },
         {
           onSuccess: () => {
+            setIsShowLoginMessage(false);
             setIsShouldRequestOtp(false);
             setIsShowOTPModal(true);
             setIsRequested(true);
@@ -51,9 +53,18 @@ export function SignupContent() {
               token_type: "email_verification",
             });
           },
-          onError: (_error: any) => {
-            setIsShouldRequestOtp(true);
-            setInitialTime(150);
+          onError: (error: any) => {
+            console.log(error?.message, "errormessage");
+            if (
+              error?.message?.includes(
+                "email has been used, please use another email"
+              )
+            ) {
+              setIsShowLoginMessage(true);
+            } else {
+              setIsShouldRequestOtp(true);
+              setInitialTime(150);
+            }
           },
         }
       );
@@ -161,7 +172,9 @@ export function SignupContent() {
                         })}
                         type="email"
                         className={`rounded-md p-4 border border-neutral-100 focus:outline-none ${
-                          (formState?.errors?.email || isShouldRequestOtp) &&
+                          (formState?.errors?.email ||
+                            isShouldRequestOtp ||
+                            isShowLoginMessage) &&
                           "border-primary-500"
                         }`}
                         placeholder="Masukkan Email Anda"
@@ -175,6 +188,14 @@ export function SignupContent() {
                         <span className="text-primary-500 text-sm">
                           Email ini sudah terdaftar. Kirim OTP untuk
                           melanjutkan.
+                        </span>
+                      )}
+                      {isShowLoginMessage && (
+                        <span className="text-sm">
+                          Akun sudah terdaftar, silahkan menuju halaman{" "}
+                          <Link className="text-link underline" to="/login">
+                            Login
+                          </Link>
                         </span>
                       )}
                     </div>
