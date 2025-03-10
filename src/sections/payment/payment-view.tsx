@@ -13,7 +13,6 @@ import { uploadImage } from "../../services/utils/uploadImage";
 import { useCreatePayment } from "../../services/payment/use-payment-create";
 import dayjs from "dayjs";
 import { formatDuration } from "../../helpers/format-duration";
-import { useSubscriptionById } from "../../services/subscription/use-subscription-detail";
 
 interface BankAccountProps {
   bank_name: string;
