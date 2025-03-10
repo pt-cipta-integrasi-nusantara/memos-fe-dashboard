@@ -33,6 +33,10 @@ export const DashboardSubscriptionPaymentPage = lazy(
   () => import("../pages/dashboard/subscription/payment")
 );
 
+export const DashboardSubscriptionPaymentDetailPage = lazy(
+  () => import("../pages/dashboard/subscription/payment/detail")
+);
+
 export const DashboardSubscriptionPaymentSuccessPage = lazy(
   () => import("../pages/dashboard/subscription/payment/success")
 );
@@ -86,8 +90,13 @@ export function Router() {
           element: <DashboardSubscriptionPaymentInProgressPage />,
         },
         {
-          path: "/subscription/payment/:subscriptionId",
+          path: "/subscription/payment/status/:subscriptionId",
           element: <DashboardSubscriptionPaymentStatusPage />,
+        },
+
+        {
+          path: "/subscription/payment/:subscriptionId",
+          element: <DashboardSubscriptionPaymentDetailPage />,
         },
         {
           path: "*",

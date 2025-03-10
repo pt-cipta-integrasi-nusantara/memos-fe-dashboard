@@ -19,17 +19,23 @@ interface BankAccountProps {
   bank_name: string;
 }
 
-export function PaymentContent() {
+export function PaymentContent({ data }: { data?: any }) {
   const { subscriptionData, formData, setFormData, setSubscriptionData } =
     useSubscriptionStore();
   const { mutate: createPayment } = useCreatePayment();
-  const { data: subscriptionDataById } = useSubscriptionById("6");
-  console.log(subscriptionDataById, "subscriptionData");
   const navigate = useNavigate();
   const { data: me } = useMe();
   const { register, handleSubmit } = useForm<any>();
   const [selectedBank, setSelectedBank] = useState<BankAccountProps>();
   const form = useRef(null) as any;
+
+  useEffect(() => {
+    if (data) {
+      setSubscriptionData({
+        price: data?.plan?.price,
+      });
+    }
+  }, [data]);
 
   const onPreviousStep = () => {
     navigate("//subscription");
@@ -157,7 +163,10 @@ export function PaymentContent() {
                         className="cursor-pointer"
                       />
                       <span className="font-bold text-primary-500 text-[20px]">
-                        {formatDuration(subscriptionData?.duration)} –{" "}
+                        {subscriptionData?.duration
+                          ? formatDuration(subscriptionData?.duration ?? "")
+                          : ""}{" "}
+                        {data?.plan?.duration?.Months} Months –{" "}
                         {formatRupiah(subscriptionData?.price)}
                       </span>
                       <span className="text-primary-500 underline cursor-pointer">
