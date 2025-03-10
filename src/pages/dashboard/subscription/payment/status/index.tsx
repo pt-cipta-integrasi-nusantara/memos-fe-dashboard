@@ -1,13 +1,14 @@
 import { useParams } from "react-router-dom";
+import { usePaymentById } from "../../../../../services/payment/use-payment-detail";
 
 import { PaymentFailedContent } from "../../../../../sections/payment/payment-failed-view";
 import { PaymentInProgressContent } from "../../../../../sections/payment/payment-in-progress-view";
 import { PaymentSuccessContent } from "../../../../../sections/payment/payment-success-view";
-import { useSubscriptionById } from "../../../../../services/subscription/use-subscription-detail";
 
 export default function PaymentStatusPage() {
-  const { subscriptionId } = useParams();
-  const { data } = useSubscriptionById(String(subscriptionId));
+  const { paymentId } = useParams();
+  const { data } = usePaymentById(String(paymentId));
+
   return (
     <div>
       <head>

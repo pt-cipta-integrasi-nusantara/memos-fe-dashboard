@@ -32,6 +32,9 @@ export function DashboardContent() {
     if (payload?.subscription_id) {
       navigate(`/subscription/payment/${payload?.subscription_id}`);
     }
+    if (payload?.payment_id) {
+      navigate(`/subscription/payment/status/${payload?.payment_id}`);
+    }
   };
 
   const onAcceptWorkspace = (mode: string) => {

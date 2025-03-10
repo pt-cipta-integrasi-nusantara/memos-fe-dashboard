@@ -31,6 +31,7 @@ export function PaymentContent({ data }: { data?: any }) {
   useEffect(() => {
     if (data) {
       setSubscriptionData({
+        id: data?.id,
         price: data?.plan?.price,
       });
     }
@@ -85,14 +86,10 @@ export function PaymentContent({ data }: { data?: any }) {
         setSubscriptionData({
           pay_date: data?.data?.pay_date,
         });
-        if (data?.data?.status === "Pending") {
-          navigate("/subscription/payment/pending");
-        } else {
-          navigate("/subscription/payment/success");
-        }
+        navigate(`/subscription/payment/status/${data?.data?.id}`);
       },
       onError: () => {
-        navigate("/subscription/payment/failed");
+        navigate("/subscription/payment/status/failed");
       },
     });
     // TODO Submit handler
