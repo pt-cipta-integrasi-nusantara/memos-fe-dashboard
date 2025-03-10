@@ -42,6 +42,10 @@ export function DashboardContent() {
     }
   };
 
+  const hasSubscriptionId = myActivity?.some(
+    (item) => item.payload?.subscription_id !== undefined
+  );
+
   return (
     <div
       id="dashboard"
@@ -119,16 +123,17 @@ export function DashboardContent() {
                         </span>
                       </div>
                     )}
-                    {activity?.payload?.choose_plan === true && (
-                      <div>
-                        <span
-                          className="cursor-pointer text-[14px] text-primary-500"
-                          onClick={onToDetail}
-                        >
-                          Lihat Paket
-                        </span>
-                      </div>
-                    )}
+                    {!hasSubscriptionId &&
+                      activity?.payload?.choose_plan === true && (
+                        <div>
+                          <span
+                            className="cursor-pointer text-[14px] text-primary-500"
+                            onClick={onToDetail}
+                          >
+                            Lihat Paket
+                          </span>
+                        </div>
+                      )}
                     {activity?.content && (
                       <div>
                         <span className="text-[12px] text-neutral-300">
