@@ -78,19 +78,19 @@ export function Router() {
           element: <DashboardSubscriptionPaymentPage />,
         },
         {
-          path: "/subscription/payment/success",
+          path: "/subscription/payment/status/success",
           element: <DashboardSubscriptionPaymentSuccessPage />,
         },
         {
-          path: "/subscription/payment/failed",
+          path: "/subscription/payment/status/failed",
           element: <DashboardSubscriptionPaymentFailedPage />,
         },
         {
-          path: "/subscription/payment/pending",
+          path: "/subscription/payment/status/pending",
           element: <DashboardSubscriptionPaymentInProgressPage />,
         },
         {
-          path: "/subscription/payment/status/:subscriptionId",
+          path: "/subscription/payment/status/:paymentId",
           element: <DashboardSubscriptionPaymentStatusPage />,
         },
 

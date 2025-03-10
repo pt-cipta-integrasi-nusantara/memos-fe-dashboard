@@ -3,7 +3,7 @@ import type { Payment } from './types';
 import { http } from '../../utils/http';
 
 async function fetchPaymentById(paymentId: string) {
-  const { data } = await http<{ data: Payment }>(`bank-accounts/${paymentId}`);
+  const { data } = await http<{ data: Payment }>(`payments/${paymentId}`);
 
   return data;
 }
