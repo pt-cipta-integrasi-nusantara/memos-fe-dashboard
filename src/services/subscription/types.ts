@@ -11,4 +11,6 @@ export interface Subscription {
     updated_by: string;
     deleted_at: string;
     deleted_by: string;
+    plan: any;
+    payment: any
 }
