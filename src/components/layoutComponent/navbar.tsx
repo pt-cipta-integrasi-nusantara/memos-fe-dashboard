@@ -79,6 +79,7 @@ interface NavMenuDesktopProps {
   setIsExpandedMenubar: Dispatch<SetStateAction<boolean>>;
   handleLogout: () => void;
   me: User | undefined;
+  pathname: string;
 }
 
 function NavMenuDesktop({
@@ -88,6 +89,7 @@ function NavMenuDesktop({
   // setIsExpandedMenubar,
   handleLogout,
   me,
+  pathname,
 }: NavMenuDesktopProps) {
   // const onToggleMenubar = () => {
   //   setIsExpandedMenubar((prev) => !prev);
@@ -131,10 +133,19 @@ function NavMenuDesktop({
             <UserAccount handleLogout={handleLogout} me={me} />
           </div>
         ) : (
-          <div id="right" className="hidden lg:flex gap-3 items-center">
-            <span>Sudah memiliki akun?</span>
-            <Button isClinix title="Masuk" onClick={onClickToLogin} />
-          </div>
+          <>
+            {pathname === "/login" ? (
+              <div id="right" className="hidden lg:flex gap-3 items-center">
+                <span>Belum memiliki akun?</span>
+                <Button isClinix title="Daftar" onClick={onClickLogo} />
+              </div>
+            ) : (
+              <div id="right" className="hidden lg:flex gap-3 items-center">
+                <span>Sudah memiliki akun?</span>
+                <Button isClinix title="Masuk" onClick={onClickToLogin} />
+              </div>
+            )}
+          </>
         )}
       </header>
     </div>
@@ -152,6 +163,7 @@ export function Navbar({
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
+  console.log(pathname, "pathname");
   const [_, setOpen] = React.useState(false);
 
   const onClickLogo = () => {
@@ -179,6 +191,7 @@ export function Navbar({
         setIsExpandedMenubar={setIsExpandedMenubar}
         handleLogout={handleLogout}
         me={me}
+        pathname={pathname}
       />
     </>
   );

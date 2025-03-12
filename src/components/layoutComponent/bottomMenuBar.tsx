@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { HomeIcon, ProfileIcon, SocialIcon, WorkIcon } from "../iconsComponent";
+import { HomeIcon } from "../iconsComponent";
 
 function Navmenu() {
   const location = useLocation();
@@ -17,45 +17,45 @@ function Navmenu() {
       ),
     },
 
-    {
-      path: "/workspace",
-      label: "Workspace",
-      icon: (
-        <WorkIcon
-          className={`mt-4 w-[20px] h-[20px] ${
-            asPath.includes("/workspace") ? "text-primary-500" : ""
-          }`}
-        />
-      ),
-    },
+    // {
+    //   path: "/workspace",
+    //   label: "Workspace",
+    //   icon: (
+    //     <WorkIcon
+    //       className={`mt-4 w-[20px] h-[20px] ${
+    //         asPath.includes("/workspace") ? "text-primary-500" : ""
+    //       }`}
+    //     />
+    //   ),
+    // },
 
-    {
-      path: "/social",
-      label: "Social",
-      icon: (
-        <SocialIcon
-          className={`mt-4 w-[20px] h-[20px] ${
-            asPath.includes("/social") ? "text-primary-500" : ""
-          }`}
-        />
-      ),
-    },
+    // {
+    //   path: "/social",
+    //   label: "Social",
+    //   icon: (
+    //     <SocialIcon
+    //       className={`mt-4 w-[20px] h-[20px] ${
+    //         asPath.includes("/social") ? "text-primary-500" : ""
+    //       }`}
+    //     />
+    //   ),
+    // },
 
-    {
-      path: "/profile",
-      label: "Profile",
-      icon: (
-        <ProfileIcon
-          className={`mt-4 w-[20px] h-[20px] ${
-            asPath.includes("/profile") ? "text-primary-500" : ""
-          }`}
-        />
-      ),
-    },
+    // {
+    //   path: "/profile",
+    //   label: "Profile",
+    //   icon: (
+    //     <ProfileIcon
+    //       className={`mt-4 w-[20px] h-[20px] ${
+    //         asPath.includes("/profile") ? "text-primary-500" : ""
+    //       }`}
+    //     />
+    //   ),
+    // },
   ];
   return (
     <nav className="bg-white w-full border-t border-neutral-250">
-      <ul className="flex justify-center gap-8">
+      <ul className="flex justify-left px-16 gap-8">
         {menus?.map((menu) => (
           <li
             className={`${
@@ -96,7 +96,7 @@ function Navmenu() {
 
 export function BottomMenuBar() {
   return (
-    <div className="block lg:hidden fixed bottom-0 w-full flex">
+    <div className="block lg:hidden fixed bottom-0 w-full max-w-full flex overflow-hidden">
       <Navmenu />
     </div>
   );

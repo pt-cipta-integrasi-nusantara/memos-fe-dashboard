@@ -1,4 +1,4 @@
-import { PaymentSuccessContent } from "../../../../../sections/payment/payment-success-view";
+// import { PaymentSuccessContent } from "../../../../../sections/payment/payment-success-view";
 
 export default function PaymentSuccessPage() {
   return (
@@ -17,9 +17,7 @@ export default function PaymentSuccessPage() {
         />
       </head>
 
-      <main className="mt-[1.5rem]">
-        <PaymentSuccessContent />
-      </main>
+      <main className="mt-[1.5rem]">{/* <PaymentSuccessContent /> */}</main>
     </div>
   );
 }

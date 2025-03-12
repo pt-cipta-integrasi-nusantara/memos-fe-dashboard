@@ -5,16 +5,26 @@ import { useSubscriptionStore } from "../../stores/subscription/useSubscriptionS
 import { formatRupiah } from "../../helpers/format-currency";
 import dayjs from "dayjs";
 import { useSubscriptionById } from "../../services/subscription/use-subscription-detail";
+import React, { Fragment } from "react";
+import { Dialog, Transition } from "@headlessui/react";
 
 export function PaymentSuccessContent({ data }: { data: any }) {
-  const { subscriptionData, formData, resetFormData, resetSubscriptionData } =
+  const { subscriptionData, resetFormData, resetSubscriptionData } =
     useSubscriptionStore();
   const { data: subscription } = useSubscriptionById(data?.subscription_id);
   const navigate = useNavigate();
+  const [isPreviewImage, setIsPreviewImage] = React.useState(false);
+  const [selectedImage, setSelectedImage] = React.useState("");
+
   const onBackToHome = () => {
     navigate("/");
     resetFormData();
     resetSubscriptionData();
+  };
+
+  const onPreviewImage = (image: string) => {
+    setIsPreviewImage(true);
+    setSelectedImage(image);
   };
 
   // useEffect(() => {
@@ -105,7 +115,12 @@ export function PaymentSuccessContent({ data }: { data: any }) {
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Bukti Transfer</span>
-                  <span className="underline text-link cursor-pointer">
+                  <span
+                    onClick={() =>
+                      onPreviewImage(subscription?.payment?.payment_proof)
+                    }
+                    className="underline text-link cursor-pointer"
+                  >
                     {subscription?.payment?.payment_proof}
                   </span>
                 </div>
@@ -134,6 +149,56 @@ export function PaymentSuccessContent({ data }: { data: any }) {
           </Card>
         </div>
       </div>
+
+      {isPreviewImage && (
+        <Transition appear show={isPreviewImage} as={Fragment}>
+          <Dialog
+            as="div"
+            className="relative z-10"
+            onClose={() => setIsPreviewImage(false)}
+          >
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-black/25" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 overflow-y-auto">
+              <div className="flex min-h-full items-center justify-center p-4 text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <Dialog.Panel className="w-full max-w-[30rem] transform overflow-hidden rounded-2xl bg-white p-8 text-left align-middle shadow-xl transition-all">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg font-medium leading-6 text-gray-900"
+                    >
+                      <div className="flex items-center gap-2 mb-2">
+                        Preview
+                      </div>
+                    </Dialog.Title>
+                    <div className="mt-2 flex justify-center max-h-[600px]">
+                      <img src={selectedImage} className="object-cover" />
+                    </div>
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition>
+      )}
     </div>
   );
 }

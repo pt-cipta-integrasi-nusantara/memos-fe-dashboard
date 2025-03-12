@@ -121,8 +121,9 @@ export function PaymentContent({ data }: { data?: any }) {
               </div>
               <div className="border-t-2 border-neutral-250 w-full h-1"></div>
               <div className="p-4 bg-[#E9F1FC] text-link rounded-[8px] mt-6">
-                Silakan melakukan transfer sebelum 24 Februari 2025, 23:59 WIB
-                untuk menghindari pembatalan otomatis.
+                Silakan melakukan transfer sebelum{" "}
+                {dayjs().add(1, "day").format("DD MMMM YYYY, HH:mm")} WIB untuk
+                menghindari pembatalan otomatis.
               </div>
               <div className="mt-6 text-[14px]">
                 <div id="identitas-diri" className="mt-4">

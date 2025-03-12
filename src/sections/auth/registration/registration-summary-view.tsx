@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { twMerge } from "tailwind-merge";
 import { Button, Card } from "../../../components/uiComponent";
 import { useRegistrationFormStore } from "../../../stores/registration/useRegistrationFormStore";
@@ -7,12 +7,15 @@ import toast from "react-hot-toast";
 import * as sessionService from "../../../utils/session";
 import { useNavigate } from "react-router-dom";
 import { spesialisData } from "../../../components/constants/constants";
+import { Dialog, Transition } from "@headlessui/react";
 
 export function SummaryContent() {
   const navigate = useNavigate();
   const { formData } = useRegistrationFormStore();
   const { mutate: registerAccount } = useRegister();
   const [isChecked, setIsChecked] = React.useState(false);
+  const [isPreviewImage, setIsPreviewImage] = React.useState(false);
+  const [selectedImage, setSelectedImage] = React.useState("");
 
   const onCheckAgreement = () => {
     setIsChecked((prev) => !prev);
@@ -92,6 +95,11 @@ export function SummaryContent() {
     });
   };
 
+  const onPreviewImage = (image: string) => {
+    setIsPreviewImage(true);
+    setSelectedImage(image);
+  };
+
   return (
     <div
       id="summary"
@@ -133,7 +141,10 @@ export function SummaryContent() {
                 </div>
                 <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
                   <span>Unggah KTP</span>
-                  <span className="underline text-link">
+                  <span
+                    className="cursor-pointer underline text-link"
+                    onClick={() => onPreviewImage(formData?.identity_photo)}
+                  >
                     {formData?.identity_photo_name}
                   </span>
                 </div>
@@ -187,7 +198,10 @@ export function SummaryContent() {
                 </div>
                 <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
                   <span>Unggah STR</span>
-                  <span className="underline text-link">
+                  <span
+                    className="cursor-pointer underline text-link"
+                    onClick={() => onPreviewImage(formData?.str_photo)}
+                  >
                     {formData?.str_photo_name}
                   </span>
                 </div>
@@ -209,7 +223,10 @@ export function SummaryContent() {
                 </div>
                 <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
                   <span>Unggah Tempat Usaha</span>
-                  <span className="underline text-link">
+                  <span
+                    className="cursor-pointer underline text-link"
+                    onClick={() => onPreviewImage(formData?.facility_photo)}
+                  >
                     {formData?.facility_photo_name}
                   </span>
                 </div>
@@ -260,6 +277,56 @@ export function SummaryContent() {
           </Card>
         </div>
       </div>
+
+      {isPreviewImage && (
+        <Transition appear show={isPreviewImage} as={Fragment}>
+          <Dialog
+            as="div"
+            className="relative z-10"
+            onClose={() => setIsPreviewImage(false)}
+          >
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-black/25" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 overflow-y-auto">
+              <div className="flex min-h-full items-center justify-center p-4 text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <Dialog.Panel className="w-full max-w-[30rem] transform overflow-hidden rounded-2xl bg-white p-8 text-left align-middle shadow-xl transition-all">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg font-medium leading-6 text-gray-900"
+                    >
+                      <div className="flex items-center gap-2 mb-2">
+                        Preview
+                      </div>
+                    </Dialog.Title>
+                    <div className="mt-2 flex justify-center max-h-[600px]">
+                      <img src={selectedImage} className="object-cover" />
+                    </div>
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition>
+      )}
     </div>
   );
 }
