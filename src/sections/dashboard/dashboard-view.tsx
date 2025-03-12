@@ -49,6 +49,10 @@ export function DashboardContent() {
     (item) => item.payload?.subscription_id !== undefined
   );
 
+  const hasPaymentId = myActivity?.some(
+    (item) => item.payload?.payment_id !== undefined
+  );
+
   return (
     <div
       id="dashboard"
@@ -65,11 +69,11 @@ export function DashboardContent() {
               meningkatkan media sosial profesional Anda.
             </p>
           </div>
-          <Button
+          {/* <Button
             className="flex-none w-40 md:w-auto mt-2 md:mt-0 h-0"
             isPrimary
             title="Lengkapi Profil"
-          />
+          /> */}
         </Card>
         <Card className="mt-4 p-0 py-4">
           <div className="flex items-center gap-2  p-4">
@@ -84,12 +88,12 @@ export function DashboardContent() {
 
           <div id="aktivitas-content">
             {myActivity?.map((activity, index) => (
-              <div className="flex flex-col md:flex-row justify-between  py-4 px-8 ">
-                <div
-                  className={`flex gap-2 ${
-                    index % 2 === 0 ? "bg-blue-50" : ""
-                  } `}
-                >
+              <div
+                className={`flex flex-col md:flex-row justify-between  py-4 px-8  ${
+                  index % 2 === 0 ? "bg-blue-50 w-full" : ""
+                } `}
+              >
+                <div className={`flex gap-2`}>
                   {activity?.image && (
                     <img
                       src={activity?.image}
@@ -114,18 +118,39 @@ export function DashboardContent() {
                         </span>
                       </div>
                     )}
-                    {activity?.payload && !activity?.payload?.choose_plan && (
-                      <div>
-                        <span
-                          className="cursor-pointer text-[14px] text-primary-500"
-                          onClick={() =>
-                            onToDetailRegistration(activity?.payload)
-                          }
-                        >
-                          Lihat detail
-                        </span>
-                      </div>
-                    )}
+
+                    {hasPaymentId &&
+                      activity?.details === "Konfirmasi Pembayaran Terkirim" &&
+                      activity?.payload &&
+                      !activity?.payload?.choose_plan && (
+                        <div>
+                          <span
+                            className="cursor-pointer text-[14px] text-primary-500"
+                            onClick={() =>
+                              onToDetailRegistration(activity?.payload)
+                            }
+                          >
+                            Lihat detail
+                          </span>
+                        </div>
+                      )}
+
+                    {!hasPaymentId &&
+                      activity?.details ===
+                        "Order langganan Clinix Anda masih menunggu pembayaran" &&
+                      activity?.payload &&
+                      !activity?.payload?.choose_plan && (
+                        <div>
+                          <span
+                            className="cursor-pointer text-[14px] text-primary-500"
+                            onClick={() =>
+                              onToDetailRegistration(activity?.payload)
+                            }
+                          >
+                            Lihat detail
+                          </span>
+                        </div>
+                      )}
                     {!hasSubscriptionId &&
                       activity?.payload?.choose_plan === true && (
                         <div>

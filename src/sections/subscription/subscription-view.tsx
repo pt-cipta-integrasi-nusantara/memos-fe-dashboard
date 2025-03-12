@@ -65,7 +65,7 @@ export function SubscriptionContent() {
   return (
     <div
       id="terms-condition"
-      className={twMerge("mb-24 p-4 lg:p-16", "max-w-[1200rem] mx-auto")}
+      className={twMerge("mb-24 p-4 lg:p-16", "max-w-[1000px] mx-auto")}
     >
       <div>
         <Card>
