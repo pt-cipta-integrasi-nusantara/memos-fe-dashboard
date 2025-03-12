@@ -4,10 +4,12 @@ import { useNavigate } from "react-router-dom";
 import { useSubscriptionStore } from "../../stores/subscription/useSubscriptionStore";
 import { formatRupiah } from "../../helpers/format-currency";
 import dayjs from "dayjs";
+import { useSubscriptionById } from "../../services/subscription/use-subscription-detail";
 
-export function PaymentSuccessContent() {
+export function PaymentSuccessContent({ data }: { data: any }) {
   const { subscriptionData, formData, resetFormData, resetSubscriptionData } =
     useSubscriptionStore();
+  const { data: subscription } = useSubscriptionById(data?.subscription_id);
   const navigate = useNavigate();
   const onBackToHome = () => {
     navigate("/");
@@ -50,10 +52,10 @@ export function PaymentSuccessContent() {
             <div className="flex flex-col gap-1 items-center mt-4">
               <p>Jumlah</p>
               <p className="text-[20px] text-primary-500 font-bold">
-                {formatRupiah(subscriptionData?.price)}
+                {formatRupiah(subscription?.plan?.price)}
               </p>
               <p>
-                {dayjs(subscriptionData?.pay_date).format("DD MMMM YYYY")} •
+                {dayjs(subscription?.plan?.pay_date).format("DD MMMM YYYY")} •
                 Pembayaran 82302393
               </p>
             </div>
@@ -75,13 +77,13 @@ export function PaymentSuccessContent() {
                     />
                     <span className="font-bold text-primary-500 text-[20px]">
                       {subscriptionData?.duration} –{" "}
-                      {formatRupiah(subscriptionData?.price)}
+                      {formatRupiah(subscription?.plan?.price)}
                     </span>
                   </div>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Tagihan Kepada</span>
-                  <span>{formData?.owner_name}</span>
+                  <span>{subscription?.payment?.bank_account?.owner_name}</span>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Metode Pembayaran</span>
@@ -89,26 +91,28 @@ export function PaymentSuccessContent() {
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Nama Pemilik Rekening</span>
-                  <span>{formData?.owner_name}</span>
+                  <span>{subscription?.payment?.bank_account?.owner_name}</span>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Nama Bank</span>
-                  <span>{formData?.bankAccount?.bank_name}</span>
+                  <span>{subscription?.payment?.bank_account?.bank_name}</span>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>No. Rekening</span>
-                  <span>{formData?.account_number}</span>
+                  <span>
+                    {subscription?.payment?.bank_account?.account_number}
+                  </span>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Bukti Transfer</span>
                   <span className="underline text-link cursor-pointer">
-                    {formData?.payment_proof_name}
+                    {subscription?.payment?.payment_proof}
                   </span>
                 </div>
                 <div className="flex flex-col md:flex-row justify-between md:items-center mt-4">
                   <span>Total Pembayaran</span>
                   <span className="text-[14px] font-bold">
-                    {formatRupiah(subscriptionData?.price)}
+                    {formatRupiah(subscription?.payment?.pay_amount)}
                   </span>
                 </div>
               </div>

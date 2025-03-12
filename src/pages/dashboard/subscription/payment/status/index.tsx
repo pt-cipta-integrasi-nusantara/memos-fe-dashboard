@@ -29,7 +29,7 @@ export default function PaymentStatusPage() {
         {data?.status === "Pending" ? (
           <PaymentInProgressContent data={data} />
         ) : data?.status === "Paid" ? (
-          <PaymentSuccessContent />
+          <PaymentSuccessContent data={data} />
         ) : (
           <PaymentFailedContent />
         )}
