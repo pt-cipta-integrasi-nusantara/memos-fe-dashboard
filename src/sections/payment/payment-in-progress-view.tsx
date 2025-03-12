@@ -39,7 +39,7 @@ export function PaymentInProgressContent({ data }: { data: any }) {
               <h1 className="text-[24px] font-bold">
                 Pembayaran Sedang Diproses
               </h1>
-              <p className="w-3/4 text-center">
+              <p className="w-full lg:w-3/4 text-center">
                 Terima kasih! Kami telah menerima konfirmasi pembayaran Anda.
                 Tim kami akan segera memverifikasi transaksi Anda.{" "}
               </p>
