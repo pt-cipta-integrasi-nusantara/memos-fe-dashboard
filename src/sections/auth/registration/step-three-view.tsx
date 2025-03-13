@@ -86,24 +86,32 @@ export function ProfesionForm() {
 
   useEffect(() => {
     setSelectedProvince(
-      provinceList?.find((item: any) => item?.id === formData["province"])
+      provinceList?.find(
+        (item: any) => item?.id === formData["facility_province"]
+      )
     );
     setSelectedCity(
-      cityList?.find((item: any) => item?.id === formData["city"])
+      cityList?.find((item: any) => item?.id === formData["facility_city"])
     );
     setSelectedDistrict(
-      districtList?.find((item: any) => item?.id === formData["sub_district"])
+      districtList?.find(
+        (item: any) => item?.id === formData["facility_sub_district"]
+      )
     );
     setSelectedVillage(
-      villageList?.find((item: any) => item?.id === formData["village"])
+      villageList?.find(
+        (item: any) => item?.id === formData["facility_village"]
+      )
     );
   });
 
   useEffect(() => {
     if (provinceList?.length > 0 && formData?.province) {
       setValue(
-        "province",
-        provinceList?.find((item) => item?.id === formData["province"]),
+        "facility_province",
+        provinceList?.find(
+          (item) => item?.id === formData["facility_province"]
+        ),
         { shouldValidate: true }
       );
     }
@@ -112,8 +120,8 @@ export function ProfesionForm() {
   useEffect(() => {
     if (cityList?.length > 0 && formData?.city) {
       setValue(
-        "city",
-        cityList?.find((item) => item?.id === formData["city"]),
+        "facility_city",
+        cityList?.find((item) => item?.id === formData["facility_city"]),
         { shouldValidate: true }
       );
     }
@@ -122,8 +130,10 @@ export function ProfesionForm() {
   useEffect(() => {
     if (districtList?.length > 0 && formData?.sub_district) {
       setValue(
-        "sub_district",
-        districtList?.find((item) => item?.id === formData["sub_district"]),
+        "facility_sub_district",
+        districtList?.find(
+          (item) => item?.id === formData["facility_sub_district"]
+        ),
         { shouldValidate: true }
       );
     }
@@ -132,8 +142,8 @@ export function ProfesionForm() {
   useEffect(() => {
     if (villageList?.length > 0 && formData?.village) {
       setValue(
-        "village",
-        villageList?.find((item) => item?.id === formData["village"]),
+        "facility_village",
+        villageList?.find((item) => item?.id === formData["facility_village"]),
         { shouldValidate: true }
       );
     }
@@ -150,7 +160,7 @@ export function ProfesionForm() {
   const getCities = async () => {
     await fetch(
       `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${
-        watch("province")?.id
+        watch("facility_province")?.id
       }.json`
     )
       .then((response) => response.json())
@@ -160,7 +170,7 @@ export function ProfesionForm() {
   const getDistricts = async () => {
     await fetch(
       `https://www.emsifa.com/api-wilayah-indonesia/api/districts/${
-        watch("city")?.id
+        watch("facility_city")?.id
       }.json`
     )
       .then((response) => response.json())
@@ -170,7 +180,7 @@ export function ProfesionForm() {
   const getVillages = async () => {
     await fetch(
       `https://www.emsifa.com/api-wilayah-indonesia/api/villages/${
-        watch("sub_district")?.id
+        watch("facility_sub_district")?.id
       }.json`
     )
       .then((response) => response.json())
@@ -182,22 +192,22 @@ export function ProfesionForm() {
   }, []);
 
   useEffect(() => {
-    if (watch("province") || selectedProvince) {
+    if (watch("facility_province") || selectedProvince) {
       getCities();
     }
-  }, [watch("province"), selectedProvince]);
+  }, [watch("facility_province"), selectedProvince]);
 
   useEffect(() => {
-    if (watch("city") || selectedCity) {
+    if (watch("facility_city") || selectedCity) {
       getDistricts();
     }
-  }, [watch("city"), selectedCity]);
+  }, [watch("facility_city"), selectedCity]);
 
   useEffect(() => {
-    if (watch("sub_district") || selectedDistrict) {
+    if (watch("facility_sub_district") || selectedDistrict) {
       getVillages();
     }
-  }, [watch("sub_district"), selectedDistrict]);
+  }, [watch("facility_sub_district"), selectedDistrict]);
 
   const onPreviousStep = () => {
     navigate("/registration/step/2");
@@ -241,9 +251,16 @@ export function ProfesionForm() {
     }
   };
 
-  const [isSameAddress, setIsSameAddress] = useState(true);
   const onToggleSameAddress = () => {
-    setIsSameAddress((prev) => !prev);
+    if (formData["isSameAddress"] === true) {
+      setFormData({
+        isSameAddress: false,
+      });
+    } else {
+      setFormData({
+        isSameAddress: true,
+      });
+    }
   };
 
   const onSubmit: SubmitHandler<any> = async () => {
@@ -827,7 +844,7 @@ export function ProfesionForm() {
                   className="accent-green-500 w-4 h-4"
                   id="same_address"
                   type="checkbox"
-                  checked={isSameAddress}
+                  checked={formData["isSameAddress"] === true}
                   onChange={onToggleSameAddress}
                 />
 
@@ -836,7 +853,7 @@ export function ProfesionForm() {
                 </label>
               </div>
 
-              {!isSameAddress && (
+              {formData["isSameAddress"] === false && (
                 <>
                   <div className="border-t-2 border-dashed border-neutral-400 w-full h-1"></div>
 
@@ -847,13 +864,13 @@ export function ProfesionForm() {
                       <div className="w-full flex flex-col gap-2">
                         <label
                           className="text-[14px] font-medium"
-                          htmlFor="province"
+                          htmlFor="facility_province"
                         >
                           Provinsi <span className="text-warning">*</span>
                         </label>
 
                         <Controller
-                          name="province"
+                          name="facility_province"
                           control={control}
                           defaultValue={selectedProvince}
                           rules={{
@@ -866,8 +883,8 @@ export function ProfesionForm() {
                             <Listbox
                               value={field.value}
                               onChange={(val) => {
-                                setFormData({ province: val?.id });
-                                setValue("province", val, {
+                                setFormData({ facility_province: val?.id });
+                                setValue("facility_province", val, {
                                   shouldValidate: true,
                                 });
                               }}
@@ -875,7 +892,7 @@ export function ProfesionForm() {
                               <div className="relative">
                                 <Listbox.Button
                                   className={`border relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none ${
-                                    formState?.errors?.province
+                                    formState?.errors?.facility_province
                                       ? "border-primary-500"
                                       : "border-neutral-100"
                                   }`}
@@ -933,21 +950,24 @@ export function ProfesionForm() {
                           )}
                         />
 
-                        {formState?.errors?.province && (
+                        {formState?.errors?.facility_province && (
                           <span className="text-primary-500">
-                            {formState?.errors?.province?.message as any}
+                            {
+                              formState?.errors?.facility_province
+                                ?.message as any
+                            }
                           </span>
                         )}
                       </div>
                       <div className="w-full flex flex-col gap-2">
                         <label
                           className="text-[14px] font-medium"
-                          htmlFor="city"
+                          htmlFor="facility_city"
                         >
                           Kota/Kabupaten <span className="text-warning">*</span>
                         </label>
                         <Controller
-                          name="city"
+                          name="facility_city"
                           control={control}
                           defaultValue={selectedCity}
                           rules={{
@@ -960,8 +980,8 @@ export function ProfesionForm() {
                             <Listbox
                               value={field.value}
                               onChange={(val) => {
-                                setFormData({ city: val?.id });
-                                setValue("city", val, {
+                                setFormData({ facility_city: val?.id });
+                                setValue("facility_city", val, {
                                   shouldValidate: true,
                                 });
                               }}
@@ -969,7 +989,7 @@ export function ProfesionForm() {
                               <div className="relative">
                                 <Listbox.Button
                                   className={`border relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none ${
-                                    formState?.errors?.city
+                                    formState?.errors?.facility_city
                                       ? "border-primary-500"
                                       : "border-neutral-100"
                                   }`}
@@ -1026,9 +1046,9 @@ export function ProfesionForm() {
                           )}
                         />
 
-                        {formState?.errors?.city && (
+                        {formState?.errors?.facility_city && (
                           <span className="text-primary-500">
-                            {formState?.errors?.city?.message as any}
+                            {formState?.errors?.facility_city?.message as any}
                           </span>
                         )}
                       </div>
@@ -1039,12 +1059,12 @@ export function ProfesionForm() {
                       <div className="w-full flex flex-col gap-2">
                         <label
                           className="text-[14px] font-medium"
-                          htmlFor="district"
+                          htmlFor="facility_sub_district"
                         >
                           Kecamatan <span className="text-warning">*</span>
                         </label>
                         <Controller
-                          name="sub_district"
+                          name="facility_sub_district"
                           control={control}
                           defaultValue={selectedDistrict}
                           rules={{
@@ -1057,8 +1077,8 @@ export function ProfesionForm() {
                             <Listbox
                               value={field.value}
                               onChange={(val) => {
-                                setFormData({ sub_district: val?.id });
-                                setValue("sub_district", val, {
+                                setFormData({ facility_sub_district: val?.id });
+                                setValue("facility_sub_district", val, {
                                   shouldValidate: true,
                                 });
                               }}
@@ -1066,7 +1086,7 @@ export function ProfesionForm() {
                               <div className="relative">
                                 <Listbox.Button
                                   className={`border relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none ${
-                                    formState?.errors?.sub_district
+                                    formState?.errors?.facility_sub_district
                                       ? "border-primary-500"
                                       : "border-neutral-100"
                                   }`}
@@ -1123,22 +1143,25 @@ export function ProfesionForm() {
                           )}
                         />
 
-                        {formState?.errors?.sub_district && (
+                        {formState?.errors?.facility_sub_district && (
                           <span className="text-primary-500">
-                            {formState?.errors?.sub_district?.message as any}
+                            {
+                              formState?.errors?.facility_sub_district
+                                ?.message as any
+                            }
                           </span>
                         )}
                       </div>
                       <div className="w-full flex flex-col gap-2">
                         <label
                           className="text-[14px] font-medium"
-                          htmlFor="village"
+                          htmlFor="facility_village"
                         >
                           Kelurahan <span className="text-warning">*</span>
                         </label>
 
                         <Controller
-                          name="village"
+                          name="facility_village"
                           control={control}
                           defaultValue={selectedVillage}
                           rules={{
@@ -1151,8 +1174,8 @@ export function ProfesionForm() {
                             <Listbox
                               value={field.value}
                               onChange={(val) => {
-                                setFormData({ village: val?.id });
-                                setValue("village", val, {
+                                setFormData({ facility_village: val?.id });
+                                setValue("facility_village", val, {
                                   shouldValidate: true,
                                 });
                               }}
@@ -1160,7 +1183,7 @@ export function ProfesionForm() {
                               <div className="relative">
                                 <Listbox.Button
                                   className={`border relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none ${
-                                    formState?.errors?.village
+                                    formState?.errors?.facility_village
                                       ? "border-primary-500"
                                       : "border-neutral-100"
                                   }`}
@@ -1217,9 +1240,12 @@ export function ProfesionForm() {
                           )}
                         />
 
-                        {formState?.errors?.village && (
+                        {formState?.errors?.facility_village && (
                           <span className="text-primary-500">
-                            {formState?.errors?.village?.message as any}
+                            {
+                              formState?.errors?.facility_village
+                                ?.message as any
+                            }
                           </span>
                         )}
                       </div>
@@ -1230,14 +1256,14 @@ export function ProfesionForm() {
                       <div className="flex flex-col gap-2 w-full">
                         <label
                           className="text-[14px] font-medium"
-                          htmlFor="street_address"
+                          htmlFor="facility_street_address"
                         >
                           Alamat
                           <span className="text-warning">*</span>
                         </label>
                         <input
-                          id="street_address"
-                          {...register("street_address", {
+                          id="facility_street_address"
+                          {...register("facility_street_address", {
                             required: {
                               value: true,
                               message: "Alamat wajib diisi",
@@ -1245,23 +1271,32 @@ export function ProfesionForm() {
                           })}
                           type="text"
                           className={`rounded-[8px] p-4 border focus:outline-none ${
-                            formState?.errors?.street_address
+                            formState?.errors?.facility_street_address
                               ? "border-primary-500"
                               : "border-neutral-100"
                           }`}
                           placeholder="Masukkan Alamat"
                           onChange={(e) => {
-                            setValue("street_address", e.target.value, {
-                              shouldValidate: true,
+                            setValue(
+                              "facility_street_address",
+                              e.target.value,
+                              {
+                                shouldValidate: true,
+                              }
+                            );
+                            setFormData({
+                              facility_street_address: e.target.value,
                             });
-                            setFormData({ street_address: e.target.value });
                           }}
-                          defaultValue={formData["street_address"]}
+                          defaultValue={formData["facility_street_address"]}
                         />
 
-                        {formState?.errors?.street_address && (
+                        {formState?.errors?.facility_street_address && (
                           <span className="text-primary-500">
-                            {formState?.errors?.street_address?.message as any}
+                            {
+                              formState?.errors?.facility_street_address
+                                ?.message as any
+                            }
                           </span>
                         )}
                       </div>
@@ -1269,39 +1304,43 @@ export function ProfesionForm() {
                         <div className="w-full flex flex-col gap-2">
                           <label
                             className="text-[14px] font-medium"
-                            htmlFor="detail_note"
+                            htmlFor="facility_detail_note"
                           >
                             Detail Alamat (Optional){" "}
                           </label>
                           <input
-                            id="detail_note"
-                            {...register("detail_note", { required: false })}
+                            id="facility_detail_note"
+                            {...register("facility_detail_note", {
+                              required: false,
+                            })}
                             type="text"
                             className="rounded-[8px] p-4 border border-neutral-100 focus:outline-none"
                             placeholder="Detail Alamat, No. Lantai"
                             onChange={(e) =>
-                              setFormData({ detail_note: e.target.value })
+                              setFormData({
+                                facility_detail_note: e.target.value,
+                              })
                             }
-                            defaultValue={formData["detail_note"]}
+                            defaultValue={formData["facility_detail_note"]}
                           />
                         </div>
                         <div className="w-full flex flex-col gap-2">
                           <label
                             className="text-[14px] font-medium"
-                            htmlFor="house_no"
+                            htmlFor="facility_house_no"
                           >
                             No. Rumah (Optional){" "}
                           </label>
                           <input
-                            id="house_no"
-                            {...register("house_no")}
+                            id="facility_house_no"
+                            {...register("facility_house_no")}
                             type="text"
                             className="rounded-[8px] p-4 border border-neutral-100 focus:outline-none"
                             placeholder="No. Rumah"
                             onChange={(e) =>
-                              setFormData({ house_no: e.target.value })
+                              setFormData({ facility_house_no: e.target.value })
                             }
-                            defaultValue={formData["house_no"]}
+                            defaultValue={formData["facility_house_no"]}
                           />
                         </div>
                       </div>
@@ -1312,14 +1351,14 @@ export function ProfesionForm() {
                       <div className="flex flex-col gap-2 lg:w-full">
                         <label
                           className="text-[14px] font-medium"
-                          htmlFor="postal_code"
+                          htmlFor="facility_postal_code"
                         >
                           Kode Pos
                           <span className="text-warning">*</span>
                         </label>
                         <input
-                          id="postal_code"
-                          {...register("postal_code", {
+                          id="facility_postal_code"
+                          {...register("facility_postal_code", {
                             required: {
                               value: true,
                               message: "Kode pos wajib diisi",
@@ -1333,16 +1372,21 @@ export function ProfesionForm() {
                           }`}
                           placeholder="Masukkan Kode Pos"
                           onChange={(e) => {
-                            setValue("postal_code", e.target.value, {
+                            setValue("facility_postal_code", e.target.value, {
                               shouldValidate: true,
                             });
-                            setFormData({ postal_code: e.target.value });
+                            setFormData({
+                              facility_postal_code: e.target.value,
+                            });
                           }}
-                          defaultValue={formData["postal_code"]}
+                          defaultValue={formData["facility_postal_code"]}
                         />
-                        {formState?.errors?.postal_code && (
+                        {formState?.errors?.facility_postal_code && (
                           <span className="text-primary-500">
-                            {formState?.errors?.postal_code?.message as any}
+                            {
+                              formState?.errors?.facility_postal_code
+                                ?.message as any
+                            }
                           </span>
                         )}
                       </div>
@@ -1350,39 +1394,39 @@ export function ProfesionForm() {
                         <div className="w-full flex flex-col gap-2">
                           <label
                             className="text-[14px] font-medium"
-                            htmlFor="rt_no"
+                            htmlFor="facility_rt_no"
                           >
                             RT
                           </label>
                           <input
-                            id="rt_no"
-                            {...register("rt_no", { required: false })}
+                            id="facility_rt_no"
+                            {...register("facility_rt_no", { required: false })}
                             type="text"
                             className="rounded-[8px] p-4 border border-neutral-100 focus:outline-none"
                             placeholder="Masukkan RT"
                             onChange={(e) =>
-                              setFormData({ rt_no: e.target.value })
+                              setFormData({ facility_rt_no: e.target.value })
                             }
-                            defaultValue={formData["rt_no"]}
+                            defaultValue={formData["facility_rt_no"]}
                           />
                         </div>
                         <div className="w-full flex flex-col gap-2">
                           <label
                             className="text-[14px] font-medium"
-                            htmlFor="rw_no"
+                            htmlFor="facility_rw_no"
                           >
                             RW
                           </label>
                           <input
                             id="rw_no"
-                            {...register("rw_no", { required: false })}
+                            {...register("facility_rw_no", { required: false })}
                             type="text"
                             className="rounded-[8px] p-4 border border-neutral-100 focus:outline-none"
                             placeholder="Masukkan RW"
                             onChange={(e) =>
-                              setFormData({ rw_no: e.target.value })
+                              setFormData({ facility_rw_no: e.target.value })
                             }
-                            defaultValue={formData["rw_no"]}
+                            defaultValue={formData["facility_rw_no"]}
                           />
                         </div>
                       </div>
@@ -1393,7 +1437,7 @@ export function ProfesionForm() {
                       <div className="w-full flex flex-col gap-2">
                         <label
                           className="text-[14px] font-medium"
-                          htmlFor="telp"
+                          htmlFor="facility_telp"
                         >
                           No. Telp
                           {/* <span className="text-warning">*</span> */}
@@ -1401,40 +1445,18 @@ export function ProfesionForm() {
                         <div className="relative rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2">
                           <span>021</span>
                           <input
-                            id="telp"
-                            {...register("telp", { required: false })}
+                            id="facility_telp"
+                            {...register("facility_telp", { required: false })}
                             type="number"
                             min={0}
                             className="focus:outline-none"
                             placeholder="Masukkan No. Telp"
                             onChange={(e) =>
-                              setFormData({ telp: e.target.value })
+                              setFormData({ facility_telp: e.target.value })
                             }
-                            defaultValue={formData["telp"]}
+                            defaultValue={formData["facility_telp"]}
                           />
                         </div>
-                      </div>
-                      <div className="w-full flex flex-col gap-2">
-                        <label
-                          className="text-[14px] font-medium"
-                          htmlFor="pinpoint"
-                        >
-                          Pinpoint (Optional)
-                          {/* <span className="text-warning">*</span> */}
-                        </label>
-                        <input
-                          id="pinpoint"
-                          {...register("pinpoint")}
-                          type="text"
-                          onChange={(e) => {
-                            setValue("full_name", e.target.value, {
-                              shouldValidate: true,
-                            });
-                            setFormData({ full_name: e.target.value });
-                          }}
-                          className={`rounded-[8px] p-4 border focus:outline-none`}
-                          placeholder="Pinpoint"
-                        />
                       </div>
                     </div>
                   </div>

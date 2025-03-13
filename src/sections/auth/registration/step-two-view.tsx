@@ -319,6 +319,14 @@ export function IdentityForm() {
                             value: true,
                             message: "NIK wajib diisi",
                           },
+                          minLength: {
+                            value: 16,
+                            message: "NIK harus berisi 16 karakter",
+                          },
+                          maxLength: {
+                            value: 16,
+                            message: "NIK harus berisi 16 karakter",
+                          },
                         })}
                         type="number"
                         onChange={(e) => {
@@ -623,10 +631,15 @@ export function IdentityForm() {
                       <span>+62</span>
                       <input
                         id="phone_number"
-                        {...register("phone_number")}
+                        {...register("phone_number", {
+                          pattern: {
+                            value: /^8\d{10,14}$/,
+                            message: "Pastikan format Nomor HP sesuai",
+                          },
+                        })}
                         type="number"
                         className="focus:outline-none w-full"
-                        placeholder="Masukkan No. HP"
+                        placeholder="Contoh : +62 8123456789"
                         min={0}
                         onChange={(e) => {
                           setValue("phone_number", e.target.value, {
@@ -637,6 +650,11 @@ export function IdentityForm() {
                         defaultValue={formData["phone_number"]}
                       />
                     </div>
+                    {formState?.errors?.phone_number && (
+                      <span className="text-primary-500">
+                        {formState?.errors?.phone_number?.message as any}
+                      </span>
+                    )}
                   </div>
                   <div className="w-full flex flex-col gap-2">
                     <label
@@ -660,6 +678,11 @@ export function IdentityForm() {
                           required: {
                             value: true,
                             message: "Kata sandi wajib diisi",
+                          },
+                          pattern: {
+                            value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/,
+                            message:
+                              "Password harus berisi huruf besar, huruf kecil, angka, dan minimal 8 karakter",
                           },
                         })}
                         type={isHidePassword ? "password" : "text"}
@@ -1295,28 +1318,6 @@ export function IdentityForm() {
                         defaultValue={formData["telp"]}
                       />
                     </div>
-                  </div>
-                  <div className="w-full flex flex-col gap-2">
-                    <label
-                      className="text-[14px] font-medium"
-                      htmlFor="pinpoint"
-                    >
-                      Pinpoint (Optional)
-                      {/* <span className="text-warning">*</span> */}
-                    </label>
-                    <input
-                      id="pinpoint"
-                      {...register("pinpoint")}
-                      type="text"
-                      onChange={(e) => {
-                        setValue("full_name", e.target.value, {
-                          shouldValidate: true,
-                        });
-                        setFormData({ full_name: e.target.value });
-                      }}
-                      className={`rounded-[8px] p-4 border focus:outline-none`}
-                      placeholder="Pinpoint"
-                    />
                   </div>
                 </div>
               </div>

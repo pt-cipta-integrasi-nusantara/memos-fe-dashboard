@@ -201,7 +201,7 @@ export function SubscriptionContent() {
                     id="nik"
                     {...register("no_memos", { required: true })}
                     type="text"
-                    value={me?.user?.no_rm}
+                    value={me?.memos_id}
                     className="text-neutral-300 rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 focus:outline-none w-full"
                     readOnly
                     disabled
@@ -218,7 +218,7 @@ export function SubscriptionContent() {
                     id="gender"
                     {...register("gender", { required: true })}
                     type="text"
-                    value={me?.user?.gender}
+                    value={me?.user?.gender === "1" ? "Laki-laki" : "Perempuan"}
                     className="text-neutral-300 rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 focus:outline-none w-full"
                     readOnly
                     disabled
@@ -275,7 +275,7 @@ export function SubscriptionContent() {
                     id="profesion"
                     {...register("profesion", { required: true })}
                     type="text"
-                    value={me?.user?.profession_id}
+                    value={me?.user?.profession_id === 1 ? "Dokter" : "-"}
                     className="text-neutral-300 rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 focus:outline-none w-full"
                     readOnly
                     disabled

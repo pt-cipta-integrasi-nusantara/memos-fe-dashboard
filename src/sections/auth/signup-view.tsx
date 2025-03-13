@@ -61,9 +61,11 @@ export function SignupContent() {
               )
             ) {
               setIsShouldRequestOtp(true);
+              setIsShowLoginMessage(false);
               setInitialTime(150);
             } else {
               setIsShowLoginMessage(true);
+              setIsShouldRequestOtp(false);
             }
           },
         }
