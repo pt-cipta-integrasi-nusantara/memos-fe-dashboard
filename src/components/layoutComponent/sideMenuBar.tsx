@@ -1,11 +1,6 @@
-import { Disclosure, Listbox, Transition } from "@headlessui/react";
-import {
-  ArrowDownIcon,
-  DashboardIcon,
-  ProfileIcon,
-  WorkIcon,
-} from "../iconsComponent";
-import { Fragment, useState } from "react";
+// import { Disclosure, Listbox, Transition } from "@headlessui/react";
+import { DashboardIcon } from "../iconsComponent";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 interface SelectProps {
@@ -31,11 +26,11 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
   const navigate = useNavigate();
   const location = useLocation();
   const asPath = location.pathname + location.search;
-  const [selectedOrg, setSelectedOrg] = useState<SelectProps>(orgList[0]);
+  // const [selectedOrg, setSelectedOrg] = useState<SelectProps>(orgList[0]);
 
-  const onClickWorkspace = (workspaceItem: string) => {
-    navigate(`/workspace/${workspaceItem}`);
-  };
+  // const onClickWorkspace = (workspaceItem: string) => {
+  //   navigate(`/workspace/${workspaceItem}`);
+  // };
 
   return (
     <nav>

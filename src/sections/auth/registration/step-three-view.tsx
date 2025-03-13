@@ -251,9 +251,7 @@ export function ProfesionForm() {
     }
   };
 
-  const [isSameAddress, setIsSameAddress] = useState(true);
   const onToggleSameAddress = () => {
-    setIsSameAddress((prev) => !prev);
     if (formData["isSameAddress"] === true) {
       setFormData({
         isSameAddress: false,
