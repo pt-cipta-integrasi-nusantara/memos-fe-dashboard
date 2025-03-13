@@ -16,6 +16,7 @@ export function SummaryContent() {
   const [isChecked, setIsChecked] = React.useState(false);
   const [isPreviewImage, setIsPreviewImage] = React.useState(false);
   const [selectedImage, setSelectedImage] = React.useState("");
+  const isSameAddress = formData["isSameAddress"] === true;
 
   const onCheckAgreement = () => {
     setIsChecked((prev) => !prev);
@@ -65,19 +66,43 @@ export function SummaryContent() {
         photo: formData?.facility_photo,
         ref_address: {
           country: "1",
-          province: formData?.province,
-          city: formData?.city,
-          sub_district: formData?.sub_district,
-          village: formData?.village,
-          street_address: formData?.street_address,
-          postal_code: formData?.postal_code,
-          phone_number: formData?.telp,
-          detail_note: formData?.detail_note,
-          house_no: Number(formData?.house_no),
-          rt_no: Number(formData?.rt_no),
-          rw_no: Number(formData?.rw_no),
-          latitude: formData?.latitude,
-          longitude: formData?.longitude,
+          province: isSameAddress
+            ? formData?.province
+            : formData?.facility_province,
+          city: isSameAddress ? formData?.city : formData?.facility_city,
+          sub_district: isSameAddress
+            ? formData?.sub_district
+            : formData?.facility_sub_district,
+          village: isSameAddress
+            ? formData?.village
+            : formData?.facility_village,
+          street_address: isSameAddress
+            ? formData?.street_address
+            : formData?.facility_street_address,
+          postal_code: isSameAddress
+            ? formData?.postal_code
+            : formData?.facility_postal_code,
+          phone_number: isSameAddress
+            ? formData?.telp
+            : formData?.facility_telp,
+          detail_note: isSameAddress
+            ? formData?.detail_note
+            : formData?.facility_detail_note,
+          house_no: isSameAddress
+            ? Number(formData?.house_no)
+            : Number(formData?.facility_house_no),
+          rt_no: isSameAddress
+            ? Number(formData?.rt_no)
+            : Number(formData?.facility_rt_no),
+          rw_no: isSameAddress
+            ? Number(formData?.rw_no)
+            : Number(formData?.facility_rt_no),
+          latitude: isSameAddress
+            ? formData?.latitude
+            : formData?.facility_latitude,
+          longitude: isSameAddress
+            ? formData?.longitude
+            : formData?.facility_longitude,
         },
       },
     };
@@ -233,8 +258,18 @@ export function SummaryContent() {
                 <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
                   <span>Alamat</span>
                   <span>
-                    {formData?.street_address} {formData?.detail_note} RT
-                    {formData?.rt_no} RW{formData?.rw_no}
+                    {isSameAddress
+                      ? formData?.street_address
+                      : formData?.facility_street_address}{" "}
+                    {isSameAddress
+                      ? formData?.detail_note
+                      : formData?.facility_detail_note}{" "}
+                    RT
+                    {isSameAddress
+                      ? formData?.rt_no
+                      : formData?.facility_rt_no}{" "}
+                    RW
+                    {isSameAddress ? formData?.rw_no : formData?.facility_rw_no}
                   </span>
                 </div>
               </div>

@@ -70,7 +70,7 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
           </div>
         </li>
 
-        <Listbox value={selectedOrg} onChange={setSelectedOrg}>
+        {/* <Listbox value={selectedOrg} onChange={setSelectedOrg}>
           <div className="relative">
             <Listbox.Button className="py-4 flex items-center w-full cursor-pointer px-8">
               <span className="block truncate">
@@ -316,7 +316,7 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
               </span>
             )}
           </div>
-        </li>
+        </li> */}
       </ul>
     </nav>
   );
