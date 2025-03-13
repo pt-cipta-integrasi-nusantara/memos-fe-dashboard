@@ -309,7 +309,7 @@ export function IdentityForm() {
                       className={`relative rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 ${
                         formState.errors?.identity_number
                           ? "border-primary-500"
-                          : "border-neutral0100"
+                          : "border-neutral-100"
                       }`}
                     >
                       <input
