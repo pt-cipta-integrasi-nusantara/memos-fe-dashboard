@@ -60,10 +60,10 @@ export function SignupContent() {
                 "email has been used, please use another email"
               )
             ) {
-              setIsShowLoginMessage(true);
-            } else {
               setIsShouldRequestOtp(true);
               setInitialTime(150);
+            } else {
+              setIsShowLoginMessage(true);
             }
           },
         }
