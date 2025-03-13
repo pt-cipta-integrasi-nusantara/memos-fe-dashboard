@@ -11,8 +11,9 @@ export function LoginContent() {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [isHidePassword, setIsHidePassword] = useState(true);
+  const [isWrongPassword, setIsWrongPassword] = useState(false);
   const { resetFormData } = useRegistrationFormStore();
-  const { register, handleSubmit } = useForm<any>();
+  const { register, handleSubmit, setValue } = useForm<any>();
   const form = useRef(null) as any;
 
   useEffect(() => {
@@ -20,14 +21,21 @@ export function LoginContent() {
   }, []);
 
   const onSubmit: SubmitHandler<any> = async (formData: any) => {
-    console.log(formData, "formlogin");
     try {
       await login(formData);
     } catch (error: any) {
+      console.log(error?.message);
       const reason = error?.message
         ? error?.message?.split("~")[0]
         : "Terjadi error, silakan coba lagi";
-      toast.error(reason);
+      if (
+        error?.message ===
+        "crypto/bcrypt: hashedPassword is not the hash of the given password ~ undefined"
+      ) {
+        setIsWrongPassword(true);
+      } else {
+        toast.error(reason);
+      }
     }
     // TODO: login function
   };
@@ -66,13 +74,25 @@ export function LoginContent() {
                       <label className="text-[14px] font-medium" htmlFor="name">
                         Kata Sandi
                       </label>
-                      <div className="relative rounded-[8px] p-4 border border-neutral-100 flex items-center justify-between gap-2">
+                      <div
+                        className={`relative rounded-[8px] p-4 border ${
+                          isWrongPassword
+                            ? "border-primary-500"
+                            : "border-neutral-100"
+                        } flex items-center justify-between gap-2`}
+                      >
                         <input
                           id="password"
                           {...register("password", { required: true })}
                           type={isHidePassword ? "password" : "text"}
                           className="focus:outline-none w-full"
                           placeholder="Masukkan Kata Sandi"
+                          onChange={(e) => {
+                            setIsWrongPassword(false);
+                            setValue("password", e.target.value, {
+                              shouldValidate: true,
+                            });
+                          }}
                         />
 
                         <img
@@ -84,6 +104,12 @@ export function LoginContent() {
                           className="cursor-pointer"
                         />
                       </div>
+
+                      {isWrongPassword && (
+                        <span className="text-primary-500">
+                          Kata sandi salah
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
