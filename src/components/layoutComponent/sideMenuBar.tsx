@@ -1,26 +1,26 @@
 // import { Disclosure, Listbox, Transition } from "@headlessui/react";
 import { DashboardIcon } from "../iconsComponent";
-import { useState } from "react";
+// import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-interface SelectProps {
-  label: string;
-  id: string;
-  logo: string;
-}
+// interface SelectProps {
+//   label: string;
+//   id: string;
+//   logo: string;
+// }
 
-const orgList = [
-  {
-    id: "1",
-    label: "PT. Setio Husodo",
-    logo: "/assets/images/logo-setio.png",
-  },
-  {
-    id: "2",
-    label: "PT. Healthy",
-    logo: "/assets/images/logo-healthy.png",
-  },
-];
+// const orgList = [
+//   {
+//     id: "1",
+//     label: "PT. Setio Husodo",
+//     logo: "/assets/images/logo-setio.png",
+//   },
+//   {
+//     id: "2",
+//     label: "PT. Healthy",
+//     logo: "/assets/images/logo-healthy.png",
+//   },
+// ];
 
 function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
   const navigate = useNavigate();
