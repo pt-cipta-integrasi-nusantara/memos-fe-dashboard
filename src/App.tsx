@@ -20,7 +20,11 @@ export default function App() {
           content="RMbsBIUpcLYYwPo4uGuQf1xftz_DMnhb87bv13cscGM"
         />
       </head>
-      <section className="w-full mx-auto text-neutral-500">
+      <section
+        className={`w-full mx-auto text-neutral-500 ${
+          !isAuth ? "dual-bg" : ""
+        }`}
+      >
         <Navbar setIsExpandedMenubar={setIsExpandedMenubar} />
         <div className="flex">
           {isAuth && !asPath.includes("/subscription") && (
