@@ -73,18 +73,11 @@ export function SignupContent() {
     } else {
       setIsShowOTPModal(true);
       setIsRequested(true);
-      requestAuthCode(
-        {
-          contact_type: "email",
-          contact_value: formData?.email,
-          token_type: "mfa_otp",
-        }
-        // {
-        //   onSuccess: () => {
-        //     setIsShouldRequestOtp(false);
-        //   },
-        // }
-      );
+      requestAuthCode({
+        contact_type: "email",
+        contact_value: formData?.email,
+        token_type: "mfa_otp",
+      });
     }
   };
 

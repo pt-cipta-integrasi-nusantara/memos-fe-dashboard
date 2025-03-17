@@ -40,6 +40,10 @@ export function LoginContent() {
     // TODO: login function
   };
 
+  const onClickResetPassword = () => {
+    navigate("/forgot-password");
+  };
+
   return (
     <div
       id="signup"
@@ -115,7 +119,10 @@ export function LoginContent() {
                 </div>
               </div>
 
-              <p className="mt-2 text-[14px] underline text-link cursor-pointer">
+              <p
+                onClick={onClickResetPassword}
+                className="mt-2 text-[14px] underline text-link cursor-pointer"
+              >
                 Lupa kata sandi?
               </p>
 
