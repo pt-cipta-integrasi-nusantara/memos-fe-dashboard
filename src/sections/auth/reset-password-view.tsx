@@ -17,7 +17,7 @@ export function ResetPasswordContent() {
     resetFormData();
   }, []);
 
-  const onSubmit: SubmitHandler<any> = async (formData: any) => {
+  const onSubmit: SubmitHandler<any> = async (_formData: any) => {
     try {
       setIsSuccess(true);
     } catch (error: any) {}
