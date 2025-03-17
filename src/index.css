@@ -45,3 +45,10 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance:textfield; /* Firefox */
 }
+
+.dual-bg {
+  @apply bg-no-repeat;
+  background-image: url('/public/assets/images/bg-1.png'), url('/public/assets/images/bg-2.png');
+  background-position: left bottom, right bottom;
+  background-size: 30% auto, 30% auto;
+}
