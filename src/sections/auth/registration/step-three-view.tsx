@@ -663,6 +663,11 @@ export function ProfesionForm() {
                       }
                     </span>
                   )}
+
+                  <span className="text-[13px] text-neutral-300">
+                    Diisi dengan nama dokter apabila tidak terhubung dengan
+                    badan usaha
+                  </span>
                 </div>
                 <div className="w-full flex flex-col gap-2">
                   <label
