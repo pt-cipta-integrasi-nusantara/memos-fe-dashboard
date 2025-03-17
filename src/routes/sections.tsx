@@ -8,6 +8,12 @@ import { useAuth } from "../utils/auth/providers";
 // Unauthenticated Pages
 export const SignInPage = lazy(() => import("../pages/login/index"));
 export const SignUpPage = lazy(() => import("../pages/index"));
+export const ForgotPasswordPage = lazy(
+  () => import("../pages/forgot-password/index")
+);
+export const ResetPasswordPage = lazy(
+  () => import("../pages/reset-password/index")
+);
 export const SignUpStepOnePage = lazy(
   () => import("../pages/registration/step/1")
 );
@@ -134,6 +140,14 @@ export function Router() {
     {
       path: "/login",
       element: <SignInPage />,
+    },
+    {
+      path: "/forgot-password",
+      element: <ForgotPasswordPage />,
+    },
+    {
+      path: "/reset-password",
+      element: <ResetPasswordPage />,
     },
     {
       path: "*",
