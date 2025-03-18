@@ -102,8 +102,8 @@ function NavMenuDesktop({
           {/* <MenubarIcon className="cursor-pointer" onClick={onToggleMenubar} /> */}
           <img
             src="/assets/logo/logo-memos.png"
-            width={112}
-            height={32}
+            width={228}
+            height={60}
             alt="logo-memos"
             onClick={onClickLogo}
             className="cursor-pointer"

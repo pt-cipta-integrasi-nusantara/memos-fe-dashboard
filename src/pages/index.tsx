@@ -4,7 +4,7 @@ export default function SignupPage() {
   return (
     <>
       <head>
-        <title>Clinix</title>
+        <title>Memos</title>
         <meta
           name="description"
           content="Sistem CRM Healthcare yang dirancang untuk beradaptasi dengan anda bekerja, mengintegrasikan berbagai aspek operasional kesehatan ke dalam satu platform yang intuitif dan mudah digunakan"

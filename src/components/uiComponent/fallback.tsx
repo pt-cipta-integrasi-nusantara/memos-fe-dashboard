@@ -8,8 +8,8 @@ export function Loader() {
       }}
     >
       <circle
-        fill="#45A03F"
-        stroke="#45A03F"
+        fill="#F75252"
+        stroke="#F75252"
         stroke-width="15"
         r="15"
         cx="40"
@@ -26,8 +26,8 @@ export function Loader() {
         ></animate>
       </circle>
       <circle
-        fill="#45A03F"
-        stroke="#45A03F"
+        fill="#F75252"
+        stroke="#F75252"
         stroke-width="15"
         r="15"
         cx="100"
@@ -44,8 +44,8 @@ export function Loader() {
         ></animate>
       </circle>
       <circle
-        fill="#45A03F"
-        stroke="#45A03F"
+        fill="#F75252"
+        stroke="#F75252"
         stroke-width="15"
         r="15"
         cx="160"
