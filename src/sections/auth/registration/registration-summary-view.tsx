@@ -295,14 +295,12 @@ export function SummaryContent() {
             <div className="flex flex-col-reverse lg:flex-row  justify-between gap-4 mt-4">
               <Button
                 onClick={onClickToEdit}
-                isClinix
                 isPrimary={false}
                 title="Edit Data"
                 className="w-full"
               />
               <Button
                 isDisabled={!isChecked}
-                isClinix
                 isPrimary
                 onClick={onFinishRegistration}
                 title="Kirim Permintaan Berlangganan"

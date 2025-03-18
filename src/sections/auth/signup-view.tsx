@@ -208,7 +208,6 @@ export function SignupContent() {
 
               <Button
                 isPrimary
-                isClinix
                 title={isShouldRequestOtp ? "Kirim OTP" : "Daftar"}
                 className="w-full mt-4 focus:outline-none"
                 type="submit"
@@ -310,11 +309,7 @@ export function SignupContent() {
                         alamat email : {censoredEmail}
                       </p>
                     </div>
-                    <PinInput
-                      isClinix
-                      length={6}
-                      onComplete={onVerifyAuthCode}
-                    />
+                    <PinInput length={6} onComplete={onVerifyAuthCode} />
                     <div className="mt-8">
                       <Countdown
                         initialTime={initialTime}

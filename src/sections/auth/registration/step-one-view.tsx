@@ -169,7 +169,6 @@ export function TermsConditionContent() {
           </div>
           <Button
             onClick={onNextStep}
-            isClinix
             isPrimary
             className="w-full mt-4"
             title="Selanjutnya"

@@ -69,7 +69,6 @@ export function SummaryFinishContent() {
             <div className="flex flex-col-reverse lg:flex-row  justify-between gap-4 mt-4">
               <Button
                 onClick={onClickToHome}
-                isClinix
                 isPrimary
                 title="Ke Halaman Utama"
                 className="w-full"

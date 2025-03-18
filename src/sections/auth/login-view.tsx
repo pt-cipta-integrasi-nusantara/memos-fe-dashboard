@@ -127,7 +127,6 @@ export function LoginContent() {
               </p>
 
               <Button
-                isClinix
                 isPrimary
                 title="Masuk"
                 className="w-full mt-4 focus:outline-none"

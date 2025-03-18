@@ -1326,7 +1326,6 @@ export function IdentityForm() {
           <Card className="mt-8">
             <Button
               type="submit"
-              isClinix
               isPrimary
               className="w-full"
               title="Selanjutnya"

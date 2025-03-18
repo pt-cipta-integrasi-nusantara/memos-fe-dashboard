@@ -1470,13 +1470,7 @@ export function ProfesionForm() {
             </div>
           </Card>
           <Card className="mt-8">
-            <Button
-              type="submit"
-              isClinix
-              isPrimary
-              className="w-full"
-              title="Simpan"
-            />
+            <Button type="submit" isPrimary className="w-full" title="Simpan" />
           </Card>
         </form>
       </div>

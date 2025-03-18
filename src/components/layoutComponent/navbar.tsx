@@ -100,16 +100,6 @@ function NavMenuDesktop({
         {/* Logo */}
         <div id="logo" className="flex items-center gap-4">
           {/* <MenubarIcon className="cursor-pointer" onClick={onToggleMenubar} /> */}
-          {!isLoggedIn && (
-            <img
-              src="/assets/logo/logo-clinix.png"
-              width={122}
-              height={48}
-              alt="logo-clinix"
-              onClick={onClickLogo}
-              className="cursor-pointer"
-            />
-          )}
           <img
             src="/assets/logo/logo-memos.png"
             width={112}
@@ -137,12 +127,12 @@ function NavMenuDesktop({
             {pathname === "/login" ? (
               <div id="right" className="hidden lg:flex gap-3 items-center">
                 <span>Belum memiliki akun?</span>
-                <Button isClinix title="Daftar" onClick={onClickLogo} />
+                <Button title="Daftar" onClick={onClickLogo} />
               </div>
             ) : (
               <div id="right" className="hidden lg:flex gap-3 items-center">
                 <span>Sudah memiliki akun?</span>
-                <Button isClinix title="Masuk" onClick={onClickToLogin} />
+                <Button title="Masuk" onClick={onClickToLogin} />
               </div>
             )}
           </>

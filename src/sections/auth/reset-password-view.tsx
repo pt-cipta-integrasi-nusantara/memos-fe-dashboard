@@ -164,7 +164,6 @@ export function ResetPasswordContent() {
                 </div>
 
                 <Button
-                  isClinix
                   isPrimary
                   title="Simpan"
                   className="w-full mt-4 focus:outline-none"
