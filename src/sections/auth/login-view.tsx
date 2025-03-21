@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { twMerge } from "tailwind-merge";
 import { Button, Card } from "../../components/uiComponent";
 import { useRegistrationFormStore } from "../../stores/registration/useRegistrationFormStore";
+import dayjs from "dayjs";
 
 export function LoginContent() {
   const navigate = useNavigate();
@@ -14,6 +15,7 @@ export function LoginContent() {
   const [isWrongPassword, setIsWrongPassword] = useState(false);
   const { resetFormData } = useRegistrationFormStore();
   const { register, handleSubmit, setValue } = useForm<any>();
+  const lastLogin = localStorage.getItem("last_login");
   const form = useRef(null) as any;
 
   useEffect(() => {
@@ -55,6 +57,11 @@ export function LoginContent() {
             <Card>
               <h2 className="font-bold text-[30px]">Login</h2>
               <h3 className="mt-2">Masukkan data Anda untuk login</h3>
+              {lastLogin && (
+                <span className="mt-2 block text-sm text-neutral-300">
+                  Terakhir masuk: {dayjs(lastLogin).format("DD-MM-YYYY HH:mm")}
+                </span>
+              )}
               <div className="flex flex-col gap-8 mt-6">
                 <div className="flex flex-col gap-4">
                   {/* Row 1 */}

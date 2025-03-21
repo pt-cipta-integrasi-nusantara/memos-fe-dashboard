@@ -1,8 +1,10 @@
+import dayjs from "dayjs";
 import { User } from "../services/auth/types";
 
 const STORAGE_KEY = 'session';
 const USER_KEY = "user"
 const IS_LOGGEDIN_KEY = "isloggedin"
+const SESSION_TIMESTAMP_KEY = "last_login"
 
 export function getSession() {
     return window.localStorage.getItem(STORAGE_KEY);
@@ -14,6 +16,7 @@ export function getIsLoggedin() {
 
 export function setSession(newSession: string) {
   window.localStorage.setItem(STORAGE_KEY, newSession);
+  window.localStorage.setItem(SESSION_TIMESTAMP_KEY, dayjs().format("YYYY-MM-DD HH:mm:ss"));
 }
 
 export function setIsLoggedin(isLoggedin: string) {
