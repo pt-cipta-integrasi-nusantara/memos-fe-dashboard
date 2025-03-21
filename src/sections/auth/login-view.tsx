@@ -93,6 +93,8 @@ export function LoginContent() {
                         placeholder="Masukkan Email Anda"
                         autoComplete="off"
                         autoCorrect="off"
+                        spellCheck="false"
+                        aria-autocomplete="none"
                       />
                       {lastLogin && (
                         <span className="block text-sm text-neutral-300">
@@ -127,6 +129,7 @@ export function LoginContent() {
                               shouldValidate: true,
                             });
                           }}
+                          autoComplete="new-password"
                         />
 
                         <img
