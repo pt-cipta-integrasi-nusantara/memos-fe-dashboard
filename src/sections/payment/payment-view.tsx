@@ -38,7 +38,7 @@ export function PaymentContent({ data }: { data?: any }) {
   }, [data]);
 
   const onPreviousStep = () => {
-    navigate("//subscription");
+    navigate("/subscription");
   };
 
   const handleFotoBuktiBayar = (e: ChangeEvent<HTMLInputElement>) => {
@@ -166,7 +166,10 @@ export function PaymentContent({ data }: { data?: any }) {
                         {data?.plan?.duration?.Months} Months –{" "}
                         {formatRupiah(subscriptionData?.price)}
                       </span>
-                      <span className="text-primary-500 underline cursor-pointer">
+                      <span
+                        onClick={() => navigate("/subscription")}
+                        className="text-primary-500 underline cursor-pointer"
+                      >
                         Ubah
                       </span>
                     </div>
