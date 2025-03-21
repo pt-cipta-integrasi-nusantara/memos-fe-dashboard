@@ -1,12 +1,18 @@
+import ReCAPTCHA from "react-google-recaptcha";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../utils/auth/providers";
-import { useEffect, useRef, useState } from "react";
+import { createRef, useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { twMerge } from "tailwind-merge";
 import { Button, Card } from "../../components/uiComponent";
 import { useRegistrationFormStore } from "../../stores/registration/useRegistrationFormStore";
 import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/id"; // Import Indonesian locale
+
+dayjs.extend(relativeTime);
+dayjs.locale("id"); // Set locale to Indonesian
 
 export function LoginContent() {
   const navigate = useNavigate();
@@ -17,12 +23,24 @@ export function LoginContent() {
   const { register, handleSubmit, setValue } = useForm<any>();
   const lastLogin = localStorage.getItem("last_login");
   const form = useRef(null) as any;
+  const [isCaptchaDone, setIsCaptchaDone] = useState(false);
+  const recaptchaRef = createRef<any>();
+
+  const onChange = (token: string | null) => {
+    if (token !== null) {
+      setIsCaptchaDone(true);
+    } else {
+      setIsCaptchaDone(false);
+    }
+  };
 
   useEffect(() => {
     resetFormData();
   }, []);
 
   const onSubmit: SubmitHandler<any> = async (formData: any) => {
+    recaptchaRef?.current?.reset();
+
     try {
       await login(formData);
     } catch (error: any) {
@@ -57,11 +75,7 @@ export function LoginContent() {
             <Card>
               <h2 className="font-bold text-[30px]">Login</h2>
               <h3 className="mt-2">Masukkan data Anda untuk login</h3>
-              {lastLogin && (
-                <span className="mt-2 block text-sm text-neutral-300">
-                  Terakhir masuk: {dayjs(lastLogin).format("DD-MM-YYYY HH:mm")}
-                </span>
-              )}
+
               <div className="flex flex-col gap-8 mt-6">
                 <div className="flex flex-col gap-4">
                   {/* Row 1 */}
@@ -76,7 +90,15 @@ export function LoginContent() {
                         type="email"
                         className="rounded-md p-4 border border-neutral-100 focus:outline-none"
                         placeholder="Masukkan Email Anda"
+                        // autoComplete="off"
+                        autoCorrect="off"
                       />
+                      {lastLogin && (
+                        <span className="block text-sm text-neutral-300">
+                          Aktifitas terakhir email ini{" "}
+                          {dayjs(lastLogin).fromNow(true)} yang lalu
+                        </span>
+                      )}
                     </div>
                   </div>
                   {/* Row 1 */}
@@ -132,9 +154,16 @@ export function LoginContent() {
               >
                 Lupa kata sandi?
               </p>
-
+              {/* <div className="my-4">
+                <ReCAPTCHA
+                  ref={recaptchaRef}
+                  sitekey="6LdeYPsqAAAAAIuCPajsLD0jK9vMGRwMjxqAomu4"
+                  onChange={onChange}
+                />
+              </div> */}
               <Button
                 isPrimary
+                disabled={!isCaptchaDone}
                 title="Masuk"
                 className="w-full mt-4 focus:outline-none"
                 type="submit"
