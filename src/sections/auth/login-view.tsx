@@ -43,6 +43,7 @@ export function LoginContent() {
 
     try {
       await login(formData);
+      setIsCaptchaDone(false);
     } catch (error: any) {
       console.log(error?.message);
       const reason = error?.message
@@ -90,7 +91,7 @@ export function LoginContent() {
                         type="email"
                         className="rounded-md p-4 border border-neutral-100 focus:outline-none"
                         placeholder="Masukkan Email Anda"
-                        // autoComplete="off"
+                        autoComplete="off"
                         autoCorrect="off"
                       />
                       {lastLogin && (
@@ -154,18 +155,22 @@ export function LoginContent() {
               >
                 Lupa kata sandi?
               </p>
-              {/* <div className="my-4">
+              <div className="my-4">
                 <ReCAPTCHA
                   ref={recaptchaRef}
-                  sitekey="6LdeYPsqAAAAAIuCPajsLD0jK9vMGRwMjxqAomu4"
+                  sitekey="6LckcvsqAAAAACoMcl-VqcpiXzzw_kbA2pxcQ7xR"
                   onChange={onChange}
                 />
-              </div> */}
+              </div>
               <Button
                 isPrimary
                 disabled={!isCaptchaDone}
                 title="Masuk"
-                className="w-full mt-4 focus:outline-none"
+                className={`w-full mt-4 focus:outline-none ${
+                  !isCaptchaDone
+                    ? "bg-neutral-250 text-neutral-400 border-neutral-400 cursor-not-allowed"
+                    : ""
+                }`}
                 type="submit"
               />
               <div className="mt-4 flex items-center gap-3">
