@@ -1,7 +1,8 @@
-import { useLocation } from "react-router-dom";
-import { HomeIcon } from "../iconsComponent";
+import { useLocation, useNavigate } from "react-router-dom";
+import { HomeIcon, ProfileIcon } from "../iconsComponent";
 
 function Navmenu() {
+  const navigate = useNavigate();
   const location = useLocation();
   const asPath = location.pathname + location.search;
   const menus = [
@@ -41,31 +42,37 @@ function Navmenu() {
     //   ),
     // },
 
-    // {
-    //   path: "/profile",
-    //   label: "Profile",
-    //   icon: (
-    //     <ProfileIcon
-    //       className={`mt-4 w-[20px] h-[20px] ${
-    //         asPath.includes("/profile") ? "text-primary-500" : ""
-    //       }`}
-    //     />
-    //   ),
-    // },
+    {
+      path: "/profile",
+      label: "Profile",
+      icon: (
+        <ProfileIcon
+          className={`mt-4 w-[20px] h-[20px] ${
+            asPath.includes("/profile") ? "text-primary-500" : ""
+          }`}
+        />
+      ),
+    },
   ];
+
+  const handleRoute = (path: string) => {
+    navigate(`${path}`);
+  };
+
   return (
     <nav className="bg-white w-full border-t border-neutral-250">
       <ul className="flex justify-left px-16 gap-8">
         {menus?.map((menu) => (
           <li
+            onClick={() => handleRoute(menu?.path)}
             className={`${
-              asPath.includes(menu?.path)
+              asPath === menu.path
                 ? "bg-gradient-to-b from-[#FFEFEF] via-white to-white via-50%"
                 : ""
             }  pb-4 flex items-center cursor-pointer`}
           >
             <div className="flex flex-col items-center gap-3 relative">
-              {asPath.includes(menu?.path) && (
+              {asPath === menu.path && (
                 <div className="absolute top-0 w-[72px] h-[4px]">
                   <img
                     src="/assets/icons/bottom-menu.svg"
@@ -79,9 +86,7 @@ function Navmenu() {
               {menu?.icon}
               <span
                 className={`${
-                  asPath.includes(menu?.path)
-                    ? "font-bold text-primary-500"
-                    : ""
+                  asPath === menu.path ? "font-bold text-primary-500" : ""
                 }`}
               >
                 {menu?.label}

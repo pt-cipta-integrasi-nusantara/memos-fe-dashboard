@@ -57,6 +57,8 @@ export const DashboardSubscriptionPaymentStatusPage = lazy(
   () => import("../pages/dashboard/subscription/payment/status")
 );
 
+export const ProfilePage = lazy(() => import("../pages/profile"));
+
 const renderFallback = (
   <div className="flex items-center justify-center h-full">
     <Loader />
@@ -75,6 +77,10 @@ export function Router() {
       ),
       children: [
         { path: "/", element: <DashboardHomePage />, index: true },
+        {
+          path: "/profile",
+          element: <ProfilePage />,
+        },
         {
           path: "/subscription",
           element: <DashboardSubscriptionPage />,

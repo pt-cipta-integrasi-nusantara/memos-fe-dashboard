@@ -130,6 +130,8 @@ export function LoginContent() {
                             });
                           }}
                           autoComplete="new-password"
+                          autoCorrect="off"
+                          spellCheck="false"
                         />
 
                         <img

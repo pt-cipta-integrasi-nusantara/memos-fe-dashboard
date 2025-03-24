@@ -17,6 +17,9 @@ import {
 import { Button } from "../../components/uiComponent";
 import { useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { useAuth } from "../../utils/auth/providers";
+import { useMe } from "../../services/auth/use-me";
+import dayjs from "dayjs";
 
 interface AccountContainerProps {
   form: any;
@@ -226,7 +229,9 @@ function AccountContainer({
 }
 
 export function ProfileContent() {
+  const { logout } = useAuth();
   const { register, handleSubmit } = useForm<any>();
+  const { data: me } = useMe();
   const [openedSection, setOpenedSection] = useState("profile");
   const form = useRef(null) as any;
 
@@ -237,10 +242,14 @@ export function ProfileContent() {
   const onSubmit: SubmitHandler<any> = async () => {
     // TODO Submit handler
   };
+
+  const handleLogout = async () => {
+    await logout();
+  };
   return (
     <div id="profile" className={twMerge("max-w-full mx-auto")}>
       <div className="flex">
-        <div className="w-full lg:w-1/4 h-screen border-r border-neutral-250 p-4 lg:p-8">
+        <div className="w-full lg:w-1/4 h-screen border-r border-neutral-250 p-4 lg:p-8 mb-[8rem] md:mb-[6rem]">
           <div className="flex items-center gap-5">
             <ProfileHomeIcon className="w-[16px] h-[16px]" />
             <ChevronRightColorIcon
@@ -248,7 +257,7 @@ export function ProfileContent() {
                 openedSection === "" ? "text-primary-500" : ""
               }`}
             />
-            <span>Tony Moly</span>
+            <span>{me?.full_name}</span>
           </div>
           <div className="flex items-center gap-2 mt-8">
             <img
@@ -258,14 +267,14 @@ export function ProfileContent() {
               alt="ava"
             />
             <div className="flex flex-col gap-2">
-              <h1 className="text-[24px] font-bold">Tony Moly</h1>
-              <span>No. Memos: 48188</span>
+              <h1 className="text-[24px] font-bold">{me?.full_name}</h1>
+              <span>No. Memos: {me?.memos_id}</span>
               <div className="flex items-center gap-1">
                 <div className="bg-[#FFE5ED] rounded-full px-4 py-1 text-[#E40044]">
-                  Perempuan
+                  {me?.user?.gender === "1" ? "Laki-laki" : "Perempuan"}
                 </div>
                 <div className="bg-neutral-200 rounded-full px-4 py-1 text-neutral-300">
-                  31 Tahun
+                  {dayjs().diff(dayjs(me?.user?.birth_date), "year")} Tahun
                 </div>
               </div>
             </div>
@@ -406,7 +415,7 @@ export function ProfileContent() {
           <div className="border-t-2 mt-6 border-neutral-250 w-full h-1"></div>
 
           <div
-            onClick={() => onClickMenu("logout")}
+            onClick={handleLogout}
             className="flex flex-col gap-2 cursor-pointer mt-4"
           >
             <div className="flex justify-between items-center">
