@@ -274,7 +274,10 @@ export function ProfesionForm() {
   return (
     <div
       id="terms-condition"
-      className={twMerge("mb-24 p-4 lg:p-16", "max-w-[1200rem] mx-auto")}
+      className={twMerge(
+        "mb-24 p-4 text-[14px] lg:p-16",
+        "max-w-[1200rem] mx-auto"
+      )}
     >
       <div className="lg:mx-36">
         <form ref={form} onSubmit={handleSubmit(onSubmit)}>
@@ -330,7 +333,7 @@ export function ProfesionForm() {
                         >
                           <div className="relative">
                             <Listbox.Button
-                              className={`border relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none ${
+                              className={`border relative w-full cursor-default rounded-md bg-white p-[10px] text-[14px] text-left focus:outline-none ${
                                 formState?.errors?.profession_id
                                   ? "border-primary-500"
                                   : "border-neutral-100"
@@ -422,7 +425,7 @@ export function ProfesionForm() {
                         >
                           <div className="relative">
                             <Listbox.Button
-                              className={`border relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none ${
+                              className={`border relative w-full cursor-default rounded-md bg-white p-[10px] text-[14px] text-left focus:outline-none ${
                                 formState?.errors?.smf_id
                                   ? "border-primary-500"
                                   : "border-neutral-100"
@@ -503,7 +506,7 @@ export function ProfesionForm() {
                         },
                       })}
                       type="text"
-                      className={`rounded-[8px] p-4 border focus:outline-none ${
+                      className={`rounded-[8px] p-[10px] text-[14px] border focus:outline-none ${
                         formState?.errors?.str_no
                           ? "border-primary-500"
                           : "border-neutral-100"
@@ -545,7 +548,7 @@ export function ProfesionForm() {
                           },
                         })}
                         type="date"
-                        className={`rounded-[8px] p-4 border focus:outline-none ${
+                        className={`rounded-[8px] p-[10px] text-[14px] border focus:outline-none ${
                           formState?.errors?.expires_date
                             ? "border-primary-500"
                             : "border-neutral-100"
@@ -574,7 +577,7 @@ export function ProfesionForm() {
                         <span className="text-warning">*</span>
                       </label>
                       <div
-                        className={`relative rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 ${
+                        className={`relative rounded-[8px] p-[10px] text-[14px] border border-neutral-100 flex items-center gap-2 ${
                           formState.errors?.str_photo
                             ? "border-primary-500"
                             : "border-neutral-100"
@@ -639,7 +642,7 @@ export function ProfesionForm() {
                       },
                     })}
                     type="text"
-                    className={`rounded-[8px] p-4 border focus:outline-none ${
+                    className={`rounded-[8px] p-[10px] text-[14px] border focus:outline-none ${
                       formState?.errors?.facility_organization_name
                         ? "border-primary-500"
                         : "border-neutral-100"
@@ -686,7 +689,7 @@ export function ProfesionForm() {
                       },
                     })}
                     type="text"
-                    className={`rounded-[8px] p-4 border focus:outline-none ${
+                    className={`rounded-[8px] p-[10px] text-[14px] border focus:outline-none ${
                       formState?.errors?.facility_name
                         ? "border-primary-500"
                         : "border-neutral-100"
@@ -741,7 +744,7 @@ export function ProfesionForm() {
                       >
                         <div className="relative">
                           <Listbox.Button
-                            className={`border relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none ${
+                            className={`border relative w-full cursor-default rounded-md bg-white p-[10px] text-[14px] text-left focus:outline-none ${
                               formState?.errors?.facility_type
                                 ? "border-primary-500"
                                 : "border-neutral-100"
@@ -813,7 +816,7 @@ export function ProfesionForm() {
                     Unggah Foto Tempat Klinik/Usaha (Opsional)
                   </label>
                   <div
-                    className={`relative rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 ${
+                    className={`relative rounded-[8px] p-[10px] text-[14px] border border-neutral-100 flex items-center gap-2 ${
                       formState.errors?.facility_photo
                         ? "border-primary-500"
                         : "border-neutral-100"
@@ -888,7 +891,10 @@ export function ProfesionForm() {
                             <Listbox
                               value={field.value}
                               onChange={(val) => {
-                                setFormData({ facility_province: val?.id });
+                                setFormData({
+                                  facility_province: val?.id,
+                                  facility_province_name: val?.name,
+                                });
                                 setValue("facility_province", val, {
                                   shouldValidate: true,
                                 });
@@ -896,7 +902,7 @@ export function ProfesionForm() {
                             >
                               <div className="relative">
                                 <Listbox.Button
-                                  className={`border relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none ${
+                                  className={`border relative w-full cursor-default rounded-md bg-white p-[10px] text-[14px] text-left focus:outline-none ${
                                     formState?.errors?.facility_province
                                       ? "border-primary-500"
                                       : "border-neutral-100"
@@ -985,7 +991,10 @@ export function ProfesionForm() {
                             <Listbox
                               value={field.value}
                               onChange={(val) => {
-                                setFormData({ facility_city: val?.id });
+                                setFormData({
+                                  facility_city: val?.id,
+                                  facility_city_name: val?.name,
+                                });
                                 setValue("facility_city", val, {
                                   shouldValidate: true,
                                 });
@@ -993,7 +1002,7 @@ export function ProfesionForm() {
                             >
                               <div className="relative">
                                 <Listbox.Button
-                                  className={`border relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none ${
+                                  className={`border relative w-full cursor-default rounded-md bg-white p-[10px] text-[14px] text-left focus:outline-none ${
                                     formState?.errors?.facility_city
                                       ? "border-primary-500"
                                       : "border-neutral-100"
@@ -1082,7 +1091,10 @@ export function ProfesionForm() {
                             <Listbox
                               value={field.value}
                               onChange={(val) => {
-                                setFormData({ facility_sub_district: val?.id });
+                                setFormData({
+                                  facility_sub_district: val?.id,
+                                  facility_sub_district_name: val?.name,
+                                });
                                 setValue("facility_sub_district", val, {
                                   shouldValidate: true,
                                 });
@@ -1090,7 +1102,7 @@ export function ProfesionForm() {
                             >
                               <div className="relative">
                                 <Listbox.Button
-                                  className={`border relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none ${
+                                  className={`border relative w-full cursor-default rounded-md bg-white p-[10px] text-[14px] text-left focus:outline-none ${
                                     formState?.errors?.facility_sub_district
                                       ? "border-primary-500"
                                       : "border-neutral-100"
@@ -1179,7 +1191,10 @@ export function ProfesionForm() {
                             <Listbox
                               value={field.value}
                               onChange={(val) => {
-                                setFormData({ facility_village: val?.id });
+                                setFormData({
+                                  facility_village: val?.id,
+                                  facility_village_name: val?.name,
+                                });
                                 setValue("facility_village", val, {
                                   shouldValidate: true,
                                 });
@@ -1187,7 +1202,7 @@ export function ProfesionForm() {
                             >
                               <div className="relative">
                                 <Listbox.Button
-                                  className={`border relative w-full cursor-default rounded-md bg-white py-4 pl-4 pr-10 text-left focus:outline-none ${
+                                  className={`border relative w-full cursor-default rounded-md bg-white p-[10px] text-[14px] text-left focus:outline-none ${
                                     formState?.errors?.facility_village
                                       ? "border-primary-500"
                                       : "border-neutral-100"
@@ -1275,7 +1290,7 @@ export function ProfesionForm() {
                             },
                           })}
                           type="text"
-                          className={`rounded-[8px] p-4 border focus:outline-none ${
+                          className={`rounded-[8px] p-[10px] text-[14px] border focus:outline-none ${
                             formState?.errors?.facility_street_address
                               ? "border-primary-500"
                               : "border-neutral-100"
@@ -1319,7 +1334,7 @@ export function ProfesionForm() {
                               required: false,
                             })}
                             type="text"
-                            className="rounded-[8px] p-4 border border-neutral-100 focus:outline-none"
+                            className="rounded-[8px] p-[10px] text-[14px] border border-neutral-100 focus:outline-none"
                             placeholder="Detail Alamat, No. Lantai"
                             onChange={(e) =>
                               setFormData({
@@ -1340,7 +1355,7 @@ export function ProfesionForm() {
                             id="facility_house_no"
                             {...register("facility_house_no")}
                             type="text"
-                            className="rounded-[8px] p-4 border border-neutral-100 focus:outline-none"
+                            className="rounded-[8px] p-[10px] text-[14px] border border-neutral-100 focus:outline-none"
                             placeholder="No. Rumah"
                             onChange={(e) =>
                               setFormData({ facility_house_no: e.target.value })
@@ -1370,7 +1385,7 @@ export function ProfesionForm() {
                             },
                           })}
                           type="text"
-                          className={`rounded-[8px] p-4 border focus:outline-none ${
+                          className={`rounded-[8px] p-[10px] text-[14px] border focus:outline-none ${
                             formState?.errors?.postal_code
                               ? "border-primary-500"
                               : "border-neutral-100"
@@ -1407,7 +1422,7 @@ export function ProfesionForm() {
                             id="facility_rt_no"
                             {...register("facility_rt_no", { required: false })}
                             type="text"
-                            className="rounded-[8px] p-4 border border-neutral-100 focus:outline-none"
+                            className="rounded-[8px] p-[10px] text-[14px] border border-neutral-100 focus:outline-none"
                             placeholder="Masukkan RT"
                             onChange={(e) =>
                               setFormData({ facility_rt_no: e.target.value })
@@ -1426,7 +1441,7 @@ export function ProfesionForm() {
                             id="rw_no"
                             {...register("facility_rw_no", { required: false })}
                             type="text"
-                            className="rounded-[8px] p-4 border border-neutral-100 focus:outline-none"
+                            className="rounded-[8px] p-[10px] text-[14px] border border-neutral-100 focus:outline-none"
                             placeholder="Masukkan RW"
                             onChange={(e) =>
                               setFormData({ facility_rw_no: e.target.value })
@@ -1447,7 +1462,7 @@ export function ProfesionForm() {
                           No. Telp
                           {/* <span className="text-warning">*</span> */}
                         </label>
-                        <div className="relative rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2">
+                        <div className="relative rounded-[8px] p-[10px] text-[14px] border border-neutral-100 flex items-center gap-2">
                           <span>021</span>
                           <input
                             id="facility_telp"

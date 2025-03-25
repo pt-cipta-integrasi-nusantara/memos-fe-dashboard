@@ -126,18 +126,15 @@ export function SummaryContent() {
   };
 
   return (
-    <div
-      id="summary"
-      className={twMerge("mb-24 p-4 lg:p-16", "max-w-[80rem] mx-auto")}
-    >
-      <div className="lg:mx-36">
+    <div id="summary" className={twMerge("mb-24 p-4", "max-w-[560px] mx-auto")}>
+      <div>
         <div>
           <Card>
             <div className="text-center">
-              <h2 className="font-bold text-[18px] lg:text-[30px]">
+              <h2 className="font-bold text-[18px] lg:text-[25px]">
                 Ringkasan Pendaftaran
               </h2>
-              <h3 className="mt-2 text-[14px] lg:text-base">
+              <h3 className="mt-2 text-[14px]">
                 Pastikan semua data di bawah ini sudah benar sebelum
                 melanjutkan:
               </h3>
@@ -195,9 +192,16 @@ export function SummaryContent() {
                 </div>
                 <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
                   <span>Alamat</span>
-                  <span>
-                    {formData?.street_address} {formData?.detail_note} RT
-                    {formData?.rt_no} RW{formData?.rw_no}
+                  <span className="w-1/2 text-right">
+                    {formData?.street_address} {formData?.detail_note}
+                    {", "}
+                    {formData?.rt_no ? `RT ${formData?.rt_no}` : null}{" "}
+                    {formData?.rw_no ? `RW ${formData?.rw_no}` : null}
+                    {", "}
+                    {formData?.sub_district_name}
+                    {", "} {formData?.village_name}
+                    {", "} {formData?.city_name}
+                    {", "} {formData?.province_name}
                   </span>
                 </div>
               </div>
@@ -257,19 +261,48 @@ export function SummaryContent() {
                 </div>
                 <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
                   <span>Alamat</span>
-                  <span>
+                  <span className="w-1/2 text-right">
                     {isSameAddress
                       ? formData?.street_address
                       : formData?.facility_street_address}{" "}
                     {isSameAddress
                       ? formData?.detail_note
-                      : formData?.facility_detail_note}{" "}
-                    RT
+                      : formData?.facility_detail_note}
+                    {", "}
                     {isSameAddress
                       ? formData?.rt_no
-                      : formData?.facility_rt_no}{" "}
-                    RW
-                    {isSameAddress ? formData?.rw_no : formData?.facility_rw_no}
+                      : formData?.facility_rt_no
+                      ? `RT ${
+                          isSameAddress
+                            ? formData?.rt_no
+                            : formData?.facility_rt_no
+                        }`
+                      : null}{" "}
+                    {isSameAddress
+                      ? formData?.rw_no
+                      : formData?.facility_rw_no
+                      ? `RW ${
+                          isSameAddress
+                            ? formData?.rw_no
+                            : formData?.facility_rw_no
+                        }`
+                      : null}
+                    {", "}
+                    {isSameAddress
+                      ? formData?.sub_district_name
+                      : formData?.facility_sub_district_name}
+                    {", "}{" "}
+                    {isSameAddress
+                      ? formData?.village_name
+                      : formData?.facility_village_name}
+                    {", "}{" "}
+                    {isSameAddress
+                      ? formData?.city_name
+                      : formData?.facility_city_name}
+                    {", "}{" "}
+                    {isSameAddress
+                      ? formData?.province_name
+                      : formData?.facility_province_name}
                   </span>
                 </div>
               </div>
@@ -297,14 +330,14 @@ export function SummaryContent() {
                 onClick={onClickToEdit}
                 isPrimary={false}
                 title="Edit Data"
-                className="w-full"
+                className="w-full text-base"
               />
               <Button
                 isDisabled={!isChecked}
                 isPrimary
                 onClick={onFinishRegistration}
                 title="Kirim Permintaan Berlangganan"
-                className="w-full"
+                className="w-full text-base"
               />
             </div>
           </Card>
