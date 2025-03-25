@@ -68,7 +68,10 @@ export function LoginContent() {
   return (
     <div
       id="signup"
-      className={twMerge("mb-24 p-4 lg:p-16", "max-w-[60rem] mx-auto")}
+      className={twMerge(
+        "min-h-screen mb-24 p-4 lg:p-16",
+        "max-w-[60rem] mx-auto"
+      )}
     >
       <div className="lg:mx-36">
         <div>

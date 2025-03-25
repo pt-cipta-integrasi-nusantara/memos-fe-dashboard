@@ -48,12 +48,12 @@ const Countdown: React.FC<CountdownProps> = ({
       {isRequested ? (
         <span>
           Kirim ulang kode dalam{" "}
-          <span className="text-green-500">{formatTime(timeLeft)}</span>
+          <span className="text-primary-500">{formatTime(timeLeft)}</span>
         </span>
       ) : (
         <span
           onClick={onClickRequestCode}
-          className="cursor-pointer text-green-500"
+          className="cursor-pointer text-primary-500"
         >
           Kirim ulang permintaan kode
         </span>

@@ -135,7 +135,10 @@ export function SignupContent() {
   return (
     <div
       id="signup"
-      className={twMerge("mb-24 p-4 lg:p-16", "max-w-[60rem] mx-auto")}
+      className={twMerge(
+        "min-h-screen mb-24 p-4 lg:p-16",
+        "max-w-[60rem] mx-auto"
+      )}
     >
       <div className="lg:mx-36">
         <div>
@@ -166,7 +169,7 @@ export function SignupContent() {
                           },
                         })}
                         type="email"
-                        className={`rounded-md p-4 border border-neutral-100 focus:outline-none ${
+                        className={`rounded-md p-[10px] text-[14px] border border-neutral-100 focus:outline-none ${
                           (formState?.errors?.email ||
                             isShouldRequestOtp ||
                             isShowLoginMessage) &&

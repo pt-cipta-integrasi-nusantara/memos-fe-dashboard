@@ -25,13 +25,16 @@ export function ResetPasswordContent() {
   };
 
   const onBackToHome = () => {
-    navigate("/");
+    navigate("/login");
   };
 
   return (
     <div
       id="reset-password"
-      className={twMerge("mb-24 p-4 lg:p-16", "max-w-[60rem] mx-auto")}
+      className={twMerge(
+        "min-h-screen mb-24 p-4 lg:p-16",
+        "max-w-[60rem] mx-auto"
+      )}
     >
       <div className="lg:mx-36">
         {!isSuccess ? (
@@ -52,7 +55,7 @@ export function ResetPasswordContent() {
                           Kata Sandi
                         </label>
                         <div
-                          className={`relative rounded-[8px] p-4 border ${
+                          className={`relative rounded-[8px] p-[10px] text-[14px] border ${
                             formState.errors.password
                               ? "border-primary-500"
                               : "border-neutral-100"
@@ -111,7 +114,7 @@ export function ResetPasswordContent() {
                           Konfirmasi Kata Sandi
                         </label>
                         <div
-                          className={`relative rounded-[8px] p-4 border ${
+                          className={`relative rounded-[8px] p-[10px] text-[14px] border ${
                             formState.errors.confirm_new_password
                               ? "border-primary-500"
                               : "border-neutral-100"
