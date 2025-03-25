@@ -77,7 +77,7 @@ export function LoginContent() {
         <div>
           <form ref={form} onSubmit={handleSubmit(onSubmit)}>
             <Card>
-              <h2 className="font-bold text-[30px]">Login</h2>
+              <h2 className="font-bold text-[20px] lg:text-[24px]">Login</h2>
               <h3 className="mt-2">Masukkan data Anda untuk login</h3>
 
               <div className="flex flex-col gap-8 mt-6">
@@ -92,7 +92,7 @@ export function LoginContent() {
                         id="email"
                         {...register("email", { required: true })}
                         type="email"
-                        className="rounded-md p-4 border border-neutral-100 focus:outline-none"
+                        className="rounded-md p-[10px] border border-neutral-100 focus:outline-none"
                         placeholder="Masukkan Email Anda"
                         autoComplete="off"
                         autoCorrect="off"
@@ -114,7 +114,7 @@ export function LoginContent() {
                         Kata Sandi
                       </label>
                       <div
-                        className={`relative rounded-[8px] p-4 border ${
+                        className={`relative rounded-[8px] p-[10px] border ${
                           isWrongPassword
                             ? "border-primary-500"
                             : "border-neutral-100"

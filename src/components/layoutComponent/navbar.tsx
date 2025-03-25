@@ -106,7 +106,7 @@ function NavMenuDesktop({
             height={60}
             alt="logo-memos"
             onClick={onClickLogo}
-            className="cursor-pointer"
+            className="cursor-pointer w-[160px] lg:w-[228px]"
           />
         </div>
 

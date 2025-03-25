@@ -144,7 +144,7 @@ export function SignupContent() {
         <div>
           <form ref={form} onSubmit={handleSubmit(onSubmit)}>
             <Card>
-              <h2 className="font-bold text-[30px]">Daftar</h2>
+              <h2 className="font-bold text-[20px] lg:text-[24px]">Daftar</h2>
               <h3 className="mt-2">
                 Masukkan email dan kata sandi untuk melanjutkan akses ke akun
                 Anda

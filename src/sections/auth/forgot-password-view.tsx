@@ -108,7 +108,9 @@ export function ForgotPasswordContent() {
         <div>
           <form ref={form} onSubmit={handleSubmit(onSubmit)}>
             <Card>
-              <h2 className="font-bold text-[30px]">Lupa Kata Sandi</h2>
+              <h2 className="font-bold text-[20px] lg:text-[24px]">
+                Lupa Kata Sandi
+              </h2>
               <h3 className="mt-2">
                 Masukkan Email Anda untuk mengirimkan kode OTP
               </h3>

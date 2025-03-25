@@ -23,7 +23,7 @@ export function SummaryFinishContent() {
                 alt="finish"
                 className="mx-auto"
               />
-              <h2 className="font-bold text-[18px] lg:text-[30px]">
+              <h2 className="font-bold text-[18px] lg:text-[20px] lg:text-[24px]">
                 Pendaftaran Berhasil
               </h2>
               <h3 className="mt-2 text-[14px] lg:text-base">

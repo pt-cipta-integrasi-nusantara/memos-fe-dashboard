@@ -41,7 +41,9 @@ export function ResetPasswordContent() {
           <div>
             <form ref={form} onSubmit={handleSubmit(onSubmit)}>
               <Card>
-                <h2 className="font-bold text-[30px]">Atur Ulang Kata Sandi</h2>
+                <h2 className="font-bold text-[20px] lg:text-[24px]">
+                  Atur Ulang Kata Sandi
+                </h2>
                 <h3 className="mt-2">Buat kata sandi baru untuk akunmu.</h3>
                 <div className="flex flex-col gap-8 mt-6">
                   <div className="flex flex-col gap-4">
