@@ -77,22 +77,27 @@ export function ForgotPasswordContent() {
     );
   };
   const onSubmit: SubmitHandler<any> = async (formData: any) => {
-    try {
-      setInitialTime(150);
-      setIsShowOTPModal(true);
-      setIsRequested(true);
-      await requestAuthCode({
+    requestAuthCode(
+      {
         contact_type: "email",
         contact_value: formData?.email,
         token_type: "password_reset",
-      });
-    } catch (error: any) {
-      console.log(error?.message);
-      const reason = error?.message
-        ? error?.message?.split("~")[0]
-        : "Terjadi error, silakan coba lagi";
-      toast.error(reason);
-    }
+      },
+      {
+        onSuccess: () => {
+          setInitialTime(150);
+          setIsShowOTPModal(true);
+          setIsRequested(true);
+        },
+        onError: (error: any) => {
+          const reason = error?.message
+            ? error?.message?.split("~")[0]
+            : "Terjadi error, silakan coba lagi";
+          toast.error(reason);
+        },
+      }
+    );
+
     // TODO: login function
   };
 

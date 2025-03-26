@@ -1,11 +1,9 @@
 import { twMerge } from "tailwind-merge";
 import { Button, Card } from "../../../components/uiComponent";
-import { useRegistrationFormStore } from "../../../stores/registration/useRegistrationFormStore";
 import { useNavigate } from "react-router-dom";
 
 export function SummaryFinishContent() {
   const navigate = useNavigate();
-  const { formData } = useRegistrationFormStore();
 
   const onClickToHome = () => {
     navigate("/");

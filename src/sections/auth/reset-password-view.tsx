@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useResetPassword } from "../../services/auth/use-reset-password";
 import { twMerge } from "tailwind-merge";
 import { Button, Card } from "../../components/uiComponent";
 import { useRegistrationFormStore } from "../../stores/registration/useRegistrationFormStore";
@@ -10,6 +12,7 @@ export function ResetPasswordContent() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isHidePassword, setIsHidePassword] = useState(true);
   const { resetFormData } = useRegistrationFormStore();
+  const { mutate: resetPassword } = useResetPassword();
   const { register, handleSubmit, setValue, watch, formState } = useForm<any>();
   const form = useRef(null) as any;
 
@@ -17,11 +20,23 @@ export function ResetPasswordContent() {
     resetFormData();
   }, []);
 
-  const onSubmit: SubmitHandler<any> = async (_formData: any) => {
-    try {
-      setIsSuccess(true);
-    } catch (error: any) {}
-    // TODO: login function
+  const onSubmit: SubmitHandler<any> = async (formData: any) => {
+    resetPassword(
+      {
+        password: formData?.password,
+      },
+      {
+        onSuccess: () => {
+          setIsSuccess(true);
+        },
+        onError: (error: any) => {
+          const reason = error?.message
+            ? error?.message?.split("~")[0]
+            : "Terjadi error, silakan coba lagi";
+          toast.error(reason);
+        },
+      }
+    );
   };
 
   const onBackToHome = () => {
