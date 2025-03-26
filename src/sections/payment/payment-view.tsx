@@ -136,11 +136,11 @@ export function PaymentContent({ data }: { data?: any }) {
                   </div>
                   <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
                     <span>Nomor Rekening</span>
-                    <span>1234-5678-9890</span>
+                    <span>146 618 3 777</span>
                   </div>
                   <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
                     <span>Nama Penerima</span>
-                    <span>PT Cipta Integrasi Nusantara</span>
+                    <span>PT. CIPTA INTEGRASI NUSANTARA</span>
                   </div>
                 </div>
               </div>
