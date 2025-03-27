@@ -12,6 +12,7 @@ export function useResetPassword() {
       const { password} = formData
     
       return http(`account/reset-password`, {
+        method: "PUT",
         data: {
           password
         }
