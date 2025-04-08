@@ -3,7 +3,7 @@ import { Router } from "./routes/sections";
 import { BottomMenuBar, Navbar, SideMenuBar } from "./components";
 import { toast, Toaster } from "react-hot-toast";
 import { useAuth } from "./utils/auth/providers";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 
 // ----------------------------------------------------------------------
 
@@ -12,7 +12,8 @@ export default function App() {
   const asPath = location.pathname + location.search;
   const { isAuth, logout } = useAuth();
   const [isExpandedMenubar, setIsExpandedMenubar] = React.useState(true);
-
+  const [searchParams] = useSearchParams();
+  const product = String(searchParams.get("product"));
   // Auto logout if idling for 10 minutes
   React.useEffect(() => {
     let logoutTimer = 0;
@@ -49,7 +50,7 @@ export default function App() {
       </head>
       <section
         className={`w-full mx-auto text-neutral-500 ${
-          !isAuth ? "dual-bg" : ""
+          !isAuth ? (product === "clinix" ? "dual-bg-clinix" : "dual-bg") : ""
         }`}
       >
         <Navbar setIsExpandedMenubar={setIsExpandedMenubar} />

@@ -13,11 +13,13 @@ import {
 } from "../../services/auth/use-registration";
 import toast from "react-hot-toast";
 import * as sessionService from "../../utils/session";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useRegistrationFormStore } from "../../stores/registration/useRegistrationFormStore";
 
 export function SignupContent() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const product = String(searchParams.get("product"));
   const { resetFormData } = useRegistrationFormStore();
   const { mutate: registerEmail } = useRegisterEmail();
   const { mutate: requestAuthCode } = useRequestAuthCode();
@@ -211,6 +213,7 @@ export function SignupContent() {
 
               <Button
                 isPrimary
+                isClinix={product === "clinix"}
                 title={isShouldRequestOtp ? "Kirim OTP" : "Daftar"}
                 className="w-full mt-4 focus:outline-none"
                 type="submit"

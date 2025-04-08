@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useRegistrationFormStore } from "../../../stores/registration/useRegistrationFormStore";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { ChangeEvent, Fragment, useEffect, useRef, useState } from "react";
@@ -18,6 +18,8 @@ interface SelectProps {
 
 export function IdentityForm() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const product = String(searchParams.get("product"));
   const { formData, setFormData } = useRegistrationFormStore();
   const { watch, register, handleSubmit, formState, setValue, control } =
     useForm<any>();
@@ -1342,6 +1344,7 @@ export function IdentityForm() {
             <Button
               type="submit"
               isPrimary
+              isClinix={product === "clinix"}
               className="w-full"
               title="Selanjutnya"
             />

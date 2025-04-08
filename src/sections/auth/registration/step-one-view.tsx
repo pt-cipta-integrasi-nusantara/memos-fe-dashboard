@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import { Button, Card } from "../../../components/uiComponent";
 
 export function TermsConditionContent() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const product = String(searchParams.get("product"));
   const [isAgree, setIsAgree] = useState(false);
   const onNextStep = () => {
     navigate("/registration/step/2");
@@ -170,6 +172,7 @@ export function TermsConditionContent() {
           <Button
             onClick={onNextStep}
             isPrimary
+            isClinix={product === "clinix"}
             className="w-full mt-4"
             title="Selanjutnya"
             isDisabled={!isAgree}

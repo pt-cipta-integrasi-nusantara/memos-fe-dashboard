@@ -10,7 +10,7 @@ import { twMerge } from "tailwind-merge";
 import { Button, Card } from "../../../components/uiComponent";
 import { Listbox, Transition } from "@headlessui/react";
 import { ArrowDownIcon } from "../../../components/iconsComponent";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useRegistrationFormStore } from "../../../stores/registration/useRegistrationFormStore";
 
 interface SelectProps {
@@ -23,6 +23,8 @@ interface ProfesionProps {
 }
 export function ProfesionForm() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const product = String(searchParams.get("product"));
   const { formData, setFormData } = useRegistrationFormStore();
   const { register, handleSubmit, formState, watch, setValue, control } =
     useForm<any>();
@@ -1485,7 +1487,13 @@ export function ProfesionForm() {
             </div>
           </Card>
           <Card className="mt-8">
-            <Button type="submit" isPrimary className="w-full" title="Simpan" />
+            <Button
+              isClinix={product === "clinix"}
+              type="submit"
+              isPrimary
+              className="w-full"
+              title="Simpan"
+            />
           </Card>
         </form>
       </div>

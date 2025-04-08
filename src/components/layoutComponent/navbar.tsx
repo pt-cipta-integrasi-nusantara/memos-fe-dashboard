@@ -4,7 +4,7 @@ import { LogoutIcon, ProfileIcon } from "../iconsComponent";
 import React, { Dispatch, SetStateAction } from "react";
 import { Button } from "../uiComponent";
 import { useAuth } from "../../utils/auth/providers";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { User } from "../../services/auth/types";
 import { useMe } from "../../services/auth/use-me";
 
@@ -80,6 +80,7 @@ interface NavMenuDesktopProps {
   handleLogout: () => void;
   me: User | undefined;
   pathname: string;
+  product: string;
 }
 
 function NavMenuDesktop({
@@ -90,6 +91,7 @@ function NavMenuDesktop({
   handleLogout,
   me,
   pathname,
+  product,
 }: NavMenuDesktopProps) {
   // const onToggleMenubar = () => {
   //   setIsExpandedMenubar((prev) => !prev);
@@ -100,13 +102,25 @@ function NavMenuDesktop({
         {/* Logo */}
         <div id="logo" className="flex items-center gap-4">
           {/* <MenubarIcon className="cursor-pointer" onClick={onToggleMenubar} /> */}
+          {product === "clinix" && (
+            <img
+              src="/assets/logo/logo-clinix.png"
+              width={122}
+              height={48}
+              alt="logo-clinix"
+              onClick={onClickLogo}
+              className="cursor-pointer"
+            />
+          )}
           <img
             src="/assets/logo/logo-memos.png"
-            width={228}
-            height={60}
+            width={product === "clinix" ? 140 : 228}
+            height={product === "clinix" ? 36 : 60}
             alt="logo-memos"
             onClick={onClickLogo}
-            className="cursor-pointer w-[160px] lg:w-[228px]"
+            className={`cursor-pointer ${
+              product !== "clinix" ? "w-[160px] lg:w-[228px]" : ""
+            }`}
           />
         </div>
 
@@ -127,12 +141,20 @@ function NavMenuDesktop({
             {pathname === "/login" ? (
               <div id="right" className="hidden lg:flex gap-3 items-center">
                 <span>Belum memiliki akun?</span>
-                <Button title="Daftar" onClick={onClickLogo} />
+                <Button
+                  isClinix={product === "clinix"}
+                  title="Daftar"
+                  onClick={onClickLogo}
+                />
               </div>
             ) : (
               <div id="right" className="hidden lg:flex gap-3 items-center">
                 <span>Sudah memiliki akun?</span>
-                <Button title="Masuk" onClick={onClickToLogin} />
+                <Button
+                  isClinix={product === "clinix"}
+                  title="Masuk"
+                  onClick={onClickToLogin}
+                />
               </div>
             )}
           </>
@@ -153,7 +175,8 @@ export function Navbar({
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
-  console.log(pathname, "pathname");
+  const [searchParams] = useSearchParams();
+  const product = String(searchParams.get("product"));
   const [_, setOpen] = React.useState(false);
 
   const onClickLogo = () => {
@@ -182,6 +205,7 @@ export function Navbar({
         handleLogout={handleLogout}
         me={me}
         pathname={pathname}
+        product={product}
       />
     </>
   );

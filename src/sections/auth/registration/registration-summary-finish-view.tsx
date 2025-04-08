@@ -1,10 +1,11 @@
 import { twMerge } from "tailwind-merge";
 import { Button, Card } from "../../../components/uiComponent";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export function SummaryFinishContent() {
   const navigate = useNavigate();
-
+  const [searchParams] = useSearchParams();
+  const product = String(searchParams.get("product"));
   const onClickToHome = () => {
     navigate("/");
   };
@@ -15,7 +16,11 @@ export function SummaryFinishContent() {
           <Card>
             <div className="text-center">
               <img
-                src="/assets/images/registration-done.png"
+                src={
+                  product === "clinix"
+                    ? "/assets/images/registration-finish.svg"
+                    : "/assets/images/registration-done.png"
+                }
                 width={250}
                 height={200}
                 alt="finish"
@@ -43,6 +48,7 @@ export function SummaryFinishContent() {
 
             <div className="flex flex-col-reverse lg:flex-row  justify-between gap-4 mt-12">
               <Button
+                isClinix={product === "clinix"}
                 onClick={onClickToHome}
                 isPrimary
                 title="Ke Halaman Utama"

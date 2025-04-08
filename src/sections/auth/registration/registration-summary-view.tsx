@@ -5,12 +5,14 @@ import { useRegistrationFormStore } from "../../../stores/registration/useRegist
 import { useRegister } from "../../../services/auth/use-registration";
 import toast from "react-hot-toast";
 import * as sessionService from "../../../utils/session";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { spesialisData } from "../../../components/constants/constants";
 import { Dialog, Transition } from "@headlessui/react";
 
 export function SummaryContent() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const product = String(searchParams.get("product"));
   const { formData } = useRegistrationFormStore();
   const { mutate: registerAccount } = useRegister();
   const [isChecked, setIsChecked] = React.useState(false);
@@ -327,12 +329,14 @@ export function SummaryContent() {
 
             <div className="flex flex-col-reverse lg:flex-row  justify-between gap-4 mt-4">
               <Button
+                isClinix={product === "clinix"}
                 onClick={onClickToEdit}
                 isPrimary={false}
                 title="Edit Data"
                 className="w-full text-base"
               />
               <Button
+                isClinix={product === "clinix"}
                 isDisabled={!isChecked}
                 isPrimary
                 onClick={onFinishRegistration}

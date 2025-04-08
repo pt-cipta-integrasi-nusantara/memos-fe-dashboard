@@ -1,5 +1,5 @@
 import ReCAPTCHA from "react-google-recaptcha";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "../../utils/auth/providers";
 import { createRef, useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -17,6 +17,8 @@ dayjs.locale("id"); // Set locale to Indonesian
 export function LoginContent() {
   const navigate = useNavigate();
   const { login } = useAuth();
+  const [searchParams] = useSearchParams();
+  const product = String(searchParams.get("product"));
   const [isHidePassword, setIsHidePassword] = useState(true);
   const [isWrongPassword, setIsWrongPassword] = useState(false);
   const { resetFormData } = useRegistrationFormStore();
@@ -172,7 +174,8 @@ export function LoginContent() {
               </div>
               <Button
                 isPrimary
-                disabled={!isCaptchaDone}
+                isClinix={product === "clinix"}
+                // disabled={!isCaptchaDone}
                 title="Masuk"
                 className={`w-full mt-4 focus:outline-none ${
                   !isCaptchaDone

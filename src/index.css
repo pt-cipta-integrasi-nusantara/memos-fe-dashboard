@@ -53,3 +53,10 @@ input[type=number] {
   background-position: left bottom, right bottom;
   background-size: 30% auto, 30% auto;
 }
+
+.dual-bg-clinix {
+  @apply bg-no-repeat;
+  background-image: url('/public/assets/images/bg-clinix-1.png'), url('/public/assets/images/bg-clinix-2.png');
+  background-position: left bottom, right bottom;
+  background-size: 30% auto, 30% auto;
+}
