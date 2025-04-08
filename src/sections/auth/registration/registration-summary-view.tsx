@@ -25,7 +25,11 @@ export function SummaryContent() {
   };
 
   const onClickToEdit = () => {
-    navigate("/registration/step/2");
+    if (product === "clinix") {
+      navigate("/registration/step/2?product=clinix");
+    } else {
+      navigate("/registration/step/2");
+    }
   };
 
   const onFinishRegistration = () => {
@@ -111,7 +115,11 @@ export function SummaryContent() {
     registerAccount(payload, {
       onSuccess: () => {
         sessionService.flushSession();
-        navigate("/registration/summary/finish");
+        if (product === "clinix") {
+          navigate("/registration/summary/finish?product=clinix");
+        } else {
+          navigate("/registration/summary/finish");
+        }
       },
       onError: (error: any) => {
         const reason = error?.message

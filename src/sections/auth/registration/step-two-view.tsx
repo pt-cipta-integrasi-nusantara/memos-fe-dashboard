@@ -210,7 +210,11 @@ export function IdentityForm() {
   }, [watch("sub_district"), selectedDistrict]);
 
   const onPreviousStep = () => {
-    navigate("/registration/step/1");
+    if (product === "clinix") {
+      navigate("/registration/step/1?product=clinix");
+    } else {
+      navigate("/registration/step/1");
+    }
   };
 
   const handleFotoKtpChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -254,7 +258,11 @@ export function IdentityForm() {
 
   const onSubmit: SubmitHandler<any> = async () => {
     if (Object.keys(formState?.errors).length === 0) {
-      navigate("/registration/step/3");
+      if (product === "clinix") {
+        navigate("/registration/step/3?product=clinix");
+      } else {
+        navigate("/registration/step/3");
+      }
     }
   };
 

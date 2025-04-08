@@ -212,7 +212,11 @@ export function ProfesionForm() {
   }, [watch("facility_sub_district"), selectedDistrict]);
 
   const onPreviousStep = () => {
-    navigate("/registration/step/2");
+    if (product === "clinix") {
+      navigate("/registration/step/2?product=clinix");
+    } else {
+      navigate("/registration/step/2");
+    }
   };
 
   const handleSTRNoChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -267,7 +271,11 @@ export function ProfesionForm() {
 
   const onSubmit: SubmitHandler<any> = async () => {
     if (Object.keys(formState?.errors).length === 0) {
-      navigate("/registration/summary");
+      if (product === "clinix") {
+        navigate("/registration/summary?product=clinix");
+      } else {
+        navigate("/registration/summary");
+      }
     }
   };
 

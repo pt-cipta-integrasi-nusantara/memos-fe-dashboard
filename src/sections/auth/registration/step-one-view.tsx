@@ -9,7 +9,11 @@ export function TermsConditionContent() {
   const product = String(searchParams.get("product"));
   const [isAgree, setIsAgree] = useState(false);
   const onNextStep = () => {
-    navigate("/registration/step/2");
+    if (product === "clinix") {
+      navigate("/registration/step/2?product=clinix");
+    } else {
+      navigate("/registration/step/2");
+    }
   };
 
   const onPreviousStep = () => {
