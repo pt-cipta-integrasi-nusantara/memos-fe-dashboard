@@ -57,6 +57,8 @@ export const DashboardSubscriptionPaymentStatusPage = lazy(
   () => import("../pages/dashboard/subscription/payment/status")
 );
 
+export const WorkspacePage = lazy(() => import("../pages/workspace/[slug]"));
+
 export const ProfilePage = lazy(() => import("../pages/profile"));
 
 const renderFallback = (
@@ -109,6 +111,11 @@ export function Router() {
         {
           path: "/subscription/payment/:subscriptionId",
           element: <DashboardSubscriptionPaymentDetailPage />,
+        },
+
+        {
+          path: "/workspace/:workspaceId",
+          element: <WorkspacePage />,
         },
         {
           path: "*",

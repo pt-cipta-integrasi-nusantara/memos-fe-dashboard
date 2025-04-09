@@ -175,7 +175,7 @@ export function LoginContent() {
               <Button
                 isPrimary
                 isClinix={product === "clinix"}
-                disabled={!isCaptchaDone}
+                // disabled={!isCaptchaDone}
                 title="Masuk"
                 className={`w-full mt-4 focus:outline-none ${
                   !isCaptchaDone

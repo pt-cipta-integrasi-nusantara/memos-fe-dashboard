@@ -1,36 +1,43 @@
 // import { Disclosure, Listbox, Transition } from "@headlessui/react";
-import { DashboardIcon } from "../iconsComponent";
+import {
+  ArrowDownIcon,
+  DashboardIcon,
+  ProfileIcon,
+  WorkIcon,
+} from "../iconsComponent";
 // import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Fragment, useState } from "react";
+import { Disclosure, Listbox, Transition } from "@headlessui/react";
 
-// interface SelectProps {
-//   label: string;
-//   id: string;
-//   logo: string;
-// }
+interface SelectProps {
+  label: string;
+  id: string;
+  logo: string;
+}
 
-// const orgList = [
-//   {
-//     id: "1",
-//     label: "PT. Setio Husodo",
-//     logo: "/assets/images/logo-setio.png",
-//   },
-//   {
-//     id: "2",
-//     label: "PT. Healthy",
-//     logo: "/assets/images/logo-healthy.png",
-//   },
-// ];
+const orgList = [
+  {
+    id: "1",
+    label: "PT. Setio Husodo",
+    logo: "/assets/images/logo-setio.png",
+  },
+  {
+    id: "2",
+    label: "PT. Healthy",
+    logo: "/assets/images/logo-healthy.png",
+  },
+];
 
 function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
   const navigate = useNavigate();
   const location = useLocation();
   const asPath = location.pathname + location.search;
-  // const [selectedOrg, setSelectedOrg] = useState<SelectProps>(orgList[0]);
+  const [selectedOrg, setSelectedOrg] = useState<SelectProps>(orgList[0]);
 
-  // const onClickWorkspace = (workspaceItem: string) => {
-  //   navigate(`/workspace/${workspaceItem}`);
-  // };
+  const onClickWorkspace = (workspaceItem: string) => {
+    navigate(`/workspace/${workspaceItem}`);
+  };
 
   return (
     <nav>
@@ -65,7 +72,7 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
           </div>
         </li>
 
-        {/* <Listbox value={selectedOrg} onChange={setSelectedOrg}>
+        <Listbox value={selectedOrg} onChange={setSelectedOrg}>
           <div className="relative">
             <Listbox.Button className="py-4 flex items-center w-full cursor-pointer px-8">
               <span className="block truncate">
@@ -283,7 +290,7 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
             )}
           </Disclosure>
         </div>
-        <li
+        {/* <li
           onClick={() => navigate("/profile")}
           className="py-4 flex items-center w-full cursor-pointer border-b border-neutral-250 pb-6"
         >
