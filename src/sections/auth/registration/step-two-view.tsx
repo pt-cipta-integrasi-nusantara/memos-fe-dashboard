@@ -516,7 +516,11 @@ export function IdentityForm() {
                                     key={idx}
                                     className={({ active }) =>
                                       `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                        active ? "bg-green-100" : ""
+                                        active
+                                          ? product === "clinix"
+                                            ? "bg-green-100"
+                                            : "bg-primary-100"
+                                          : ""
                                       }`
                                     }
                                     value={gender}
@@ -810,7 +814,11 @@ export function IdentityForm() {
                                       key={idx}
                                       className={({ active }) =>
                                         `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                          active ? "bg-green-100" : ""
+                                          active
+                                            ? product === "clinix"
+                                              ? "bg-green-100"
+                                              : "bg-primary-100"
+                                            : ""
                                         }`
                                       }
                                       value={province}
@@ -912,7 +920,11 @@ export function IdentityForm() {
                                       key={idx}
                                       className={({ active }) =>
                                         `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                          active ? "bg-green-100" : ""
+                                          active
+                                            ? product === "clinix"
+                                              ? "bg-green-100"
+                                              : "bg-primary-100"
+                                            : ""
                                         }`
                                       }
                                       value={city}
@@ -1023,7 +1035,11 @@ export function IdentityForm() {
                                       key={idx}
                                       className={({ active }) =>
                                         `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                          active ? "bg-green-100" : ""
+                                          active
+                                            ? product === "clinix"
+                                              ? "bg-green-100"
+                                              : "bg-primary-100"
+                                            : ""
                                         }`
                                       }
                                       value={sub_district}
@@ -1129,7 +1145,11 @@ export function IdentityForm() {
                                       key={idx}
                                       className={({ active }) =>
                                         `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                          active ? "bg-green-100" : ""
+                                          active
+                                            ? product === "clinix"
+                                              ? "bg-green-100"
+                                              : "bg-primary-100"
+                                            : ""
                                         }`
                                       }
                                       value={village}

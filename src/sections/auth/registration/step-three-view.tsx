@@ -1,8 +1,11 @@
 import { ChangeEvent, Fragment, useEffect, useRef, useState } from "react";
 import {
   businesses,
+  organizationData,
   profesions,
-  spesialisData,
+  professionsMemos,
+  spesialisDataDokter,
+  spesialisDataPerawat,
 } from "../../../components/constants/constants";
 import { uploadImage } from "../../../services/utils/uploadImage";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
@@ -29,9 +32,16 @@ export function ProfesionForm() {
   const { register, handleSubmit, formState, watch, setValue, control } =
     useForm<any>();
   const form = useRef(null) as any;
+  const professionsData = product === "clinix" ? profesions : professionsMemos;
   const [selectedProfesion, setSelectedProfesion] = useState<ProfesionProps>();
   const [selectedSpesialis, setSelectedSpesialis] = useState<ProfesionProps>();
   const [selectedBusiness, setSelectedBusiness] = useState<SelectProps>();
+  const [selectedOrganization, setSelectedOrganization] =
+    useState<SelectProps>();
+  const [selectedOrganizationSite, setSelectedOrganizationSite] =
+    useState<SelectProps>();
+  const spesialisData =
+    formData?.profession_id === 1 ? spesialisDataDokter : spesialisDataPerawat;
 
   // Wilayah
   const [provinceList, setProvinceList] = useState<any[]>([]);
@@ -54,13 +64,46 @@ export function ProfesionForm() {
   >();
 
   useEffect(() => {
+    if (product !== "clinix") {
+      setSelectedOrganization(
+        organizationData?.find(
+          (item) => item?.id === formData["facility_organization_name"]
+        )
+      );
+      if (formData?.facility_organization_name) {
+        setValue(
+          "facility_organization_name",
+          organizationData?.find(
+            (item) => item?.id === formData["facility_organization_name"]
+          ),
+          {
+            shouldValidate: true,
+          }
+        );
+      }
+      setSelectedOrganizationSite(
+        organizationData?.find((item) => item?.id === formData["facility_name"])
+      );
+      if (formData?.facility_name) {
+        setValue(
+          "facility_name",
+          organizationData?.find(
+            (item) => item?.id === formData["facility_name"]
+          ),
+          {
+            shouldValidate: true,
+          }
+        );
+      }
+    }
+
     setSelectedProfesion(
-      profesions?.find((item) => item?.id === formData["profession_id"])
+      professionsData?.find((item) => item?.id === formData["profession_id"])
     );
     if (formData?.profession_id) {
       setValue(
         "profession_id",
-        profesions?.find((item) => item?.id === formData["profession_id"]),
+        professionsData?.find((item) => item?.id === formData["profession_id"]),
         { shouldValidate: true }
       );
     }
@@ -339,6 +382,10 @@ export function ProfesionForm() {
                             setValue("profession_id", val, {
                               shouldValidate: true,
                             });
+                            setValue("smf_id", null, {
+                              shouldValidate: true,
+                            });
+                            setFormData({ smf_id: null });
                           }}
                         >
                           <div className="relative">
@@ -369,12 +416,16 @@ export function ProfesionForm() {
                               leaveTo="opacity-0"
                             >
                               <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                                {profesions.map((profesion, idx) => (
+                                {professionsData.map((profesion, idx) => (
                                   <Listbox.Option
                                     key={idx}
                                     className={({ active }) =>
                                       `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                        active ? "bg-green-100" : ""
+                                        active
+                                          ? product === "clinix"
+                                            ? "bg-green-100"
+                                            : "bg-primary-100"
+                                          : ""
                                       }`
                                     }
                                     value={profesion}
@@ -466,7 +517,11 @@ export function ProfesionForm() {
                                     key={idx}
                                     className={({ active }) =>
                                       `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                        active ? "bg-green-100" : ""
+                                        active
+                                          ? product === "clinix"
+                                            ? "bg-green-100"
+                                            : "bg-primary-100"
+                                          : ""
                                       }`
                                     }
                                     value={spesialis}
@@ -628,248 +683,502 @@ export function ProfesionForm() {
                     </div>
                   </div>
                 </div>
+
+                {/* Row 3 */}
+                {product !== "clinix" && (
+                  <div className="flex items-start flex-col lg:flex-row justify-between gap-4">
+                    <div className="flex flex-col gap-2 w-full">
+                      <label
+                        className="text-[14px] font-medium"
+                        htmlFor="bpjs_code"
+                      >
+                        Kode BPJS (Opsional)
+                      </label>
+                      <input
+                        id="bpjs_code"
+                        {...register("bpjs_code")}
+                        type="text"
+                        className={`rounded-[8px] p-[10px] text-[14px] border focus:outline-none ${
+                          formState?.errors?.bpjs_code
+                            ? "border-primary-500"
+                            : "border-neutral-100"
+                        }`}
+                        placeholder="Masukkan Kode BPJS"
+                        onChange={(e) => {
+                          setValue("bpjs_code", e.target.value, {
+                            shouldValidate: true,
+                          });
+                          setFormData({ bpjs_code: e.target.value });
+                        }}
+                        defaultValue={formData["str_no"]}
+                      />
+                      {formState?.errors?.bpjs_code && (
+                        <span className="text-primary-500">
+                          {formState?.errors?.bpjs_code?.message as any}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="flex items-start flex-col md:flex-row gap-2 w-full"></div>
+                  </div>
+                )}
               </div>
               <div className="border-t-2 border-dashed border-neutral-400 w-full h-1"></div>
 
               {/* Bottom fields */}
 
               {/* Row 4 */}
-              <div className="flex flex-col lg:flex-row justify-between gap-4">
-                <div className="flex flex-col gap-2 lg:w-full">
-                  <label
-                    className="text-[14px] font-medium"
-                    htmlFor="facility_organization_name"
-                  >
-                    Organisasi
-                    <span className="text-warning">*</span>
-                  </label>
-                  <input
-                    id="facility_organization_name"
-                    {...register("facility_organization_name", {
-                      required: {
-                        value: true,
-                        message: "Organisasi wajib diisi",
-                      },
-                    })}
-                    type="text"
-                    className={`rounded-[8px] p-[10px] text-[14px] border focus:outline-none ${
-                      formState?.errors?.facility_organization_name
-                        ? "border-primary-500"
-                        : "border-neutral-100"
-                    }`}
-                    placeholder="Masukkan nama organisasi"
-                    onChange={(e) => {
-                      setValue("facility_organization_name", e.target.value, {
-                        shouldValidate: true,
-                      });
-                      setFormData({
-                        facility_organization_name: e.target.value,
-                      });
-                    }}
-                    defaultValue={formData["facility_organization_name"]}
-                  />
-                  {formState?.errors?.facility_organization_name && (
-                    <span className="text-primary-500">
-                      {
-                        formState?.errors?.facility_organization_name
-                          ?.message as any
-                      }
-                    </span>
-                  )}
-
-                  <span className="text-[13px] text-neutral-300">
-                    Diisi dengan nama dokter apabila tidak terhubung dengan
-                    badan usaha
-                  </span>
-                </div>
-                <div className="w-full flex flex-col gap-2">
-                  <label
-                    className="text-[14px] font-medium"
-                    htmlFor="facility_name"
-                  >
-                    Nama Klinik/Usaha
-                    <span className="text-warning">*</span>
-                  </label>
-                  <input
-                    id="facility_name"
-                    {...register("facility_name", {
-                      required: {
-                        value: true,
-                        message: "Nama Klinik/Usha wajib diisi",
-                      },
-                    })}
-                    type="text"
-                    className={`rounded-[8px] p-[10px] text-[14px] border focus:outline-none ${
-                      formState?.errors?.facility_name
-                        ? "border-primary-500"
-                        : "border-neutral-100"
-                    }`}
-                    placeholder="Masukkan nama klinik/usaha"
-                    onChange={(e) => {
-                      setValue("facility_name", e.target.value, {
-                        shouldValidate: true,
-                      });
-                      setFormData({ facility_name: e.target.value });
-                    }}
-                    defaultValue={formData["facility_name"]}
-                  />
-                  {formState?.errors?.facility_name && (
-                    <span className="text-primary-500">
-                      {formState?.errors?.facility_name?.message as any}
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              {/* Row 5 */}
-              <div className="flex flex-col lg:flex-row justify-between gap-4">
-                <div className="flex flex-col gap-2 lg:w-full">
-                  <label
-                    className="text-[14px] font-medium"
-                    htmlFor="organization"
-                  >
-                    Jenis Usaha
-                    <span className="text-warning">*</span>
-                  </label>
-
-                  <Controller
-                    name="facility_type"
-                    control={control}
-                    defaultValue={selectedBusiness}
-                    rules={{
-                      required: {
-                        value: true,
-                        message: "Jenis Usaha wajib diisi",
-                      },
-                    }}
-                    render={({ field }) => (
-                      <Listbox
-                        value={field.value}
-                        onChange={(val) => {
-                          setFormData({ facility_type: val?.id });
-                          setValue("facility_type", val, {
-                            shouldValidate: true,
-                          });
-                        }}
-                      >
-                        <div className="relative">
-                          <Listbox.Button
-                            className={`border relative w-full cursor-default rounded-md bg-white p-[10px] text-[14px] text-left focus:outline-none ${
-                              formState?.errors?.facility_type
-                                ? "border-primary-500"
-                                : "border-neutral-100"
-                            }`}
-                          >
-                            <span className="block truncate">
-                              {field.value ? (
-                                field.value.label
-                              ) : (
-                                <span className="text-neutral-400">
-                                  Pilih Jenis Usaha
-                                </span>
-                              )}
-                            </span>
-                            <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                              <ArrowDownIcon />
-                            </span>
-                          </Listbox.Button>
-                          <Transition
-                            as={Fragment}
-                            leave="transition ease-in duration-100"
-                            leaveFrom="opacity-100"
-                            leaveTo="opacity-0"
-                          >
-                            <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                              {businesses.map((business, idx) => (
-                                <Listbox.Option
-                                  key={idx}
-                                  className={({ active }) =>
-                                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                      active ? "bg-green-100" : ""
-                                    }`
-                                  }
-                                  value={business}
-                                >
-                                  {({ selected }) => (
-                                    <>
-                                      <span
-                                        className={`block truncate ${
-                                          selected
-                                            ? "font-medium"
-                                            : "font-normal"
-                                        }`}
-                                      >
-                                        {business?.label}
-                                      </span>
-                                    </>
-                                  )}
-                                </Listbox.Option>
-                              ))}
-                            </Listbox.Options>
-                          </Transition>
-                        </div>
-                      </Listbox>
-                    )}
-                  />
-                  {formState?.errors?.facility_type && (
-                    <span className="text-primary-500">
-                      {formState?.errors?.facility_type?.message as any}
-                    </span>
-                  )}
-                </div>
-
-                <div className="w-full flex flex-col gap-2">
-                  <label
-                    className="text-[14px] font-medium"
-                    htmlFor="identity_photo"
-                  >
-                    Unggah Foto Tempat Klinik/Usaha (Opsional)
-                  </label>
-                  <div
-                    className={`relative rounded-[8px] p-[10px] text-[14px] border border-neutral-100 flex items-center gap-2 ${
-                      formState.errors?.facility_photo
-                        ? "border-primary-500"
-                        : "border-neutral-100"
-                    }`}
-                  >
-                    <input
-                      {...register("facility_photo")}
-                      type="text"
-                      className="focus:outline-none w-full"
-                      placeholder="Unggah Foto Tempat Praktek"
-                      value={formData?.facility_photo_name}
-                      readOnly
-                    />
-                    {/* {fotoKtp?.name} */}
-                    <input
-                      type="file"
-                      hidden
-                      id="identity_photo"
-                      onChange={handleFileFotoUsahaChange}
-                    />
+              {product === "clinix" ? (
+                <div className="flex flex-col lg:flex-row justify-between gap-4">
+                  <div className="flex flex-col gap-2 lg:w-full">
                     <label
-                      htmlFor="identity_photo"
-                      className="text-link cursor-pointer"
+                      className="text-[14px] font-medium"
+                      htmlFor="facility_organization_name"
                     >
-                      Unggah
+                      Organisasi
+                      <span className="text-warning">*</span>
                     </label>
+                    <input
+                      id="facility_organization_name"
+                      {...register("facility_organization_name", {
+                        required: {
+                          value: true,
+                          message: "Organisasi wajib diisi",
+                        },
+                      })}
+                      type="text"
+                      className={`rounded-[8px] p-[10px] text-[14px] border focus:outline-none ${
+                        formState?.errors?.facility_organization_name
+                          ? "border-primary-500"
+                          : "border-neutral-100"
+                      }`}
+                      placeholder="Masukkan nama organisasi"
+                      onChange={(e) => {
+                        setValue("facility_organization_name", e.target.value, {
+                          shouldValidate: true,
+                        });
+                        setFormData({
+                          facility_organization_name: e.target.value,
+                        });
+                      }}
+                      defaultValue={formData["facility_organization_name"]}
+                    />
+                    {formState?.errors?.facility_organization_name && (
+                      <span className="text-primary-500">
+                        {
+                          formState?.errors?.facility_organization_name
+                            ?.message as any
+                        }
+                      </span>
+                    )}
+
+                    <span className="text-[13px] text-neutral-300">
+                      Diisi dengan nama dokter apabila tidak terhubung dengan
+                      badan usaha
+                    </span>
+                  </div>
+                  <div className="w-full flex flex-col gap-2">
+                    <label
+                      className="text-[14px] font-medium"
+                      htmlFor="facility_name"
+                    >
+                      Nama Klinik/Usaha
+                      <span className="text-warning">*</span>
+                    </label>
+                    <input
+                      id="facility_name"
+                      {...register("facility_name", {
+                        required: {
+                          value: true,
+                          message: "Nama Klinik/Usha wajib diisi",
+                        },
+                      })}
+                      type="text"
+                      className={`rounded-[8px] p-[10px] text-[14px] border focus:outline-none ${
+                        formState?.errors?.facility_name
+                          ? "border-primary-500"
+                          : "border-neutral-100"
+                      }`}
+                      placeholder="Masukkan nama klinik/usaha"
+                      onChange={(e) => {
+                        setValue("facility_name", e.target.value, {
+                          shouldValidate: true,
+                        });
+                        setFormData({ facility_name: e.target.value });
+                      }}
+                      defaultValue={formData["facility_name"]}
+                    />
+                    {formState?.errors?.facility_name && (
+                      <span className="text-primary-500">
+                        {formState?.errors?.facility_name?.message as any}
+                      </span>
+                    )}
                   </div>
                 </div>
-              </div>
+              ) : (
+                <div className="flex flex-col lg:flex-row justify-between gap-4">
+                  <div className="w-full flex flex-col gap-2">
+                    <label
+                      className="text-[14px] font-medium"
+                      htmlFor="facility_organization_name"
+                    >
+                      Organisasi
+                      <span className="text-warning">*</span>
+                    </label>
+                    <Controller
+                      name="facility_organization_name"
+                      control={control}
+                      defaultValue={selectedOrganization}
+                      rules={{
+                        required: {
+                          value: true,
+                          message: "Organisasi wajib diisi",
+                        },
+                      }}
+                      render={({ field }) => (
+                        <Listbox
+                          value={field.value}
+                          onChange={(val) => {
+                            setFormData({
+                              facility_organization_name: val?.id,
+                            });
+                            setValue("facility_organization_name", val, {
+                              shouldValidate: true,
+                            });
+                            setValue("facility_name", null, {
+                              shouldValidate: true,
+                            });
+                            setFormData({ facility_name: null });
+                          }}
+                        >
+                          <div className="relative">
+                            <Listbox.Button
+                              className={`border relative w-full cursor-default rounded-md bg-white p-[10px] text-[14px] text-left focus:outline-none ${
+                                formState?.errors?.facility_organization_name
+                                  ? "border-primary-500"
+                                  : "border-neutral-100"
+                              }`}
+                            >
+                              <span className="block truncate">
+                                {field.value ? (
+                                  field.value.label
+                                ) : (
+                                  <span className="text-neutral-400">
+                                    Pilih Organisasi
+                                  </span>
+                                )}
+                              </span>
+                              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                <ArrowDownIcon />
+                              </span>
+                            </Listbox.Button>
+                            <Transition
+                              as={Fragment}
+                              leave="transition ease-in duration-100"
+                              leaveFrom="opacity-100"
+                              leaveTo="opacity-0"
+                            >
+                              <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                                {organizationData.map((org, idx) => (
+                                  <Listbox.Option
+                                    key={idx}
+                                    className={({ active }) =>
+                                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                        active
+                                          ? product === "clinix"
+                                            ? "bg-green-100"
+                                            : "bg-primary-100"
+                                          : ""
+                                      }`
+                                    }
+                                    value={org}
+                                  >
+                                    {({ selected }) => (
+                                      <>
+                                        <span
+                                          className={`block truncate ${
+                                            selected
+                                              ? "font-medium"
+                                              : "font-normal"
+                                          }`}
+                                        >
+                                          {org?.label}
+                                        </span>
+                                      </>
+                                    )}
+                                  </Listbox.Option>
+                                ))}
+                              </Listbox.Options>
+                            </Transition>
+                          </div>
+                        </Listbox>
+                      )}
+                    />
 
-              <div className="flex items-center gap-2">
-                <input
-                  className="accent-green-500 w-4 h-4"
-                  id="same_address"
-                  type="checkbox"
-                  checked={formData["isSameAddress"] === true}
-                  onChange={onToggleSameAddress}
-                />
+                    {formState?.errors?.facility_organization_name && (
+                      <span className="text-primary-500">
+                        {
+                          formState?.errors?.facility_organization_name
+                            ?.message as any
+                        }
+                      </span>
+                    )}
+                  </div>
+                  <div className="w-full flex flex-col gap-2">
+                    <label className="text-[14px] font-medium" htmlFor="gender">
+                      Nama Site
+                      <span className="text-warning">*</span>
+                    </label>
 
-                <label htmlFor="same_address" className="cursor-pointer">
-                  Alamat sama dengan alamat pribadi
-                </label>
-              </div>
+                    <Controller
+                      name="facility_name"
+                      control={control}
+                      defaultValue={selectedOrganizationSite}
+                      rules={{
+                        required: {
+                          value: true,
+                          message: "Nama Site wajib diisi",
+                        },
+                      }}
+                      render={({ field }) => (
+                        <Listbox
+                          value={field.value}
+                          onChange={(val) => {
+                            setFormData({ facility_name: val?.id });
+                            setValue("facility_name", val, {
+                              shouldValidate: true,
+                            });
+                          }}
+                        >
+                          <div className="relative">
+                            <Listbox.Button
+                              className={`border relative w-full cursor-default rounded-md bg-white p-[10px] text-[14px] text-left focus:outline-none ${
+                                formState?.errors?.facility_name
+                                  ? "border-primary-500"
+                                  : "border-neutral-100"
+                              }`}
+                            >
+                              <span className="block truncate">
+                                {field.value ? (
+                                  field.value.label
+                                ) : (
+                                  <span className="text-neutral-400">
+                                    Pilih Site
+                                  </span>
+                                )}
+                              </span>
+                              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                <ArrowDownIcon />
+                              </span>
+                            </Listbox.Button>
+                            <Transition
+                              as={Fragment}
+                              leave="transition ease-in duration-100"
+                              leaveFrom="opacity-100"
+                              leaveTo="opacity-0"
+                            >
+                              <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                                {organizationData.map((org, idx) => (
+                                  <Listbox.Option
+                                    key={idx}
+                                    className={({ active }) =>
+                                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                        active
+                                          ? product === "clinix"
+                                            ? "bg-green-100"
+                                            : "bg-primary-100"
+                                          : ""
+                                      }`
+                                    }
+                                    value={org}
+                                  >
+                                    {({ selected }) => (
+                                      <>
+                                        <span
+                                          className={`block truncate ${
+                                            selected
+                                              ? "font-medium"
+                                              : "font-normal"
+                                          }`}
+                                        >
+                                          {org?.label}
+                                        </span>
+                                      </>
+                                    )}
+                                  </Listbox.Option>
+                                ))}
+                              </Listbox.Options>
+                            </Transition>
+                          </div>
+                        </Listbox>
+                      )}
+                    />
+                    {formState?.errors?.facility_name && (
+                      <span className="text-primary-500">
+                        {formState?.errors?.facility_name?.message as any}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Row 5 */}
+              {product === "clinix" && (
+                <div className="flex flex-col lg:flex-row justify-between gap-4">
+                  <div className="flex flex-col gap-2 lg:w-full">
+                    <label
+                      className="text-[14px] font-medium"
+                      htmlFor="organization"
+                    >
+                      Jenis Usaha
+                      <span className="text-warning">*</span>
+                    </label>
+
+                    <Controller
+                      name="facility_type"
+                      control={control}
+                      defaultValue={selectedBusiness}
+                      rules={{
+                        required: {
+                          value: true,
+                          message: "Jenis Usaha wajib diisi",
+                        },
+                      }}
+                      render={({ field }) => (
+                        <Listbox
+                          value={field.value}
+                          onChange={(val) => {
+                            setFormData({ facility_type: val?.id });
+                            setValue("facility_type", val, {
+                              shouldValidate: true,
+                            });
+                          }}
+                        >
+                          <div className="relative">
+                            <Listbox.Button
+                              className={`border relative w-full cursor-default rounded-md bg-white p-[10px] text-[14px] text-left focus:outline-none ${
+                                formState?.errors?.facility_type
+                                  ? "border-primary-500"
+                                  : "border-neutral-100"
+                              }`}
+                            >
+                              <span className="block truncate">
+                                {field.value ? (
+                                  field.value.label
+                                ) : (
+                                  <span className="text-neutral-400">
+                                    Pilih Jenis Usaha
+                                  </span>
+                                )}
+                              </span>
+                              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                <ArrowDownIcon />
+                              </span>
+                            </Listbox.Button>
+                            <Transition
+                              as={Fragment}
+                              leave="transition ease-in duration-100"
+                              leaveFrom="opacity-100"
+                              leaveTo="opacity-0"
+                            >
+                              <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                                {businesses.map((business, idx) => (
+                                  <Listbox.Option
+                                    key={idx}
+                                    className={({ active }) =>
+                                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                        active
+                                          ? product === "clinix"
+                                            ? "bg-green-100"
+                                            : "bg-primary-100"
+                                          : ""
+                                      }`
+                                    }
+                                    value={business}
+                                  >
+                                    {({ selected }) => (
+                                      <>
+                                        <span
+                                          className={`block truncate ${
+                                            selected
+                                              ? "font-medium"
+                                              : "font-normal"
+                                          }`}
+                                        >
+                                          {business?.label}
+                                        </span>
+                                      </>
+                                    )}
+                                  </Listbox.Option>
+                                ))}
+                              </Listbox.Options>
+                            </Transition>
+                          </div>
+                        </Listbox>
+                      )}
+                    />
+                    {formState?.errors?.facility_type && (
+                      <span className="text-primary-500">
+                        {formState?.errors?.facility_type?.message as any}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="w-full flex flex-col gap-2">
+                    <label
+                      className="text-[14px] font-medium"
+                      htmlFor="identity_photo"
+                    >
+                      Unggah Foto Tempat Klinik/Usaha (Opsional)
+                    </label>
+                    <div
+                      className={`relative rounded-[8px] p-[10px] text-[14px] border border-neutral-100 flex items-center gap-2 ${
+                        formState.errors?.facility_photo
+                          ? "border-primary-500"
+                          : "border-neutral-100"
+                      }`}
+                    >
+                      <input
+                        {...register("facility_photo")}
+                        type="text"
+                        className="focus:outline-none w-full"
+                        placeholder="Unggah Foto Tempat Praktek"
+                        value={formData?.facility_photo_name}
+                        readOnly
+                      />
+                      {/* {fotoKtp?.name} */}
+                      <input
+                        type="file"
+                        hidden
+                        id="identity_photo"
+                        onChange={handleFileFotoUsahaChange}
+                      />
+                      <label
+                        htmlFor="identity_photo"
+                        className="text-link cursor-pointer"
+                      >
+                        Unggah
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {product === "clinix" && (
+                <div className="flex items-center gap-2">
+                  <input
+                    className="accent-green-500 w-4 h-4"
+                    id="same_address"
+                    type="checkbox"
+                    checked={formData["isSameAddress"] === true}
+                    onChange={onToggleSameAddress}
+                  />
+
+                  <label htmlFor="same_address" className="cursor-pointer">
+                    Alamat sama dengan alamat pribadi
+                  </label>
+                </div>
+              )}
 
               {formData["isSameAddress"] === false && (
                 <>
@@ -944,7 +1253,11 @@ export function ProfesionForm() {
                                         key={idx}
                                         className={({ active }) =>
                                           `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                            active ? "bg-green-100" : ""
+                                            active
+                                              ? product === "clinix"
+                                                ? "bg-green-100"
+                                                : "bg-primary-100"
+                                              : ""
                                           }`
                                         }
                                         value={province}
@@ -1043,7 +1356,11 @@ export function ProfesionForm() {
                                         key={idx}
                                         className={({ active }) =>
                                           `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                            active ? "bg-green-100" : ""
+                                            active
+                                              ? product === "clinix"
+                                                ? "bg-green-100"
+                                                : "bg-primary-100"
+                                              : ""
                                           }`
                                         }
                                         value={city}
@@ -1143,7 +1460,11 @@ export function ProfesionForm() {
                                         key={idx}
                                         className={({ active }) =>
                                           `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                            active ? "bg-green-100" : ""
+                                            active
+                                              ? product === "clinix"
+                                                ? "bg-green-100"
+                                                : "bg-primary-100"
+                                              : ""
                                           }`
                                         }
                                         value={sub_district}
@@ -1243,7 +1564,11 @@ export function ProfesionForm() {
                                         key={idx}
                                         className={({ active }) =>
                                           `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                            active ? "bg-green-100" : ""
+                                            active
+                                              ? product === "clinix"
+                                                ? "bg-green-100"
+                                                : "bg-primary-100"
+                                              : ""
                                           }`
                                         }
                                         value={village}

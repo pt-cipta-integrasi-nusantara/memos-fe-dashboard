@@ -52,7 +52,8 @@ export function TermsConditionContent() {
           {/* Content */}
           <div className="mt-8 text-[14px]" id="content-terms-condition">
             <h2 className="font-bold text-[16px]">
-              Syarat & Ketentuan Penggunaan Data Pribadi Clinix
+              Syarat & Ketentuan Penggunaan Data Pribadi{" "}
+              {product === "clinix" ? "Clinix" : "Memos"}
             </h2>
             <p className="mt-4">
               Dengan menggunakan layanan kami, Anda menyetujui pengumpulan,
@@ -163,7 +164,9 @@ export function TermsConditionContent() {
         <Card className="mt-8">
           <div className="flex items-center gap-2">
             <input
-              className="accent-green-500 w-4 h-4"
+              className={`${
+                product === "clinix" ? "accent-green-500" : "accent-primary-500"
+              } w-4 h-4`}
               id="aggreement"
               type="checkbox"
               onChange={onCheckAgree}

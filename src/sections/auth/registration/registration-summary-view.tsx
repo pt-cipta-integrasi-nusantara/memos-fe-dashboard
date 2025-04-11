@@ -6,7 +6,10 @@ import { useRegister } from "../../../services/auth/use-registration";
 import toast from "react-hot-toast";
 import * as sessionService from "../../../utils/session";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { spesialisData } from "../../../components/constants/constants";
+import {
+  spesialisDataPerawat,
+  spesialisDataDokter,
+} from "../../../components/constants/constants";
 import { Dialog, Transition } from "@headlessui/react";
 
 export function SummaryContent() {
@@ -202,7 +205,7 @@ export function SummaryContent() {
                 </div>
                 <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
                   <span>Alamat</span>
-                  <span className="w-1/2 text-right">
+                  <span className="w-1/2 text-left lg:text-right">
                     {formData?.street_address} {formData?.detail_note}
                     {", "}
                     {formData?.rt_no ? `RT ${formData?.rt_no}` : null}{" "}
@@ -224,11 +227,13 @@ export function SummaryContent() {
                 <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
                   <span>SMF</span>
                   <span>
-                    {
-                      spesialisData?.find(
-                        (item) => item?.id === formData["smf_id"]
-                      )?.label
-                    }
+                    {formData["smf_id"] !== 35
+                      ? spesialisDataDokter?.find(
+                          (item) => item?.id === formData["smf_id"]
+                        )?.label
+                      : spesialisDataPerawat?.find(
+                          (item) => item?.id === formData["smf_id"]
+                        )?.label}
                   </span>
                 </div>
                 <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
@@ -248,6 +253,12 @@ export function SummaryContent() {
                   <span>Tanggal Habis Berlaku</span>
                   <span>{formData?.expires_date}</span>
                 </div>
+                {product !== "clinix" && (
+                  <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
+                    <span>Kode BPJS</span>
+                    <span>{formData?.bpjs_code}</span>
+                  </div>
+                )}
                 <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
                   <span>Organisasi</span>
                   <span>{formData?.facility_organization_name}</span>
@@ -256,72 +267,82 @@ export function SummaryContent() {
                   <span>Nama Klinik</span>
                   <span>{formData?.facility_name}</span>
                 </div>
-                <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
-                  <span>Jenis Usaha</span>
-                  <span>{formData?.facility_type}</span>
-                </div>
-                <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
-                  <span>Unggah Tempat Usaha</span>
-                  <span
-                    className="cursor-pointer underline text-link"
-                    onClick={() => onPreviewImage(formData?.facility_photo)}
-                  >
-                    {formData?.facility_photo_name}
-                  </span>
-                </div>
-                <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
-                  <span>Alamat</span>
-                  <span className="w-1/2 text-right">
-                    {isSameAddress
-                      ? formData?.street_address
-                      : formData?.facility_street_address}{" "}
-                    {isSameAddress
-                      ? formData?.detail_note
-                      : formData?.facility_detail_note}
-                    {", "}
-                    {isSameAddress
-                      ? formData?.rt_no
-                      : formData?.facility_rt_no
-                      ? `RT ${
-                          isSameAddress
-                            ? formData?.rt_no
-                            : formData?.facility_rt_no
-                        }`
-                      : null}{" "}
-                    {isSameAddress
-                      ? formData?.rw_no
-                      : formData?.facility_rw_no
-                      ? `RW ${
-                          isSameAddress
-                            ? formData?.rw_no
-                            : formData?.facility_rw_no
-                        }`
-                      : null}
-                    {", "}
-                    {isSameAddress
-                      ? formData?.sub_district_name
-                      : formData?.facility_sub_district_name}
-                    {", "}{" "}
-                    {isSameAddress
-                      ? formData?.village_name
-                      : formData?.facility_village_name}
-                    {", "}{" "}
-                    {isSameAddress
-                      ? formData?.city_name
-                      : formData?.facility_city_name}
-                    {", "}{" "}
-                    {isSameAddress
-                      ? formData?.province_name
-                      : formData?.facility_province_name}
-                  </span>
-                </div>
+                {product === "clinix" && (
+                  <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
+                    <span>Jenis Usaha</span>
+                    <span>{formData?.facility_type}</span>
+                  </div>
+                )}
+                {product === "clinix" && (
+                  <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
+                    <span>Unggah Tempat Usaha</span>
+                    <span
+                      className="cursor-pointer underline text-link"
+                      onClick={() => onPreviewImage(formData?.facility_photo)}
+                    >
+                      {formData?.facility_photo_name}
+                    </span>
+                  </div>
+                )}
+                {product === "clinix" && (
+                  <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
+                    <span>Alamat</span>
+                    <span className="w-1/2 text-right">
+                      {isSameAddress
+                        ? formData?.street_address
+                        : formData?.facility_street_address}{" "}
+                      {isSameAddress
+                        ? formData?.detail_note
+                        : formData?.facility_detail_note}
+                      {", "}
+                      {isSameAddress
+                        ? formData?.rt_no
+                        : formData?.facility_rt_no
+                        ? `RT ${
+                            isSameAddress
+                              ? formData?.rt_no
+                              : formData?.facility_rt_no
+                          }`
+                        : null}{" "}
+                      {isSameAddress
+                        ? formData?.rw_no
+                        : formData?.facility_rw_no
+                        ? `RW ${
+                            isSameAddress
+                              ? formData?.rw_no
+                              : formData?.facility_rw_no
+                          }`
+                        : null}
+                      {", "}
+                      {isSameAddress
+                        ? formData?.sub_district_name
+                        : formData?.facility_sub_district_name}
+                      {", "}{" "}
+                      {isSameAddress
+                        ? formData?.village_name
+                        : formData?.facility_village_name}
+                      {", "}{" "}
+                      {isSameAddress
+                        ? formData?.city_name
+                        : formData?.facility_city_name}
+                      {", "}{" "}
+                      {isSameAddress
+                        ? formData?.province_name
+                        : formData?.facility_province_name}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
             <div className="border-t-2 border-dashed border-neutral-400 w-full h-1 mt-8"></div>
 
             <div className="flex items-center gap-2 mt-6 text-[12px] lg:text-[14px]">
               <input
-                className="accent-green-500 w-4 h-4"
+                className={`${
+                  product === "clinix"
+                    ? "accent-green-500"
+                    : "accent-primary-500"
+                } w-4 h-4`}
                 id="agreement"
                 type="checkbox"
                 onChange={onCheckAgreement}

@@ -18,7 +18,29 @@ export const profesions = [
   },
 ]
 
-export const spesialisData = [
+export const professionsMemos = [
+  {
+    id: 1,
+    label: "Dokter"
+  },
+  {
+    id: 2,
+    label: "Perawat"
+  }
+];
+
+export const organizationData = [
+  {
+    id: "RS Sapta Medika",
+    label: "RS Sapta Medika"
+  },
+  {
+    id: "RS Setio Husudo",
+    label: "RS Setio Husudo"
+  }
+]
+
+export const spesialisDataDokter = [
   {
     id: 1,
     label: "Dokter Umum"
@@ -154,6 +176,13 @@ export const spesialisData = [
   {
     id: 34,
     label: "Dokter Gigi Spesialis"
+  },
+]
+
+export const spesialisDataPerawat = [
+  {
+    id: 35,
+    label: "Perawat"
   },
 ]
 
