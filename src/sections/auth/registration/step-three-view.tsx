@@ -5,7 +5,6 @@ import {
   profesions,
   professionsMemos,
   spesialisDataDokter,
-  spesialisDataPerawat,
 } from "../../../components/constants/constants";
 import { uploadImage } from "../../../services/utils/uploadImage";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
@@ -41,7 +40,7 @@ export function ProfesionForm() {
   const [selectedOrganizationSite, setSelectedOrganizationSite] =
     useState<SelectProps>();
   const spesialisData =
-    formData?.profession_id === 1 ? spesialisDataDokter : spesialisDataPerawat;
+    formData?.profession_id === 1 ? spesialisDataDokter : professionsMemos;
 
   // Wilayah
   const [provinceList, setProvinceList] = useState<any[]>([]);
@@ -512,35 +511,41 @@ export function ProfesionForm() {
                               leaveTo="opacity-0"
                             >
                               <Listbox.Options className="z-10 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                                {spesialisData.map((spesialis, idx) => (
-                                  <Listbox.Option
-                                    key={idx}
-                                    className={({ active }) =>
-                                      `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                        active
-                                          ? product === "clinix"
-                                            ? "bg-green-100"
-                                            : "bg-primary-100"
-                                          : ""
-                                      }`
-                                    }
-                                    value={spesialis}
-                                  >
-                                    {({ selected }) => (
-                                      <>
-                                        <span
-                                          className={`block truncate ${
-                                            selected
-                                              ? "font-medium"
-                                              : "font-normal"
-                                          }`}
-                                        >
-                                          {spesialis?.label}
-                                        </span>
-                                      </>
-                                    )}
-                                  </Listbox.Option>
-                                ))}
+                                {spesialisData
+                                  .filter((item) =>
+                                    formData.profession_id !== 1
+                                      ? item?.id === formData.profession_id
+                                      : item
+                                  )
+                                  .map((spesialis, idx) => (
+                                    <Listbox.Option
+                                      key={idx}
+                                      className={({ active }) =>
+                                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                          active
+                                            ? product === "clinix"
+                                              ? "bg-green-100"
+                                              : "bg-primary-100"
+                                            : ""
+                                        }`
+                                      }
+                                      value={spesialis}
+                                    >
+                                      {({ selected }) => (
+                                        <>
+                                          <span
+                                            className={`block truncate ${
+                                              selected
+                                                ? "font-medium"
+                                                : "font-normal"
+                                            }`}
+                                          >
+                                            {spesialis?.label}
+                                          </span>
+                                        </>
+                                      )}
+                                    </Listbox.Option>
+                                  ))}
                               </Listbox.Options>
                             </Transition>
                           </div>
@@ -710,7 +715,7 @@ export function ProfesionForm() {
                           });
                           setFormData({ bpjs_code: e.target.value });
                         }}
-                        defaultValue={formData["str_no"]}
+                        defaultValue={formData["bpjs_code"]}
                       />
                       {formState?.errors?.bpjs_code && (
                         <span className="text-primary-500">

@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import { useSubscriptionById } from "../../services/subscription/use-subscription-detail";
 import React, { Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import { CloseIcon } from "../../components/iconsComponent";
 
 export function PaymentSuccessContent({ data }: { data: any }) {
   const { subscriptionData, resetFormData, resetSubscriptionData } =
@@ -183,10 +184,14 @@ export function PaymentSuccessContent({ data }: { data: any }) {
                   <Dialog.Panel className="w-full max-w-[30rem] transform overflow-hidden rounded-2xl bg-white p-8 text-left align-middle shadow-xl transition-all">
                     <Dialog.Title
                       as="h3"
-                      className="text-lg font-medium leading-6 text-gray-900"
+                      className="flex items-center justify-between text-lg font-medium leading-6 text-gray-900"
                     >
-                      <div className="flex items-center gap-2 mb-2">
-                        Preview
+                      <div>Preview</div>
+                      <div
+                        className="cursor-pointer"
+                        onClick={() => setIsPreviewImage(false)}
+                      >
+                        <CloseIcon />
                       </div>
                     </Dialog.Title>
                     <div className="mt-2 flex justify-center max-h-[600px]">

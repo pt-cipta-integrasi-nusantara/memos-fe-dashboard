@@ -7,10 +7,11 @@ import toast from "react-hot-toast";
 import * as sessionService from "../../../utils/session";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
-  spesialisDataPerawat,
+  professionsMemos,
   spesialisDataDokter,
 } from "../../../components/constants/constants";
 import { Dialog, Transition } from "@headlessui/react";
+import { CloseIcon } from "../../../components/iconsComponent";
 
 export function SummaryContent() {
   const navigate = useNavigate();
@@ -227,11 +228,11 @@ export function SummaryContent() {
                 <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
                   <span>SMF</span>
                   <span>
-                    {formData["smf_id"] !== 35
+                    {formData["profession_id"] === 35
                       ? spesialisDataDokter?.find(
                           (item) => item?.id === formData["smf_id"]
                         )?.label
-                      : spesialisDataPerawat?.find(
+                      : professionsMemos?.find(
                           (item) => item?.id === formData["smf_id"]
                         )?.label}
                   </span>
@@ -410,10 +411,14 @@ export function SummaryContent() {
                   <Dialog.Panel className="w-full max-w-[30rem] transform overflow-hidden rounded-2xl bg-white p-8 text-left align-middle shadow-xl transition-all">
                     <Dialog.Title
                       as="h3"
-                      className="text-lg font-medium leading-6 text-gray-900"
+                      className="flex items-center justify-between text-lg font-medium leading-6 text-gray-900"
                     >
-                      <div className="flex items-center gap-2 mb-2">
-                        Preview
+                      <div>Preview</div>
+                      <div
+                        className="cursor-pointer"
+                        onClick={() => setIsPreviewImage(false)}
+                      >
+                        <CloseIcon />
                       </div>
                     </Dialog.Title>
                     <div className="mt-2 flex justify-center max-h-[600px]">

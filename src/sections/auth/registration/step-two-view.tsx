@@ -1225,25 +1225,27 @@ export function IdentityForm() {
                     )}
                   </div>
                   <div className="flex flex-col md:flex-row items-center gap-2 lg:w-full">
-                    <div className="w-full flex flex-col gap-2">
-                      <label
-                        className="text-[14px] font-medium"
-                        htmlFor="detail_note"
-                      >
-                        Detail Alamat (Optional){" "}
-                      </label>
-                      <input
-                        id="detail_note"
-                        {...register("detail_note", { required: false })}
-                        type="text"
-                        className="rounded-[8px] p-[10px] text-[14px] border border-neutral-100 focus:outline-none"
-                        placeholder="Detail Alamat, No. Lantai"
-                        onChange={(e) =>
-                          setFormData({ detail_note: e.target.value })
-                        }
-                        defaultValue={formData["detail_note"]}
-                      />
-                    </div>
+                    {product === "clinix" && (
+                      <div className="w-full flex flex-col gap-2">
+                        <label
+                          className="text-[14px] font-medium"
+                          htmlFor="detail_note"
+                        >
+                          Detail Alamat (Optional){" "}
+                        </label>
+                        <input
+                          id="detail_note"
+                          {...register("detail_note", { required: false })}
+                          type="text"
+                          className="rounded-[8px] p-[10px] text-[14px] border border-neutral-100 focus:outline-none"
+                          placeholder="Detail Alamat, No. Lantai"
+                          onChange={(e) =>
+                            setFormData({ detail_note: e.target.value })
+                          }
+                          defaultValue={formData["detail_note"]}
+                        />
+                      </div>
+                    )}
                     <div className="w-full flex flex-col gap-2">
                       <label
                         className="text-[14px] font-medium"
