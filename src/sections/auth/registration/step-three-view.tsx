@@ -715,7 +715,7 @@ export function ProfesionForm() {
                           });
                           setFormData({ bpjs_code: e.target.value });
                         }}
-                        defaultValue={formData["str_no"]}
+                        defaultValue={formData["bpjs_code"]}
                       />
                       {formState?.errors?.bpjs_code && (
                         <span className="text-primary-500">
