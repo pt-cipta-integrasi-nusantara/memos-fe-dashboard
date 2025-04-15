@@ -2,6 +2,7 @@
 import {
   ArrowDownIcon,
   DashboardIcon,
+  SettingsIcon,
   // ProfileIcon,
   WorkIcon,
 } from "../iconsComponent";
@@ -282,6 +283,77 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
                         }`}
                       >
                         RS Setio Husodo Medan
+                      </span>
+                    </div>
+                  </div>
+                </Disclosure.Panel>
+              </>
+            )}
+          </Disclosure>
+        </div>
+
+        <div className="relative">
+          <Disclosure>
+            {() => (
+              <>
+                <Disclosure.Button className="py-4 flex items-center w-full cursor-pointer px-8">
+                  <span className="block truncate">
+                    <div className="cursor-pointer flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-4">
+                        <SettingsIcon
+                          className={`w-[18px] h-[18px] ${
+                            asPath.includes("/master-item")
+                              ? "text-primary-500"
+                              : ""
+                          }`}
+                        />
+
+                        <span
+                          className={`font-bold ${
+                            asPath.includes("/master-item")
+                              ? "text-primary-500"
+                              : ""
+                          } `}
+                        >
+                          Admin Panel
+                        </span>
+                      </div>
+                    </div>
+                  </span>
+                  {isExpandedMenubar && (
+                    <span className="pointer-events-none absolute right-4 flex items-center pr-2">
+                      <ArrowDownIcon />
+                    </span>
+                  )}
+                </Disclosure.Button>
+                <Disclosure.Panel className="relative">
+                  <div className="flex flex-col gap-0">
+                    <div
+                      onClick={() => navigate("/master-item")}
+                      className="py-4 flex items-center w-full cursor-pointer"
+                    >
+                      <span
+                        className={`ml-16 font-bold ${
+                          asPath.includes("/master-item")
+                            ? "text-primary-500"
+                            : "pl-1"
+                        }`}
+                      >
+                        Master Item
+                      </span>
+                    </div>
+                    <div
+                      onClick={() => navigate("/master-tarif")}
+                      className="py-4 flex items-center w-full cursor-pointer"
+                    >
+                      <span
+                        className={`ml-16 font-bold ${
+                          asPath.includes("/master-tarif")
+                            ? "text-primary-500"
+                            : "pl-1"
+                        }`}
+                      >
+                        Master tarif
                       </span>
                     </div>
                   </div>

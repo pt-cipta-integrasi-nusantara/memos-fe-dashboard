@@ -18,7 +18,7 @@ module.exports = {
         },
         green: {
           100: "#EDF6EC",
-          500: "#45A03F"
+          500: "#45A03F",
         },
         neutral: {
           100: "#DAE0E7",
@@ -32,7 +32,7 @@ module.exports = {
         warning: "#E40044",
         yellow: {
           100: "#FFF7E5",
-          500: "#996B00"
+          500: "#996B00",
         },
         blue: {
           50: "#FBFDFE",
@@ -46,6 +46,10 @@ module.exports = {
       },
       top: {
         55: "calc(100% - 55rem)",
+      },
+
+      boxShadow: {
+        soft: "0px 0px 8px -2px rgba(103, 122, 142, 0.10), 0px 0px 4px -2px rgba(103, 122, 142, 0.06)",
       },
     },
   },

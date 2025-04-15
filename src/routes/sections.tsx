@@ -61,6 +61,45 @@ export const WorkspacePage = lazy(() => import("../pages/workspace/[slug]"));
 
 export const ProfilePage = lazy(() => import("../pages/profile"));
 
+export const MasterItemPage = lazy(() =>
+  import("../pages/master-item").then((mod) => ({
+    default: mod.MasterItemContainer,
+  }))
+);
+
+export const MasterTarifPage = lazy(() =>
+  import("../pages/master-tarif").then((mod) => ({
+    default: mod.MasterTarifContainer,
+  }))
+);
+
+export const ItemObatListPage = lazy(() =>
+  import("../pages/master-item").then((mod) => ({ default: mod.ItemObatList }))
+);
+
+export const ItemObatFormPage = lazy(() =>
+  import("../pages/master-item").then((mod) => ({
+    default: mod.ItemObatForm,
+  }))
+);
+
+export const ItemPelayananListPage = lazy(() =>
+  import("../pages/master-item").then((mod) => ({
+    default: mod.ItemPelayananList,
+  }))
+);
+
+export const ItemAlatKesehatanListPage = lazy(() =>
+  import("../pages/master-item").then((mod) => ({
+    default: mod.ItemAlatKesehatanList,
+  }))
+);
+export const ItemAlatKesehatanFormPage = lazy(() =>
+  import("../pages/master-item").then((mod) => ({
+    default: mod.ItemAlatKesehatanForm,
+  }))
+);
+
 const renderFallback = (
   <div className="flex items-center justify-center h-full">
     <Loader />
@@ -82,6 +121,45 @@ export function Router() {
         {
           path: "/profile",
           element: <ProfilePage />,
+        },
+        {
+          path: "/master-item",
+          element: <MasterItemPage />,
+          children: [
+            {
+              index: true,
+              element: <ItemPelayananListPage />,
+            },
+            {
+              path: "item-pelayanan",
+              element: <ItemPelayananListPage />,
+            },
+
+            {
+              path: "item-obat",
+              element: <ItemObatListPage />,
+            },
+            {
+              path: "item-obat/create",
+              element: <ItemObatFormPage />,
+            },
+            {
+              path: "item-obat/:id",
+              element: <ItemObatFormPage />,
+            },
+            {
+              path: "item-alat-kesehatan",
+              element: <ItemAlatKesehatanListPage />,
+            },
+            {
+              path: "item-alat-kesehatan/create",
+              element: <ItemAlatKesehatanFormPage />,
+            },
+            {
+              path: "item-alat-kesehatan/:id",
+              element: <ItemAlatKesehatanFormPage />,
+            },
+          ],
         },
         {
           path: "/subscription",
