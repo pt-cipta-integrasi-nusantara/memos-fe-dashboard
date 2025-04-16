@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -16,6 +16,8 @@ import {
 
 export function ForgotPasswordContent() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const product = String(searchParams.get("product"));
   const { mutate: requestAuthCode } = useRequestAuthCode();
   const { mutate: verifyAuthCode } = useVerifyAuthCode();
   const [initialTime, setInitialTime] = useState(150);
@@ -139,10 +141,25 @@ export function ForgotPasswordContent() {
                 </div>
               </div>
 
+              {isRequested && (
+                <div className="mt-6">
+                  <Countdown
+                    initialTime={initialTime}
+                    onClickRequestAuthCode={onClickRequestAuthCode}
+                    isRequested={isRequested}
+                    setIsRequested={setIsRequested}
+                    isClinix={product === "clinix"}
+                  />
+                </div>
+              )}
+
               <Button
                 isPrimary
                 title="Masuk"
-                className="w-full mt-4 focus:outline-none"
+                isDisabled={isRequested}
+                className={`w-full mt-4 focus:outline-none ${
+                  isRequested ? "cursor-not-allowed" : ""
+                }`}
                 type="submit"
               />
             </Card>
@@ -220,13 +237,18 @@ export function ForgotPasswordContent() {
                         alamat email : {censoredEmail}
                       </p>
                     </div>
-                    <PinInput length={6} onComplete={onVerifyAuthCode} />
+                    <PinInput
+                      length={6}
+                      onComplete={onVerifyAuthCode}
+                      isClinix={product === "clinix"}
+                    />
                     <div className="mt-8">
                       <Countdown
                         initialTime={initialTime}
                         onClickRequestAuthCode={onClickRequestAuthCode}
                         isRequested={isRequested}
                         setIsRequested={setIsRequested}
+                        isClinix={product === "clinix"}
                       />
                     </div>
                   </Dialog.Panel>

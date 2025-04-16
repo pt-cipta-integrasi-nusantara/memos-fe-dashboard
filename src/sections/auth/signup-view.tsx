@@ -132,8 +132,6 @@ export function SignupContent() {
 
   const censoredEmail = watch("email");
 
-  console.log(formState?.errors, "formStateformState");
-
   return (
     <div
       id="signup"
@@ -211,11 +209,25 @@ export function SignupContent() {
                 </p>
               </div>
 
+              {isRequested && (
+                <div className="mt-6">
+                  <Countdown
+                    initialTime={initialTime}
+                    onClickRequestAuthCode={onClickRequestAuthCode}
+                    isRequested={isRequested}
+                    setIsRequested={setIsRequested}
+                    isClinix={product === "clinix"}
+                  />
+                </div>
+              )}
               <Button
                 isPrimary
+                isDisabled={isRequested}
                 isClinix={product === "clinix"}
                 title={isShouldRequestOtp ? "Kirim OTP" : "Daftar"}
-                className="w-full mt-4 focus:outline-none"
+                className={`w-full mt-4 focus:outline-none ${
+                  isRequested ? "cursor-not-allowed" : ""
+                }`}
                 type="submit"
               />
               <div className="mt-4 flex items-center gap-3">
@@ -315,13 +327,18 @@ export function SignupContent() {
                         alamat email : {censoredEmail}
                       </p>
                     </div>
-                    <PinInput length={6} onComplete={onVerifyAuthCode} />
+                    <PinInput
+                      length={6}
+                      onComplete={onVerifyAuthCode}
+                      isClinix={product === "clinix"}
+                    />
                     <div className="mt-8">
                       <Countdown
                         initialTime={initialTime}
                         onClickRequestAuthCode={onClickRequestAuthCode}
                         isRequested={isRequested}
                         setIsRequested={setIsRequested}
+                        isClinix={product === "clinix"}
                       />
                     </div>
                   </Dialog.Panel>
