@@ -139,7 +139,7 @@ function NavMenuDesktop({
         ) : (
           <>
             {pathname === "/login" ? (
-              <div id="right" className="hidden lg:flex gap-3 items-center">
+              <div id="right" className="flex gap-3 items-center">
                 <span>Belum memiliki akun?</span>
                 <Button
                   isClinix={product === "clinix"}
@@ -148,7 +148,7 @@ function NavMenuDesktop({
                 />
               </div>
             ) : (
-              <div id="right" className="hidden lg:flex gap-3 items-center">
+              <div id="right" className="flex gap-3 items-center">
                 <span>Sudah memiliki akun?</span>
                 <Button
                   isClinix={product === "clinix"}

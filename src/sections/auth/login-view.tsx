@@ -141,7 +141,11 @@ export function LoginContent() {
 
                         <img
                           onClick={() => setIsHidePassword(!isHidePassword)}
-                          src="/assets/icons/eye.svg"
+                          src={
+                            !isHidePassword
+                              ? "/assets/icons/eye-show.svg"
+                              : "/assets/icons/eye.svg"
+                          }
                           alt="showhidepassword"
                           width={16}
                           height={16}
@@ -175,7 +179,7 @@ export function LoginContent() {
               <Button
                 isPrimary
                 isClinix={product === "clinix"}
-                // disabled={!isCaptchaDone}
+                disabled={!isCaptchaDone}
                 title="Masuk"
                 className={`w-full mt-4 focus:outline-none ${
                   !isCaptchaDone

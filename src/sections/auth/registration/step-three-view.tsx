@@ -9,11 +9,12 @@ import {
 import { uploadImage } from "../../../services/utils/uploadImage";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { twMerge } from "tailwind-merge";
-import { Button, Card } from "../../../components/uiComponent";
+import { Button, Card, Loader } from "../../../components/uiComponent";
 import { Listbox, Transition } from "@headlessui/react";
 import { ArrowDownIcon } from "../../../components/iconsComponent";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useRegistrationFormStore } from "../../../stores/registration/useRegistrationFormStore";
+import dayjs from "dayjs";
 
 interface SelectProps {
   label: string;
@@ -61,6 +62,15 @@ export function ProfesionForm() {
   const [selectedVillage, setSelectedVillage] = useState<
     Omit<SelectProps, "label"> & { name: string; district_id: number }
   >();
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+  }, []);
 
   useEffect(() => {
     if (product !== "clinix") {
@@ -321,7 +331,13 @@ export function ProfesionForm() {
     }
   };
 
-  console.log(formData, "formdata");
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div
@@ -617,6 +633,7 @@ export function ProfesionForm() {
                             message: "Tanggal Habis Berlaku wajib diisi",
                           },
                         })}
+                        min={dayjs().subtract(3, "month").format("YYYY-MM-DD")}
                         type="date"
                         className={`rounded-[8px] p-[10px] text-[14px] border focus:outline-none ${
                           formState?.errors?.expires_date

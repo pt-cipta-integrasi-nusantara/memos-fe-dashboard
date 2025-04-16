@@ -1,13 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
-import { Button, Card } from "../../../components/uiComponent";
+import { Button, Card, Loader } from "../../../components/uiComponent";
 
 export function TermsConditionContent() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const product = String(searchParams.get("product"));
   const [isAgree, setIsAgree] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+  }, []);
+
   const onNextStep = () => {
     if (product === "clinix") {
       navigate("/registration/step/2?product=clinix");
@@ -23,6 +32,14 @@ export function TermsConditionContent() {
   const onCheckAgree = () => {
     setIsAgree((prev) => !prev);
   };
+
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div

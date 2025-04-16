@@ -5,6 +5,7 @@ interface CountdownProps {
   onClickRequestAuthCode: () => void;
   isRequested: boolean;
   setIsRequested: Dispatch<SetStateAction<boolean>>;
+  isClinix: boolean;
 }
 
 const Countdown: React.FC<CountdownProps> = ({
@@ -12,6 +13,7 @@ const Countdown: React.FC<CountdownProps> = ({
   onClickRequestAuthCode,
   isRequested,
   setIsRequested,
+  isClinix,
 }) => {
   const [timeLeft, setTimeLeft] = useState<number>(initialTime);
 
@@ -48,7 +50,11 @@ const Countdown: React.FC<CountdownProps> = ({
       {isRequested ? (
         <span>
           Kirim ulang kode dalam{" "}
-          <span className="text-primary-500">{formatTime(timeLeft)}</span>
+          <span
+            className={`${isClinix ? "text-green-500" : "text-primary-500"}`}
+          >
+            {formatTime(timeLeft)}
+          </span>
         </span>
       ) : (
         <span
