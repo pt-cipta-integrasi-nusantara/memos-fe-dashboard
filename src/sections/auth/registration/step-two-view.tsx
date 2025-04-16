@@ -5,7 +5,7 @@ import { ChangeEvent, Fragment, useEffect, useRef, useState } from "react";
 import { genders } from "../../../components/constants/constants";
 import { uploadImage } from "../../../services/utils/uploadImage";
 import { twMerge } from "tailwind-merge";
-import { Button, Card } from "../../../components/uiComponent";
+import { Button, Card, Loader } from "../../../components/uiComponent";
 import { Listbox, Transition } from "@headlessui/react";
 import { ArrowDownIcon } from "../../../components/iconsComponent";
 import { SearchBox } from "../../../components/uiComponent/searchBox";
@@ -52,6 +52,14 @@ export function IdentityForm() {
   const [searchVillageTerm, setSearchVillageTerm] = useSearchDebounce();
 
   const [isHidePassword, setIsHidePassword] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+  }, []);
 
   useEffect(() => {
     if (formData?.gender) {
@@ -266,14 +274,20 @@ export function IdentityForm() {
     }
   };
 
-  console.log(formState.errors, "formstate");
-
   useEffect(() => {
     // resetFormData();
   }, []);
 
   console.log(watch(), "form value");
   console.log(formData, "formData");
+
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div
