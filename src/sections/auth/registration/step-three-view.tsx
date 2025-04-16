@@ -14,6 +14,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { ArrowDownIcon } from "../../../components/iconsComponent";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useRegistrationFormStore } from "../../../stores/registration/useRegistrationFormStore";
+import dayjs from "dayjs";
 
 interface SelectProps {
   label: string;
@@ -617,6 +618,7 @@ export function ProfesionForm() {
                             message: "Tanggal Habis Berlaku wajib diisi",
                           },
                         })}
+                        min={dayjs().subtract(3, "month").format("YYYY-MM-DD")}
                         type="date"
                         className={`rounded-[8px] p-[10px] text-[14px] border focus:outline-none ${
                           formState?.errors?.expires_date

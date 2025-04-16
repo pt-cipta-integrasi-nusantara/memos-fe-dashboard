@@ -61,7 +61,7 @@ function Navmenu() {
 
   return (
     <nav className="bg-white w-full border-t border-neutral-250">
-      <ul className="flex justify-left px-16 gap-8">
+      <ul className="flex justify-center px-16 gap-8">
         {menus?.map((menu) => (
           <li
             onClick={() => handleRoute(menu?.path)}

@@ -74,7 +74,7 @@ export function WorkspaceContent() {
                       key={idx}
                       className={({ active }) =>
                         `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                          active ? "bg-green-100" : ""
+                          active ? "bg-primary-100" : ""
                         }`
                       }
                       value={org}
@@ -131,7 +131,7 @@ export function WorkspaceContent() {
                         key={idx}
                         className={({ active }) =>
                           `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                            active ? "bg-green-100" : ""
+                            active ? "bg-primary-100" : ""
                           }`
                         }
                         value={workspace}
