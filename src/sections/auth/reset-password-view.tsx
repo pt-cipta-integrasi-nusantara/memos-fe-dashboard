@@ -11,6 +11,7 @@ export function ResetPasswordContent() {
   const navigate = useNavigate();
   const [isSuccess, setIsSuccess] = useState(false);
   const [isHidePassword, setIsHidePassword] = useState(true);
+  const [isHideConfirmPassword, setIsHideConfirmPassword] = useState(true);
   const { resetFormData } = useRegistrationFormStore();
   const { mutate: resetPassword } = useResetPassword();
   const { register, handleSubmit, setValue, watch, formState } = useForm<any>();
@@ -103,7 +104,11 @@ export function ResetPasswordContent() {
 
                           <img
                             onClick={() => setIsHidePassword(!isHidePassword)}
-                            src="/assets/icons/eye.svg"
+                            src={
+                              !isHidePassword
+                                ? "/assets/icons/eye-show.svg"
+                                : "/assets/icons/eye.svg"
+                            }
                             alt="showhidepassword"
                             width={16}
                             height={16}
@@ -150,7 +155,7 @@ export function ResetPasswordContent() {
                                 }
                               },
                             })}
-                            type={isHidePassword ? "password" : "text"}
+                            type={isHideConfirmPassword ? "password" : "text"}
                             className="focus:outline-none w-full"
                             placeholder="Masukkan Kata Sandi Baru Anda"
                             onChange={(e) => {
@@ -161,9 +166,15 @@ export function ResetPasswordContent() {
                           />
 
                           <img
-                            onClick={() => setIsHidePassword(!isHidePassword)}
-                            src="/assets/icons/eye.svg"
-                            alt="showhidepassword"
+                            onClick={() =>
+                              setIsHideConfirmPassword(!isHideConfirmPassword)
+                            }
+                            src={
+                              !isHideConfirmPassword
+                                ? "/assets/icons/eye-show.svg"
+                                : "/assets/icons/eye.svg"
+                            }
+                            alt="showhideconfirmpassword"
                             width={16}
                             height={16}
                             className="cursor-pointer"
