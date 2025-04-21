@@ -74,141 +74,147 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
         </li>
 
         <Listbox value={selectedOrg} onChange={setSelectedOrg}>
-          <div className="relative">
-            <Listbox.Button className="py-4 flex items-center w-full cursor-pointer px-8">
-              <span className="block truncate">
-                <div className="cursor-pointer flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-4">
-                    <img
-                      src={selectedOrg?.logo}
-                      alt="rs-setio"
-                      width={16}
-                      height={16}
-                    />
-                    <span className={`text-[14px] block truncate font-bold`}>
-                      {selectedOrg?.label}
-                    </span>{" "}
-                    <img
-                      src="/assets/icons/office.svg"
-                      alt="office"
-                      width={16}
-                      height={16}
-                    />
-                  </div>
-                </div>
-              </span>
-              {isExpandedMenubar && (
-                <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center pr-2">
-                  <ArrowDownIcon />
-                </span>
-              )}
-            </Listbox.Button>
-            <Transition
-              as={Fragment}
-              leave="transition ease-in duration-100"
-              leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
-              <Listbox.Options className="z-10 absolute mt-1  w-[90%] -translate-x-1/2 left-1/2 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-                <div className="p-4">Organisasi saat ini</div>
-                <Listbox.Option
-                  className={() => `relative cursor-default select-none p-4`}
-                  value={selectedOrg}
-                >
-                  {({ selected }) => (
-                    <div className="cursor-pointer flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-4">
-                        <img
-                          src={selectedOrg?.logo}
-                          alt="rs-setio"
-                          width={16}
-                          height={16}
-                        />
-                        <span
-                          className={`text-[14px] block truncate ${
-                            selected ? "font-bold" : "font-normal"
-                          }`}
-                        >
-                          {selectedOrg?.label}
-                        </span>{" "}
-                        <img
-                          src="/assets/icons/office.svg"
-                          alt="office"
-                          width={16}
-                          height={16}
-                        />
-                      </div>
+          {({ open }) => (
+            <div className="relative">
+              <Listbox.Button className="py-4 flex items-center w-full cursor-pointer px-8">
+                <span className="block truncate">
+                  <div className="cursor-pointer flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-4">
                       <img
-                        src="/assets/icons/org-checked.svg"
+                        src={selectedOrg?.logo}
+                        alt="rs-setio"
+                        width={16}
+                        height={16}
+                      />
+                      <span className={`text-[14px] block truncate font-bold`}>
+                        {selectedOrg?.label}
+                      </span>{" "}
+                      <img
+                        src="/assets/icons/office.svg"
                         alt="office"
                         width={16}
                         height={16}
                       />
                     </div>
-                  )}
-                </Listbox.Option>
-                <div className="border-t-2 my-2 border-neutral-250 w-full h-1"></div>
-                <div className="p-4">Ganti organisasi</div>
-                {orgList
-                  ?.filter((item) => item?.id !== selectedOrg?.id)
-                  .map((org, idx) => (
-                    <Listbox.Option
-                      key={idx}
-                      className={() =>
-                        `relative cursor-default select-none p-4`
+                  </div>
+                </span>
+                {isExpandedMenubar && (
+                  <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center pr-2">
+                    <ArrowDownIcon
+                      className={
+                        open ? "transition-all rotate-180" : "transition-all"
                       }
-                      value={org}
-                    >
-                      {({ selected }) => (
-                        <div className="cursor-pointer flex items-center justify-between gap-2">
-                          <div className="flex items-center gap-2">
-                            <img
-                              src={org?.logo}
-                              alt="rs-setio"
-                              width={16}
-                              height={16}
-                            />
-                            <span
-                              className={`text-[14px] block truncate ${
-                                selected ? "font-bold" : "font-normal"
-                              }`}
-                            >
-                              {org?.label}
-                            </span>{" "}
-                            <img
-                              src="/assets/icons/office.svg"
-                              alt="office"
-                              width={16}
-                              height={16}
-                            />
-                          </div>
+                    />
+                  </span>
+                )}
+              </Listbox.Button>
+              <Transition
+                as={Fragment}
+                leave="transition ease-in duration-100"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
+              >
+                <Listbox.Options className="z-10 absolute mt-1  w-[90%] -translate-x-1/2 left-1/2 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                  <div className="p-4">Organisasi saat ini</div>
+                  <Listbox.Option
+                    className={() => `relative cursor-default select-none p-4`}
+                    value={selectedOrg}
+                  >
+                    {({ selected }) => (
+                      <div className="cursor-pointer flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-4">
                           <img
-                            src="/assets/icons/org-unchecked.svg"
+                            src={selectedOrg?.logo}
+                            alt="rs-setio"
+                            width={16}
+                            height={16}
+                          />
+                          <span
+                            className={`text-[14px] block truncate ${
+                              selected ? "font-bold" : "font-normal"
+                            }`}
+                          >
+                            {selectedOrg?.label}
+                          </span>{" "}
+                          <img
+                            src="/assets/icons/office.svg"
                             alt="office"
                             width={16}
                             height={16}
                           />
                         </div>
-                      )}
-                    </Listbox.Option>
-                  ))}
-                <div className="border-t-2 my-2 border-neutral-250 w-full h-1"></div>
-                <div className="flex items-center gap-4 p-4 cursor-pointer">
-                  <img
-                    src="/assets/icons/plus.svg"
-                    alt="plus"
-                    width={16}
-                    height={16}
-                  />
-                  Tambah organisasi
-                </div>
-              </Listbox.Options>
-            </Transition>
-          </div>
+                        <img
+                          src="/assets/icons/org-checked.svg"
+                          alt="office"
+                          width={16}
+                          height={16}
+                        />
+                      </div>
+                    )}
+                  </Listbox.Option>
+                  <div className="border-t-2 my-2 border-neutral-250 w-full h-1"></div>
+                  <div className="p-4">Ganti organisasi</div>
+                  {orgList
+                    ?.filter((item) => item?.id !== selectedOrg?.id)
+                    .map((org, idx) => (
+                      <Listbox.Option
+                        key={idx}
+                        className={() =>
+                          `relative cursor-default select-none p-4`
+                        }
+                        value={org}
+                      >
+                        {({ selected }) => (
+                          <div className="cursor-pointer flex items-center justify-between gap-2">
+                            <div className="flex items-center gap-2">
+                              <img
+                                src={org?.logo}
+                                alt="rs-setio"
+                                width={16}
+                                height={16}
+                              />
+                              <span
+                                className={`text-[14px] block truncate ${
+                                  selected ? "font-bold" : "font-normal"
+                                }`}
+                              >
+                                {org?.label}
+                              </span>{" "}
+                              <img
+                                src="/assets/icons/office.svg"
+                                alt="office"
+                                width={16}
+                                height={16}
+                              />
+                            </div>
+                            <img
+                              src="/assets/icons/org-unchecked.svg"
+                              alt="office"
+                              width={16}
+                              height={16}
+                            />
+                          </div>
+                        )}
+                      </Listbox.Option>
+                    ))}
+                  <div className="border-t-2 my-2 border-neutral-250 w-full h-1"></div>
+                  <div className="flex items-center gap-4 p-4 cursor-pointer">
+                    <img
+                      src="/assets/icons/plus.svg"
+                      alt="plus"
+                      width={16}
+                      height={16}
+                    />
+                    Tambah organisasi
+                  </div>
+                </Listbox.Options>
+              </Transition>
+            </div>
+          )}
         </Listbox>
         <div className="relative">
           <Disclosure>
-            {() => (
+            {({ open }) => (
               <>
                 <Disclosure.Button className="py-4 flex items-center w-full cursor-pointer px-8">
                   <span className="block truncate">
@@ -235,7 +241,11 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
                   </span>
                   {isExpandedMenubar && (
                     <span className="pointer-events-none absolute right-4 flex items-center pr-2">
-                      <ArrowDownIcon />
+                      <ArrowDownIcon
+                        className={
+                          open ? "transition-all rotate-180" : "transition-all"
+                        }
+                      />
                     </span>
                   )}
                 </Disclosure.Button>
@@ -243,7 +253,7 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
                   <div className="flex flex-col gap-0">
                     <div
                       onClick={() => onClickWorkspace("setio-yogya")}
-                      className="py-4 flex items-center w-full cursor-pointer"
+                      className="h-[40px] py-4 flex items-center w-full cursor-pointer"
                     >
                       {asPath.includes("/workspace/setio-yogya") && (
                         <img
@@ -251,6 +261,7 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
                           width={4}
                           height={52}
                           alt="side-menu"
+                          className="h-[40px]"
                         />
                       )}
                       <span
@@ -265,7 +276,7 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
                     </div>
                     <div
                       onClick={() => onClickWorkspace("setio-medan")}
-                      className="py-4 flex items-center w-full cursor-pointer"
+                      className="h-[40px] py-4 flex items-center w-full cursor-pointer"
                     >
                       {asPath.includes("/workspace/setio-medan") && (
                         <img
@@ -273,6 +284,7 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
                           width={4}
                           height={52}
                           alt="side-menu"
+                          className="h-[40px]"
                         />
                       )}
                       <span
@@ -294,7 +306,7 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
 
         <div className="relative">
           <Disclosure>
-            {() => (
+            {({ open }) => (
               <>
                 <Disclosure.Button className="py-4 flex items-center w-full cursor-pointer px-8">
                   <span className="block truncate">
@@ -322,7 +334,11 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
                   </span>
                   {isExpandedMenubar && (
                     <span className="pointer-events-none absolute right-4 flex items-center pr-2">
-                      <ArrowDownIcon />
+                      <ArrowDownIcon
+                        className={
+                          open ? "transition-all rotate-180" : "transition-all"
+                        }
+                      />
                     </span>
                   )}
                 </Disclosure.Button>

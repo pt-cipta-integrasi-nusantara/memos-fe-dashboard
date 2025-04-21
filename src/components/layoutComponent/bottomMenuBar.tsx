@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { HomeIcon, ProfileIcon } from "../iconsComponent";
+import { HomeIcon, ProfileIcon, WorkIcon } from "../iconsComponent";
 
 function Navmenu() {
   const navigate = useNavigate();
@@ -7,7 +7,7 @@ function Navmenu() {
   const asPath = location.pathname + location.search;
   const menus = [
     {
-      path: "/",
+      path: "/home",
       label: "Home",
       icon: (
         <HomeIcon
@@ -18,17 +18,17 @@ function Navmenu() {
       ),
     },
 
-    // {
-    //   path: "/workspace",
-    //   label: "Workspace",
-    //   icon: (
-    //     <WorkIcon
-    //       className={`mt-4 w-[20px] h-[20px] ${
-    //         asPath.includes("/workspace") ? "text-primary-500" : ""
-    //       }`}
-    //     />
-    //   ),
-    // },
+    {
+      path: "/workspace",
+      label: "Workspace",
+      icon: (
+        <WorkIcon
+          className={`mt-4 w-[20px] h-[20px] ${
+            asPath.includes("/workspace") ? "text-primary-500" : ""
+          }`}
+        />
+      ),
+    },
 
     // {
     //   path: "/social",
@@ -56,44 +56,59 @@ function Navmenu() {
   ];
 
   const handleRoute = (path: string) => {
-    navigate(`${path}`);
+    if (path === "/home") {
+      navigate("/");
+    } else {
+      navigate(`${path}`);
+    }
   };
-
+  console.log(location, "location");
   return (
     <nav className="bg-white w-full border-t border-neutral-250">
       <ul className="flex justify-center px-16 gap-8">
-        {menus?.map((menu) => (
-          <li
-            onClick={() => handleRoute(menu?.path)}
-            className={`${
-              asPath === menu.path
-                ? "bg-gradient-to-b from-[#FFEFEF] via-white to-white via-50%"
-                : ""
-            }  pb-4 flex items-center cursor-pointer`}
-          >
-            <div className="flex flex-col items-center gap-3 relative">
-              {asPath === menu.path && (
-                <div className="absolute top-0 w-[72px] h-[4px]">
-                  <img
-                    src="/assets/icons/bottom-menu.svg"
-                    width={72}
-                    height={4}
-                    alt="bottom-menu"
-                  />
-                </div>
-              )}
+        {menus
+          ?.filter((item) =>
+            asPath?.includes("workspace")
+              ? item
+              : !item?.path?.includes("workspace")
+          )
+          .map((menu) => (
+            <li
+              onClick={() => handleRoute(menu?.path)}
+              className={`${
+                (asPath === "/" && menu.path === "/home") ||
+                asPath.includes(menu.path)
+                  ? "bg-gradient-to-b from-[#FFEFEF] via-white to-white via-50%"
+                  : ""
+              }  pb-4 flex items-center cursor-pointer`}
+            >
+              <div className="flex flex-col items-center gap-3 relative">
+                {(asPath === "/" && menu.path === "/home") ||
+                asPath.includes(menu.path) ? (
+                  <div className="absolute top-0 w-[72px] h-[4px]">
+                    <img
+                      src="/assets/icons/bottom-menu.svg"
+                      width={72}
+                      height={4}
+                      alt="bottom-menu"
+                    />
+                  </div>
+                ) : null}
 
-              {menu?.icon}
-              <span
-                className={`${
-                  asPath === menu.path ? "font-bold text-primary-500" : ""
-                }`}
-              >
-                {menu?.label}
-              </span>
-            </div>
-          </li>
-        ))}
+                {menu?.icon}
+                <span
+                  className={`${
+                    (asPath === "/" && menu.path === "/home") ||
+                    asPath.includes(menu.path)
+                      ? "font-bold text-primary-500"
+                      : ""
+                  }`}
+                >
+                  {menu?.label}
+                </span>
+              </div>
+            </li>
+          ))}
       </ul>
     </nav>
   );
