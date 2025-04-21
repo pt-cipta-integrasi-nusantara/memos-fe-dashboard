@@ -20,7 +20,10 @@ const TextField = ({
   ...props
 }: TextFieldProp) => {
   return (
-    <div {...containerProps} className="flex flex-col w-full gap-y-1">
+    <div
+      {...containerProps}
+      className={cn("flex flex-col w-full gap-y-1", containerProps?.className)}
+    >
       {label && (
         <label
           htmlFor={props?.id}

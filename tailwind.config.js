@@ -49,7 +49,7 @@ module.exports = {
       },
 
       boxShadow: {
-        soft: "0px 0px 8px -2px rgba(103, 122, 142, 0.10), 0px 0px 4px -2px rgba(103, 122, 142, 0.06)",
+        soft: "0px 0px 2px 1px rgba(103, 122, 142, 0.10), 0px 0px 2px 1px rgba(103, 122, 142, 0.06)",
       },
     },
   },

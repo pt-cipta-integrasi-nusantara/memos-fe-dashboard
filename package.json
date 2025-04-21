@@ -23,6 +23,7 @@
     "react-hook-form": "^7.54.1",
     "react-hot-toast": "^2.5.2",
     "react-router-dom": "^6.26.1",
+    "react-select": "^5.10.1",
     "tailwind-merge": "^2.5.5",
     "ufo": "^1.5.4",
     "zustand": "^5.0.3"

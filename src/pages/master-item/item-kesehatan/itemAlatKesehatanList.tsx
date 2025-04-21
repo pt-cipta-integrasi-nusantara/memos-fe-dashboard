@@ -1,25 +1,25 @@
-import { ContentLayout } from "../../components";
+import { ContentLayout } from "../../../components";
 import {
   Button,
   IconButton,
   Table,
   TTableColumn,
-} from "../../components/uiComponent";
+} from "../../../components/uiComponent";
 import { useNavigate } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
-import { Dialog } from "../../components/uiComponent/dialog";
+import { Dialog } from "../../../components/uiComponent/dialog";
 import {
   DeleteIcon,
   EditIcon,
   FilterListIcon,
   MoreHorizIcon,
   SearchIcon,
-} from "../../components/iconsComponent";
+} from "../../../components/iconsComponent";
 import { Fragment } from "react/jsx-runtime";
 import { useState } from "react";
-import { TextField } from "../../components/uiComponent/textField";
-import { Chip } from "../../components/uiComponent/chip";
-import { TColor } from "../../components/uiComponent/chip/chip";
+import { TextField } from "../../../components/uiComponent/textField";
+import { Chip } from "../../../components/uiComponent/chip";
+import { TColor } from "../../../components/uiComponent/chip/chip";
 
 const itemAlatKesehatanData = [
   {
@@ -245,18 +245,22 @@ const ItemAlatKesehatanList = () => {
         </div>
       }
     >
-      <Table
-        data={itemAlatKesehatanData}
-        columns={columns}
-        isLoading={false}
-        pagination={{
-          currentPage: 1,
-          totalPages: 10,
-          onPageChange: (pageNumber) => {
-            console.log(pageNumber);
-          },
-        }}
-      />
+      <div className="w-full overflow-x-auto">
+        <div className="min-w-[1100px] w-full">
+          <Table
+            data={itemAlatKesehatanData}
+            columns={columns}
+            isLoading={false}
+            pagination={{
+              currentPage: 1,
+              totalPages: 10,
+              onPageChange: (pageNumber) => {
+                console.log(pageNumber);
+              },
+            }}
+          />
+        </div>
+      </div>
 
       <Dialog
         open={isDeleteDialog}
