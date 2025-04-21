@@ -58,7 +58,7 @@ export default function App() {
           {isAuth && !asPath.includes("/subscription") && (
             <SideMenuBar isExpandedMenubar={isExpandedMenubar} />
           )}
-          <div className="w-full lg:mt-0">
+          <div className="w-full lg:mt-0 overflow-hidden">
             <Router />
           </div>
           {isAuth && <BottomMenuBar />}

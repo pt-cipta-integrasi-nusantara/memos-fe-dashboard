@@ -1,12 +1,12 @@
-import React, { Fragment, useState } from "react";
-import { ContentLayout } from "../../components";
+import { Fragment, useState } from "react";
+import { ContentLayout } from "../../../components";
 import {
   Button,
   IconButton,
   Table,
   TTableColumn,
-} from "../../components/uiComponent";
-import { TextField } from "../../components/uiComponent/textField";
+} from "../../../components/uiComponent";
+import { TextField } from "../../../components/uiComponent/textField";
 import {
   CheckIcon,
   DeleteIcon,
@@ -14,12 +14,12 @@ import {
   FilterListIcon,
   MoreHorizIcon,
   SearchIcon,
-} from "../../components/iconsComponent";
-import { Dialog } from "../../components/uiComponent/dialog";
-import { Checkbox } from "../../components/uiComponent/checkbox";
-import { Toggle } from "../../components/uiComponent/toggle";
+} from "../../../components/iconsComponent";
+import { Dialog } from "../../../components/uiComponent/dialog";
+import { Checkbox } from "../../../components/uiComponent/checkbox";
+import { Toggle } from "../../../components/uiComponent/toggle";
 import { Menu, Transition } from "@headlessui/react";
-import { Chip } from "../../components/uiComponent/chip";
+import { Chip } from "../../../components/uiComponent/chip";
 
 const itemPelayananData = [
   { id: 93457, item: "Pasang Infus", isPackage: false, status: "Active" },
@@ -96,7 +96,7 @@ const ItemPelayananList = () => {
     {
       id: "id",
       label: "Aksi",
-      setContent(data) {
+      setContent() {
         return (
           <Menu as="div" className="relative inline-block text-left">
             <Menu.Button>
