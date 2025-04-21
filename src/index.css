@@ -38,25 +38,27 @@ a {
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
-    -webkit-appearance: none;
-    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
-input[type=number] {
-    -moz-appearance:textfield; /* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
 }
 
 .dual-bg {
   @apply bg-no-repeat;
-  background-image: url('/public/assets/images/bg-1.png'), url('/public/assets/images/bg-2.png');
+  background-image: url("/public/assets/images/bg-1.png"),
+    url("/public/assets/images/bg-2.png");
   background-position: left bottom, right bottom;
   background-size: 30% auto, 30% auto;
 }
 
 .dual-bg-clinix {
   @apply bg-no-repeat;
-  background-image: url('/public/assets/images/bg-clinix-1.png'), url('/public/assets/images/bg-clinix-2.png');
+  background-image: url("/public/assets/images/bg-clinix-1.png"),
+    url("/public/assets/images/bg-clinix-2.png");
   background-position: left bottom, right bottom;
   background-size: 30% auto, 30% auto;
 }
