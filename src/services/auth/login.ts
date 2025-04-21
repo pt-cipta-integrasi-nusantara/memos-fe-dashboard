@@ -1,4 +1,3 @@
-import { useSearchParams } from "react-router-dom";
 import { http } from "../../utils/http";
 import { User } from "./types";
 
