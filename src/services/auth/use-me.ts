@@ -8,7 +8,7 @@ async function fetchMe() {
 
     const endpointUrl = new URL('/account/me', baseUrl);
   
-    const { data } = await http<{data: User}>(
+    const { data } = await http<{data: {account: User, loginSource: string}}>(
       endpointUrl.toString().replace(baseUrl, '')
     )
   

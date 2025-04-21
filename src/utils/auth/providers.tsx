@@ -20,6 +20,7 @@ export { useAuth };
 interface LoginCredentialsDTO {
   email: string;
   password: string;
+  via?: string;
 }
 
 export function AuthProvider(props: React.PropsWithChildren) {

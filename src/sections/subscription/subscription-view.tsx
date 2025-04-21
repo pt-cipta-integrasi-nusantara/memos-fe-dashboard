@@ -153,7 +153,7 @@ export function SubscriptionContent() {
                     id="nik"
                     {...register("nik", { required: true })}
                     type="text"
-                    value={me?.user?.identity_number}
+                    value={me?.account?.user?.identity_number}
                     className="text-neutral-300 rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 focus:outline-none w-full"
                     readOnly
                     disabled
@@ -171,7 +171,7 @@ export function SubscriptionContent() {
                     type="text"
                     className="text-link underline rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 focus:outline-none w-full"
                     placeholder="Unggah Foto KTP"
-                    value={me?.user?.identity_photo}
+                    value={me?.account?.user?.identity_photo}
                     readOnly
                     disabled
                   />
@@ -187,7 +187,7 @@ export function SubscriptionContent() {
                     id="fullname"
                     {...register("fullname", { required: true })}
                     type="text"
-                    value={me?.user?.full_name}
+                    value={me?.account?.user?.full_name}
                     className="text-neutral-300 rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 focus:outline-none w-full"
                     readOnly
                     disabled
@@ -201,7 +201,7 @@ export function SubscriptionContent() {
                     id="nik"
                     {...register("no_memos", { required: true })}
                     type="text"
-                    value={me?.memos_id}
+                    value={me?.account?.memos_id}
                     className="text-neutral-300 rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 focus:outline-none w-full"
                     readOnly
                     disabled
@@ -218,7 +218,11 @@ export function SubscriptionContent() {
                     id="gender"
                     {...register("gender", { required: true })}
                     type="text"
-                    value={me?.user?.gender === "1" ? "Laki-laki" : "Perempuan"}
+                    value={
+                      me?.account?.user?.gender === "1"
+                        ? "Laki-laki"
+                        : "Perempuan"
+                    }
                     className="text-neutral-300 rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 focus:outline-none w-full"
                     readOnly
                     disabled
@@ -235,7 +239,7 @@ export function SubscriptionContent() {
                     id="birth_place"
                     {...register("birth_place", { required: true })}
                     type="text"
-                    value={me?.user?.birth_place}
+                    value={me?.account?.user?.birth_place}
                     className="text-neutral-300 rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 focus:outline-none w-full"
                     readOnly
                     disabled
@@ -252,7 +256,7 @@ export function SubscriptionContent() {
                     id="address"
                     {...register("address", { required: true })}
                     type="text"
-                    value={me?.user?.addresses[0]?.street_address}
+                    value={me?.account?.user?.addresses[0]?.street_address}
                     className="text-neutral-300 rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 focus:outline-none w-full"
                     readOnly
                     disabled
@@ -275,7 +279,9 @@ export function SubscriptionContent() {
                     id="profesion"
                     {...register("profesion", { required: true })}
                     type="text"
-                    value={me?.user?.profession_id === 1 ? "Dokter" : "-"}
+                    value={
+                      me?.account?.user?.profession_id === 1 ? "Dokter" : "-"
+                    }
                     className="text-neutral-300 rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 focus:outline-none w-full"
                     readOnly
                     disabled
@@ -289,7 +295,7 @@ export function SubscriptionContent() {
                     id="smf"
                     {...register("smf", { required: true })}
                     type="text"
-                    value={me?.user?.smf_id}
+                    value={me?.account?.user?.smf_id}
                     className="text-neutral-300 rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 focus:outline-none w-full"
                     readOnly
                     disabled
@@ -306,7 +312,7 @@ export function SubscriptionContent() {
                     id="no_str"
                     {...register("no_str", { required: true })}
                     type="text"
-                    value={me?.user?.str_no}
+                    value={me?.account?.user?.str_no}
                     className="text-neutral-300 rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 focus:outline-none w-full"
                     readOnly
                     disabled
@@ -324,7 +330,7 @@ export function SubscriptionContent() {
                       id="expired_date"
                       {...register("expired_date", { required: true })}
                       type="text"
-                      value={me?.user?.str_expires_date}
+                      value={me?.account?.user?.str_expires_date}
                       className="text-neutral-300 rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 focus:outline-none w-full"
                       readOnly
                       disabled
@@ -342,7 +348,7 @@ export function SubscriptionContent() {
                       type="text"
                       className="text-link underline rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 focus:outline-none w-full"
                       placeholder="Unggah Foto KTP"
-                      value={me?.user?.str_photo}
+                      value={me?.account?.user?.str_photo}
                       readOnly
                       disabled
                     />
@@ -365,7 +371,7 @@ export function SubscriptionContent() {
                     id="organisasi"
                     {...register("organisasi", { required: true })}
                     type="text"
-                    value={me?.user?.facility?.organization_name}
+                    value={me?.account?.user?.facility?.organization_name}
                     className="text-neutral-300 rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 focus:outline-none w-full"
                     readOnly
                     disabled
@@ -382,7 +388,7 @@ export function SubscriptionContent() {
                     id="nama_klinik"
                     {...register("nama_klinik", { required: true })}
                     type="text"
-                    value={me?.user?.facility?.name}
+                    value={me?.account?.user?.facility?.name}
                     className="text-neutral-300 rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 focus:outline-none w-full"
                     readOnly
                     disabled
@@ -402,7 +408,7 @@ export function SubscriptionContent() {
                     id="jenis_usaha"
                     {...register("jenis_usaha", { required: true })}
                     type="text"
-                    value={me?.user?.facility?.type}
+                    value={me?.account?.user?.facility?.type}
                     className="text-neutral-300 rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 focus:outline-none w-full"
                     readOnly
                     disabled
@@ -420,7 +426,7 @@ export function SubscriptionContent() {
                     type="text"
                     className="text-link underline rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 focus:outline-none w-full"
                     placeholder="Unggah Foto Tempat Klinik/Usaha"
-                    value={me?.user?.facility?.photo}
+                    value={me?.account?.user?.facility?.photo}
                     readOnly
                     disabled
                   />
@@ -439,7 +445,7 @@ export function SubscriptionContent() {
                     id="alamat_usaha"
                     {...register("alamat_usaha", { required: true })}
                     type="text"
-                    value={me?.user?.facility?.address}
+                    value={me?.account?.user?.facility?.address}
                     className="text-neutral-300 rounded-[8px] p-4 border border-neutral-100 flex items-center gap-2 focus:outline-none w-full"
                     readOnly
                     disabled

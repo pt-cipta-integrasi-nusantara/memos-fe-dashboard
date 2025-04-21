@@ -176,7 +176,7 @@ export function PaymentContent({ data }: { data?: any }) {
                   </div>
                   <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
                     <span>Tagihan Kepada</span>
-                    <span>{me?.full_name}</span>
+                    <span>{me?.account?.full_name}</span>
                   </div>
                   <div className="flex flex-col lg:flex-row justify-between lg:items-center mt-4">
                     <span>Metode Pembayaran</span>

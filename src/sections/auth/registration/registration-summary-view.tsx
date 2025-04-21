@@ -48,6 +48,7 @@ export function SummaryContent() {
         identity_photo: formData?.identity_photo,
         phone_number: formData?.phone_number,
         profession_id: formData?.profession_id,
+        smf_id: formData?.smf_id,
         str_no: formData?.str_no,
         expires_date: formData?.expires_date,
         str_photo: formData?.str_photo,

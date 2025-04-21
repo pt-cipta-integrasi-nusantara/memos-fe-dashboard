@@ -62,7 +62,7 @@ export function DashboardContent() {
         <Card className="p-4 flex flex-col md:flex-row justify-between">
           <div className="flex flex-col gap-2">
             <h1 className="text-[24px] font-bold">
-              Halo, Dr. {me?.full_name}!
+              Halo, Dr. {me?.account?.full_name}!
             </h1>
             <p>
               Selamat datang di Memos, ruang untuk bekerja dengan nyaman dan
@@ -152,7 +152,8 @@ export function DashboardContent() {
                         </div>
                       )}
                     {!hasSubscriptionId &&
-                      activity?.payload?.choose_plan === true && (
+                      activity?.payload?.choose_plan === true &&
+                      me?.loginSource !== "memos" && (
                         <div>
                           <span
                             className="cursor-pointer text-[14px] text-primary-500"

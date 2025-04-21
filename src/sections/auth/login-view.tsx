@@ -44,7 +44,10 @@ export function LoginContent() {
     recaptchaRef?.current?.reset();
 
     try {
-      await login(formData);
+      await login({
+        ...formData,
+        via: product === "clinix" ? "clinix" : "memos",
+      });
       setIsCaptchaDone(false);
     } catch (error: any) {
       console.log(error?.message);

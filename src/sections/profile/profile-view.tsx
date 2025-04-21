@@ -257,7 +257,7 @@ export function ProfileContent() {
                 openedSection === "" ? "text-primary-500" : ""
               }`}
             />
-            <span>{me?.full_name}</span>
+            <span>{me?.account?.full_name}</span>
           </div>
           <div className="flex items-center gap-2 mt-8">
             <img
@@ -267,14 +267,19 @@ export function ProfileContent() {
               alt="ava"
             />
             <div className="flex flex-col gap-2">
-              <h1 className="text-[24px] font-bold">{me?.full_name}</h1>
-              <span>No. Memos: {me?.memos_id}</span>
+              <h1 className="text-[24px] font-bold">
+                {me?.account?.full_name}
+              </h1>
+              <span>No. Memos: {me?.account?.memos_id}</span>
               <div className="flex items-center gap-1">
                 <div className="bg-[#FFE5ED] rounded-full px-4 py-1 text-[#E40044]">
-                  {me?.user?.gender === "1" ? "Laki-laki" : "Perempuan"}
+                  {me?.account?.user?.gender === "1"
+                    ? "Laki-laki"
+                    : "Perempuan"}
                 </div>
                 <div className="bg-neutral-200 rounded-full px-4 py-1 text-neutral-300">
-                  {dayjs().diff(dayjs(me?.user?.birth_date), "year")} Tahun
+                  {dayjs().diff(dayjs(me?.account?.user?.birth_date), "year")}{" "}
+                  Tahun
                 </div>
               </div>
             </div>

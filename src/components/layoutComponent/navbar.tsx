@@ -7,13 +7,14 @@ import { useAuth } from "../../utils/auth/providers";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { User } from "../../services/auth/types";
 import { useMe } from "../../services/auth/use-me";
+import { professionsMemos, spesialisDataDokter } from "../constants/constants";
 
 function UserAccount({
   handleLogout,
   me,
 }: {
   handleLogout: () => void;
-  me: User | undefined;
+  me: { account: User; loginSource: string } | undefined;
 }) {
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -27,8 +28,16 @@ function UserAccount({
             className="rounded-full"
           />
           <div className="flex flex-col gap-1 items-start">
-            <span className="font-bold">Dr. {me?.full_name}</span>
-            <span>Dokter Bedah</span>
+            <span className="font-bold">Dr. {me?.account?.full_name}</span>
+            <span>
+              {me?.account?.user?.profession_id === 1
+                ? spesialisDataDokter?.find(
+                    (item) => item?.id === me?.account?.user?.smf_id
+                  )?.label
+                : professionsMemos?.find(
+                    (item) => item?.id === me?.account?.user?.smf_id
+                  )?.label}
+            </span>
           </div>
           <img
             src="/assets/icons/chevron-down.svg"
@@ -78,7 +87,7 @@ interface NavMenuDesktopProps {
   onClickToLogin: () => void;
   setIsExpandedMenubar: Dispatch<SetStateAction<boolean>>;
   handleLogout: () => void;
-  me: User | undefined;
+  me: { account: User; loginSource: string } | undefined;
   pathname: string;
   product: string;
 }
