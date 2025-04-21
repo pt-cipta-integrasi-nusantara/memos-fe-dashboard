@@ -41,7 +41,7 @@ const Table = <TData, TCollapse>({
   collapseColumns,
   ...props
 }: TableProp<TData, TCollapse>) => {
-  const [expandedRows, setExpandedRows] = useState<{
+  const [expandedRows, _setExpandedRows] = useState<{
     index: number;
     isOpen: boolean;
   }>({
