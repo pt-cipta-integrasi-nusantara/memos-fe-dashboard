@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import { Fragment, useState } from "react";
 import { Button, ContentLayout } from "../../components";
 import { IconButton, Table, TTableColumn } from "../../components/uiComponent";
 import {
@@ -164,7 +164,7 @@ const ItemObatList = () => {
     {
       id: "itemObat",
       label: "Aksi",
-      setContent(data) {
+      setContent() {
         return (
           <Menu as="div" className="relative inline-block text-left">
             <Menu.Button>

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import { Fragment, useState } from "react";
 import { ContentLayout } from "../../components";
 import {
   Button,
@@ -96,7 +96,7 @@ const ItemPelayananList = () => {
     {
       id: "id",
       label: "Aksi",
-      setContent(data) {
+      setContent() {
         return (
           <Menu as="div" className="relative inline-block text-left">
             <Menu.Button>

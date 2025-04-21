@@ -175,7 +175,7 @@ const ItemAlatKesehatanList = () => {
     {
       id: "sku",
       label: "Aksi",
-      setContent(data) {
+      setContent() {
         return (
           <Menu as="div" className="relative inline-block text-left">
             <Menu.Button>
