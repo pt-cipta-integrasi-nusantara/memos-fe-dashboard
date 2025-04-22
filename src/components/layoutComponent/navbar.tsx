@@ -189,11 +189,19 @@ export function Navbar({
   const [_, setOpen] = React.useState(false);
 
   const onClickLogo = () => {
-    navigate("/");
+    if (product === "clinix") {
+      navigate("/?product=clinix");
+    } else {
+      navigate("/");
+    }
   };
 
   const onClickToLogin = () => {
-    navigate("/login");
+    if (product === "clinix") {
+      navigate("/login?product=clinix");
+    } else {
+      navigate("/login");
+    }
   };
 
   React.useEffect(() => {

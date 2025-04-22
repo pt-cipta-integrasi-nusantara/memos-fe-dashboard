@@ -248,7 +248,13 @@ export function SignupContent() {
                 Daftar dengan Google
               </button>
               <div
-                onClick={() => navigate("/login")}
+                onClick={() => {
+                  if (product === "clinix") {
+                    navigate("/login?product=clinix");
+                  } else {
+                    navigate("/login");
+                  }
+                }}
                 className="mt-4 text-center cursor-pointer"
               >
                 <span>

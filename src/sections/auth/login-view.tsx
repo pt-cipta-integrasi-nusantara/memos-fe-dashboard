@@ -206,7 +206,13 @@ export function LoginContent() {
                 Daftar dengan Google
               </button>
               <div
-                onClick={() => navigate("/")}
+                onClick={() => {
+                  if (product === "clinix") {
+                    navigate("/?product=clinix");
+                  } else {
+                    navigate("/");
+                  }
+                }}
                 className="mt-4 text-center cursor-pointer"
               >
                 <span>
