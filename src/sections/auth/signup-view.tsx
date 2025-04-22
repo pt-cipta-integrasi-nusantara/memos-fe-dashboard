@@ -120,7 +120,11 @@ export function SignupContent() {
           const { token } = data?.data;
           sessionService.setSession(token);
           setTimeout(() => {
-            navigate("/registration/step/1");
+            if (product === "clinix") {
+              navigate("/registration/step/1?product=clinix");
+            } else {
+              navigate("/registration/step/1");
+            }
           }, 1000);
         },
         onError: (error: any) => {
