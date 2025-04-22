@@ -3,6 +3,8 @@ import TableHeader from "./tableHeader";
 import TableCollapse from "./tableCollapse";
 import { cn } from "../../../utils/classnamesHelper";
 import TablePagination, { PaginationProps } from "./tablePagination";
+import IconButton from "../iconButton";
+import { ArrowDownIcon } from "../../iconsComponent";
 
 export interface TTableColumn<TData> {
   id: keyof TData;
@@ -12,7 +14,7 @@ export interface TTableColumn<TData> {
   align?: "left" | "center" | "right" | "justify";
   width?: string;
 }
-interface TableProp<TData, TCollapse> extends React.ComponentProps<"table"> {
+interface TableProp<TData> extends React.ComponentProps<"table"> {
   isLoading: boolean;
   data: Array<TData>;
   columns: Array<TTableColumn<TData>>;
@@ -20,16 +22,10 @@ interface TableProp<TData, TCollapse> extends React.ComponentProps<"table"> {
   tableRowProps?: React.ComponentProps<"tr">;
   tableRowClasses?: (data: TData) => string;
   pagination?: PaginationProps;
-  collapseColumns?: {
-    key?: keyof TData;
-    data?: Array<TCollapse>;
-    columns: Array<TTableColumn<TCollapse>>;
-    isLoading?: boolean;
-    colSpan: number;
-  };
+  collapseContent?: React.ReactNode;
 }
 
-const Table = <TData, TCollapse>({
+const Table = <TData,>({
   isLoading,
   data,
   columns,
@@ -38,10 +34,10 @@ const Table = <TData, TCollapse>({
   pagination,
   className,
   tableRowProps,
-  collapseColumns,
+  collapseContent,
   ...props
-}: TableProp<TData, TCollapse>) => {
-  const [expandedRows, _setExpandedRows] = useState<{
+}: TableProp<TData>) => {
+  const [expandedRows, setExpandedRows] = useState<{
     index: number;
     isOpen: boolean;
   }>({
@@ -54,7 +50,7 @@ const Table = <TData, TCollapse>({
         {...props}
         className={cn("w-full table border-collapse", className)}
       >
-        <TableHeader columns={columns} useCollapse={!!collapseColumns} />
+        <TableHeader columns={columns} useCollapse={!!collapseContent} />
         <tbody>
           {isLoading ? (
             <tr>
@@ -66,7 +62,7 @@ const Table = <TData, TCollapse>({
             </tr>
           ) : data?.length > 0 ? (
             data?.map((dt, index) => (
-              <React.Fragment key={index}>
+              <React.Fragment key={`table-body-${index}`}>
                 <tr
                   {...tableRowProps}
                   className={cn("border-b", tableRowProps?.className, {
@@ -74,32 +70,31 @@ const Table = <TData, TCollapse>({
                     [tableRowClasses?.(dt) as string]: tableRowClasses,
                   })}
                 >
-                  {collapseColumns && (
+                  {collapseContent && (
                     <td className="py-4 px-2 text-[14px]">
-                      {/* Icon */}
-                      {/* <IconButton
-                      className={cn(
-                        "transition-transform",
-                        expandedRows.index === index && expandedRows.isOpen
-                          ? "rotate-180"
-                          : "rotate-0"
-                      )}
-                      onClick={() =>
-                        setExpandedRows((prev) => ({
-                          index: index,
-                          isOpen: index === prev.index ? !prev.isOpen : true,
-                        }))
-                      }
-                    >
-                      <ArrowDownIcon color="#677A8E" />
-                    </IconButton> */}
+                      <IconButton
+                        className={cn(
+                          "transition-transform",
+                          expandedRows.index === index && expandedRows.isOpen
+                            ? "rotate-180"
+                            : "rotate-0"
+                        )}
+                        onClick={() =>
+                          setExpandedRows((prev) => ({
+                            index: index,
+                            isOpen: index === prev.index ? !prev.isOpen : true,
+                          }))
+                        }
+                      >
+                        <ArrowDownIcon />
+                      </IconButton>
                     </td>
                   )}
                   {columns.map((column) => {
                     const { id, className, setContent, ...props } = column;
                     return (
                       <td
-                        key={id.toString()}
+                        key={`table-row-${id.toString()}`}
                         {...props}
                         onClick={() => onListClick?.(dt)}
                         className={cn("py-4 px-2 text-[14px]", className)}
@@ -110,10 +105,10 @@ const Table = <TData, TCollapse>({
                   })}
                 </tr>
 
-                {collapseColumns && (
+                {collapseContent && (
                   <tr>
                     <th
-                      colSpan={collapseColumns.colSpan}
+                      colSpan={columns.length + 1}
                       className={cn({
                         "p-4 bg-[#F3F5F7]":
                           expandedRows.index === index && expandedRows.isOpen,
@@ -124,46 +119,7 @@ const Table = <TData, TCollapse>({
                           expandedRows.index === index && expandedRows.isOpen
                         }
                       >
-                        <table className="w-full table border-collapse bg-white">
-                          <TableHeader columns={collapseColumns.columns} />
-                          <tbody>
-                            {collapseColumns.isLoading ? (
-                              <tr>
-                                <td colSpan={columns.length}>Loading ...</td>
-                              </tr>
-                            ) : (
-                              (collapseColumns?.key
-                                ? (dt[collapseColumns.key] as [])
-                                : collapseColumns.data
-                              )?.map((collapseItem, index) => (
-                                <tr className="border-b">
-                                  {collapseColumns.columns.map((column) => {
-                                    const {
-                                      id,
-                                      className,
-                                      align = "left",
-                                      setContent,
-                                      ...props
-                                    } = column;
-                                    return (
-                                      <td
-                                        key={id.toString()}
-                                        {...props}
-                                        className={cn(
-                                          "py-4 px-2 text-[14px] font-normal",
-                                          className
-                                        )}
-                                        align={align}
-                                      >
-                                        {setContent(collapseItem, index)}
-                                      </td>
-                                    );
-                                  })}
-                                </tr>
-                              ))
-                            )}
-                          </tbody>
-                        </table>
+                        {collapseContent}
                       </TableCollapse>
                     </th>
                   </tr>

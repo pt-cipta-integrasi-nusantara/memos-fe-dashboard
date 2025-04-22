@@ -50,3 +50,4 @@ export { EditIcon } from "./EditIcon";
 export { DeleteIcon } from "./DeleteIcon";
 export { SettingsIcon } from "./SettingsIcon";
 export { CheckIcon } from "./CheckIcon";
+export { AddCircleOutlineIcon } from "./AddCircleOutlineIcon";

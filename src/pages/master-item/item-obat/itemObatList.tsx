@@ -1,17 +1,21 @@
 import { Fragment, useState } from "react";
-import { Button, ContentLayout } from "../../components";
-import { IconButton, Table, TTableColumn } from "../../components/uiComponent";
+import { Button, ContentLayout } from "../../../components";
+import {
+  IconButton,
+  Table,
+  TTableColumn,
+} from "../../../components/uiComponent";
 import {
   DeleteIcon,
   EditIcon,
   FilterListIcon,
   MoreHorizIcon,
   SearchIcon,
-} from "../../components/iconsComponent";
-import { TextField } from "../../components/uiComponent/textField";
+} from "../../../components/iconsComponent";
+import { TextField } from "../../../components/uiComponent/textField";
 import { useNavigate } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
-import { Dialog } from "../../components/uiComponent/dialog";
+import { Dialog } from "../../../components/uiComponent/dialog";
 
 const itemObatData = [
   {
@@ -123,43 +127,99 @@ const ItemObatList = () => {
     {
       id: "sku",
       label: "SKU",
-      setContent: (data) => <span>{data.itemObat}</span>,
+      setContent: (data) => (
+        <span
+          className="cursor-pointer"
+          onClick={() => navigate(`${data.itemObat}/lokasi`)}
+        >
+          {data.itemObat}
+        </span>
+      ),
     },
 
     {
       id: "barcode",
       label: "Barcode",
-      setContent: (data) => <span>{data.barcode}</span>,
+      setContent: (data) => (
+        <span
+          className="cursor-pointer"
+          onClick={() => navigate(`${data.itemObat}/lokasi`)}
+        >
+          {data.barcode}
+        </span>
+      ),
     },
     {
       id: "namaItem",
       label: "Nama Item",
-      setContent: (data) => <span>{data.namaItem}</span>,
+      setContent: (data) => (
+        <span
+          className="cursor-pointer"
+          onClick={() => navigate(`${data.itemObat}/lokasi`)}
+        >
+          {data.namaItem}
+        </span>
+      ),
     },
     {
       id: "sku",
       label: "KFA93NO",
-      setContent: (data) => <span>{data.sku}</span>,
+      setContent: (data) => (
+        <span
+          className="cursor-pointer"
+          onClick={() => navigate(`${data.itemObat}/lokasi`)}
+        >
+          {data.sku}
+        </span>
+      ),
     },
     {
       id: "satuan",
       label: "Satuan",
-      setContent: (data) => <span>{data.satuan}</span>,
+      setContent: (data) => (
+        <span
+          className="cursor-pointer"
+          onClick={() => navigate(`${data.itemObat}/lokasi`)}
+        >
+          {data.satuan}
+        </span>
+      ),
     },
     {
       id: "kuantitiDosis",
       label: "Kuantiti Dosis",
-      setContent: (data) => <span>{data.kuantitiDosis}</span>,
+      setContent: (data) => (
+        <span
+          className="cursor-pointer"
+          onClick={() => navigate(`${data.itemObat}/lokasi`)}
+        >
+          {data.kuantitiDosis}
+        </span>
+      ),
     },
     {
       id: "grupDosis",
       label: "Grup Dosis",
-      setContent: (data) => <span>{data.grupDosis}</span>,
+      setContent: (data) => (
+        <span
+          className="cursor-pointer"
+          onClick={() => navigate(`${data.itemObat}/lokasi`)}
+        >
+          {data.grupDosis}
+        </span>
+      ),
     },
     {
       id: "remarks",
       label: "Remarks",
-      setContent: (data) => <span>{data.remarks}</span>,
+      setContent: (data) => (
+        <span
+          className="cursor-pointer"
+          onClick={() => navigate(`${data.itemObat}/lokasi`)}
+        >
+          {data.remarks}
+        </span>
+      ),
     },
     {
       id: "itemObat",
@@ -185,7 +245,7 @@ const ItemObatList = () => {
                 <Menu.Item>
                   <div
                     className="px-4 py-2 hover:bg-primary-200 flex gap-x-3 items-center cursor-pointer"
-                    onClick={() => navigate("12")}
+                    onClick={() => navigate("12/edit")}
                   >
                     <EditIcon />
                     Edit
@@ -234,8 +294,6 @@ const ItemObatList = () => {
         </div>
       }
     >
-      {/* <div className="w-full overflow-x-auto pb-16"> */}
-      {/* <div className="min-w-[1600px] w-full "> */}
       <Table
         data={itemObatData}
         columns={columns}
@@ -248,8 +306,6 @@ const ItemObatList = () => {
           },
         }}
       />
-      {/* </div>
-      </div> */}
 
       <Dialog
         open={isDeleteDialog}

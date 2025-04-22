@@ -82,6 +82,31 @@ export const ItemObatFormPage = lazy(() =>
     default: mod.ItemObatForm,
   }))
 );
+export const ItemObatDetailPage = lazy(() =>
+  import("../pages/master-item").then((mod) => ({
+    default: mod.ItemObatDetail,
+  }))
+);
+export const ItemObatDetailPriceListPage = lazy(() =>
+  import("../pages/master-item").then((mod) => ({
+    default: mod.ItemObatDetailPriceList,
+  }))
+);
+export const ItemObatDetailLokasiPage = lazy(() =>
+  import("../pages/master-item").then((mod) => ({
+    default: mod.ItemObatDetailLokasi,
+  }))
+);
+export const ItemObatDetailPemasokPage = lazy(() =>
+  import("../pages/master-item").then((mod) => ({
+    default: mod.ItemObatDetailPemasok,
+  }))
+);
+export const ItemObatDetailSatuanKonversiPage = lazy(() =>
+  import("../pages/master-item").then((mod) => ({
+    default: mod.ItemObatDetailSatuanKonversi,
+  }))
+);
 
 export const ItemPelayananListPage = lazy(() =>
   import("../pages/master-item").then((mod) => ({
@@ -97,6 +122,59 @@ export const ItemAlatKesehatanListPage = lazy(() =>
 export const ItemAlatKesehatanFormPage = lazy(() =>
   import("../pages/master-item").then((mod) => ({
     default: mod.ItemAlatKesehatanForm,
+  }))
+);
+
+export const TarifTindakanListPage = lazy(() =>
+  import("../pages/master-tarif").then((mod) => ({
+    default: mod.TarifTindakanList,
+  }))
+);
+
+export const TarifPaketListPage = lazy(() =>
+  import("../pages/master-tarif").then((mod) => ({
+    default: mod.TarifPaketList,
+  }))
+);
+
+export const TarifObatListPage = lazy(() =>
+  import("../pages/master-tarif").then((mod) => ({
+    default: mod.TarifObatList,
+  }))
+);
+
+export const TarifAlkesListPage = lazy(() =>
+  import("../pages/master-tarif").then((mod) => ({
+    default: mod.TarifAlkesList,
+  }))
+);
+
+export const TarifTindakanFormPage = lazy(() =>
+  import("../pages/master-tarif").then((mod) => ({
+    default: mod.TarifTindakanForm,
+  }))
+);
+
+export const TarifPaketFormPage = lazy(() =>
+  import("../pages/master-tarif").then((mod) => ({
+    default: mod.TarifPaketForm,
+  }))
+);
+export const TarifPaketDetailPage = lazy(() =>
+  import("../pages/master-tarif").then((mod) => ({
+    default: mod.TarifPaketDetail,
+  }))
+);
+
+export const TarifObatFormPage = lazy(() =>
+  import("../pages/master-tarif").then((mod) => ({
+    default: mod.TarifObatForm,
+  }))
+);
+
+export const TarifAlkesFormPage = lazy(() =>
+  import("../pages/master-tarif").then((mod) => ({
+    default: mod.TarifAlkesForm,
   }))
 );
 
@@ -145,6 +223,33 @@ export function Router() {
             },
             {
               path: "item-obat/:id",
+              element: <ItemObatDetailPage />,
+              children: [
+                {
+                  index: true,
+                  element: <ItemObatDetailLokasiPage />,
+                },
+                {
+                  path: "lokasi",
+                  element: <ItemObatDetailLokasiPage />,
+                },
+                {
+                  path: "pemasok",
+                  element: <ItemObatDetailPemasokPage />,
+                },
+                {
+                  path: "satuan-konversi",
+                  element: <ItemObatDetailSatuanKonversiPage />,
+                },
+                {
+                  path: "pricelist",
+                  element: <ItemObatDetailPriceListPage />,
+                },
+              ],
+            },
+
+            {
+              path: "item-obat/:id/edit",
               element: <ItemObatFormPage />,
             },
             {
@@ -158,6 +263,63 @@ export function Router() {
             {
               path: "item-alat-kesehatan/:id",
               element: <ItemAlatKesehatanFormPage />,
+            },
+          ],
+        },
+        {
+          path: "/master-tarif",
+          element: <MasterTarifPage />,
+          children: [
+            {
+              index: true,
+              element: <TarifTindakanListPage />,
+            },
+            {
+              path: "tarif-tindakan",
+              element: <TarifTindakanListPage />,
+            },
+            {
+              path: "tarif-tindakan/create",
+              element: <TarifTindakanFormPage />,
+            },
+            {
+              path: "tarif-tindakan/:id",
+              element: <TarifTindakanFormPage />,
+            },
+
+            {
+              path: "tarif-paket",
+              element: <TarifPaketListPage />,
+            },
+            {
+              path: "tarif-paket/create",
+              element: <TarifPaketFormPage />,
+            },
+            {
+              path: "tarif-paket/:id",
+              element: <TarifPaketDetailPage />,
+            },
+            {
+              path: "tarif-paket/:id/edit",
+              element: <TarifPaketFormPage />,
+            },
+
+            {
+              path: "tarif-obat",
+              element: <TarifObatListPage />,
+            },
+            {
+              path: "tarif-obat/:id/edit",
+              element: <TarifObatFormPage />,
+            },
+
+            {
+              path: "tarif-alkes",
+              element: <TarifAlkesListPage />,
+            },
+            {
+              path: "tarif-alkes/:id/edit",
+              element: <TarifAlkesFormPage />,
             },
           ],
         },

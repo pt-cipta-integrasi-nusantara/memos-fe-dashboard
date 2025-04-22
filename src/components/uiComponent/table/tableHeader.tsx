@@ -17,7 +17,7 @@ const TableHeader = <TData,>({
           const { id, label, className, align = "left", ...props } = column;
           return (
             <th
-              key={id.toString()}
+              key={`table-header-${id.toString()}`}
               {...props}
               align={align}
               className={cn("py-4 px-2 font-semibold text-[14px]", className)}

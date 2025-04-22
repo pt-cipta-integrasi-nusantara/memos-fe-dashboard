@@ -345,7 +345,7 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
                 <Disclosure.Panel className="relative">
                   <div className="flex flex-col gap-0">
                     <div
-                      onClick={() => navigate("/master-item")}
+                      onClick={() => navigate("/master-item/item-pelayanan")}
                       className="py-4 flex items-center w-full cursor-pointer"
                     >
                       <span
@@ -359,7 +359,7 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
                       </span>
                     </div>
                     <div
-                      onClick={() => navigate("/master-tarif")}
+                      onClick={() => navigate("/master-tarif/tarif-tindakan")}
                       className="py-4 flex items-center w-full cursor-pointer"
                     >
                       <span

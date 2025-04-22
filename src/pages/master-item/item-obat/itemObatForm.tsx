@@ -1,5 +1,5 @@
-import { TextField } from "../../components/uiComponent/textField";
-import { Button } from "../../components";
+import { TextField } from "../../../components/uiComponent/textField";
+import { Button } from "../../../components";
 import { useNavigate } from "react-router-dom";
 
 const ItemObatForm = () => {
@@ -8,9 +8,9 @@ const ItemObatForm = () => {
     console.log("submit");
   };
   return (
-    <div className="w-full flex justify-center">
+    <div className="w-full flex justify-center pb-6">
       <div className="w-full lg:w-[800px] flex flex-col gap-y-6">
-        <div className="rounded-lg w-full shadow-soft p-6 flex flex-col gap-y-6">
+        <div className="rounded-lg w-full shadow-soft p-6 flex flex-col gap-y-6 bg-white">
           <h1 className="text-[20px] font-bold">Tambah Item Obat</h1>
           <div className="border-b border-[#EAEDF1]" />
           <div className="flex gap-x-4">
@@ -45,7 +45,7 @@ const ItemObatForm = () => {
           </div>
         </div>
 
-        <div className="rounded-lg w-full shadow-soft p-6 gap-x-4 flex justify-end">
+        <div className="rounded-lg w-full shadow-soft p-6 gap-x-4 flex justify-end bg-white">
           <Button
             title="Batal"
             onClick={() => navigate("/master-item/item-obat")}

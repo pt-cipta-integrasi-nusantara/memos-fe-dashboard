@@ -43,7 +43,7 @@ const Chip = ({ value, color = "primary", className, ...props }: ChipProps) => {
       >
         <span
           className={cn(
-            "text-xs font-semibold",
+            "text-[14px] font-semibold",
             chipTextColors[color],
             className
           )}
