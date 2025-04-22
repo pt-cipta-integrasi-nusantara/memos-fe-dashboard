@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import { Button, Card, Loader } from "../../../components/uiComponent";
+import { useRegistrationFormStore } from "../../../stores/registration/useRegistrationFormStore";
 
 export function TermsConditionContent() {
   const navigate = useNavigate();
@@ -9,9 +10,12 @@ export function TermsConditionContent() {
   const product = String(searchParams.get("product"));
   const [isAgree, setIsAgree] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const { setCurrentStep } = useRegistrationFormStore();
 
   useEffect(() => {
+    setCurrentStep("1");
     window.scrollTo(0, 0);
+
     setTimeout(() => {
       setIsLoading(false);
     }, 500);

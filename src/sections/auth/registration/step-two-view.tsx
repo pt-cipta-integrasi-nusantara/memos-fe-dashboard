@@ -20,7 +20,7 @@ export function IdentityForm() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const product = String(searchParams.get("product"));
-  const { formData, setFormData } = useRegistrationFormStore();
+  const { formData, setFormData, setCurrentStep } = useRegistrationFormStore();
   const { watch, register, handleSubmit, formState, setValue, control } =
     useForm<any>();
   const form = useRef(null) as any;
@@ -55,6 +55,7 @@ export function IdentityForm() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setCurrentStep("2");
     window.scrollTo(0, 0);
     setTimeout(() => {
       setIsLoading(false);

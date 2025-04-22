@@ -20,7 +20,7 @@ export function SignupContent() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const product = String(searchParams.get("product"));
-  const { resetFormData } = useRegistrationFormStore();
+  const { resetFormData, currentStep } = useRegistrationFormStore();
   const { mutate: registerEmail } = useRegisterEmail();
   const { mutate: requestAuthCode } = useRequestAuthCode();
   const { mutate: verifyAuthCode } = useVerifyAuthCode();
@@ -34,8 +34,8 @@ export function SignupContent() {
   const form = useRef(null) as any;
 
   useEffect(() => {
-    resetFormData();
-  }, []);
+    if (!currentStep || currentStep === "0") resetFormData();
+  }, [currentStep]);
 
   const onSubmit: SubmitHandler<any> = async (formData: any) => {
     if (!isShouldRequestOtp) {
@@ -121,9 +121,25 @@ export function SignupContent() {
           sessionService.setSession(token);
           setTimeout(() => {
             if (product === "clinix") {
-              navigate("/registration/step/1?product=clinix");
+              if (!currentStep || currentStep === "0") {
+                navigate(`/registration/step/1?product=clinix`);
+              } else {
+                if (currentStep !== "4") {
+                  navigate(`/registration/step/${currentStep}?product=clinix`);
+                } else {
+                  navigate(`/registration/summary?product=clinix`);
+                }
+              }
             } else {
-              navigate("/registration/step/1");
+              if (!currentStep || currentStep === "0") {
+                navigate(`/registration/step/1`);
+              } else {
+                if (currentStep !== "4") {
+                  navigate(`/registration/step/${currentStep}`);
+                } else {
+                  navigate(`/registration/summary`);
+                }
+              }
             }
           }, 1000);
         },

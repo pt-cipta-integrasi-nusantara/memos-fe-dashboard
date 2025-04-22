@@ -28,7 +28,7 @@ export function ProfesionForm() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const product = String(searchParams.get("product"));
-  const { formData, setFormData } = useRegistrationFormStore();
+  const { formData, setFormData, setCurrentStep } = useRegistrationFormStore();
   const { register, handleSubmit, formState, watch, setValue, control } =
     useForm<any>();
   const form = useRef(null) as any;
@@ -66,6 +66,7 @@ export function ProfesionForm() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setCurrentStep("3");
     window.scrollTo(0, 0);
     setTimeout(() => {
       setIsLoading(false);

@@ -1,6 +1,8 @@
 import { twMerge } from "tailwind-merge";
 import { Button, Card } from "../../../components/uiComponent";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useRegistrationFormStore } from "../../../stores/registration/useRegistrationFormStore";
+import { useEffect } from "react";
 
 export function SummaryFinishContent() {
   const navigate = useNavigate();
@@ -9,6 +11,12 @@ export function SummaryFinishContent() {
   const onClickToHome = () => {
     navigate("/");
   };
+  const { setCurrentStep } = useRegistrationFormStore();
+
+  useEffect(() => {
+    setCurrentStep("0");
+  }, []);
+
   return (
     <div id="summary" className={twMerge("mb-24 p-4", "max-w-[560px] mx-auto")}>
       <div>

@@ -1,6 +1,6 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { twMerge } from "tailwind-merge";
-import { Button, Card } from "../../../components/uiComponent";
+import { Button, Card, Loader } from "../../../components/uiComponent";
 import { useRegistrationFormStore } from "../../../stores/registration/useRegistrationFormStore";
 import { useRegister } from "../../../services/auth/use-registration";
 import toast from "react-hot-toast";
@@ -17,12 +17,21 @@ export function SummaryContent() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const product = String(searchParams.get("product"));
-  const { formData } = useRegistrationFormStore();
+  const { formData, setCurrentStep } = useRegistrationFormStore();
   const { mutate: registerAccount } = useRegister();
   const [isChecked, setIsChecked] = React.useState(false);
   const [isPreviewImage, setIsPreviewImage] = React.useState(false);
   const [selectedImage, setSelectedImage] = React.useState("");
   const isSameAddress = formData["isSameAddress"] === true;
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  useEffect(() => {
+    setCurrentStep("4");
+    window.scrollTo(0, 0);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+  }, []);
 
   const onCheckAgreement = () => {
     setIsChecked((prev) => !prev);
@@ -139,6 +148,14 @@ export function SummaryContent() {
     setIsPreviewImage(true);
     setSelectedImage(image);
   };
+
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-white z-50">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div id="summary" className={twMerge("mb-24 p-4", "max-w-[560px] mx-auto")}>
