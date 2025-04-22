@@ -19,7 +19,7 @@ function Navmenu() {
     },
 
     {
-      path: "/workspace",
+      path: "/workspace/setio-medan",
       label: "Workspace",
       icon: (
         <WorkIcon
@@ -67,11 +67,11 @@ function Navmenu() {
     <nav className="bg-white w-full border-t border-neutral-250">
       <ul className="flex justify-center px-16 gap-8">
         {menus
-          ?.filter((item) =>
-            asPath?.includes("workspace")
-              ? item
-              : !item?.path?.includes("workspace")
-          )
+          // ?.filter((item) =>
+          //   asPath?.includes("workspace")
+          //     ? item
+          //     : !item?.path?.includes("workspace")
+          // )
           .map((menu) => (
             <li
               onClick={() => handleRoute(menu?.path)}
