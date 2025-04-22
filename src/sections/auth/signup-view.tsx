@@ -60,6 +60,9 @@ export function SignupContent() {
             if (
               error?.message?.includes(
                 "email has been used, please use another email"
+              ) ||
+              error?.message?.includes(
+                "email has been registered, please ask for otp"
               )
             ) {
               setIsShouldRequestOtp(true);
