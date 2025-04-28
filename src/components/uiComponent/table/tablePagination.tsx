@@ -5,12 +5,16 @@ import IconButton from "../iconButton";
 export interface PaginationProps {
   currentPage: number;
   totalPages: number;
+  totalData: number;
+  pageSize: number;
   onPageChange: (pageNumber: number) => void;
 }
 
 const TablePagination = ({
   currentPage,
   totalPages = 1,
+  totalData,
+  pageSize,
   onPageChange,
 }: PaginationProps) => {
   const handlePageChange = (pageNumber: number | string) => {
@@ -76,7 +80,7 @@ const TablePagination = ({
 
   return (
     <div className="flex w-full justify-between py-3 relative items-center">
-      <span className="text-[#31475E] text-[14px]">{`Showing 10 of 10 results`}</span>
+      <span className="text-[#31475E] text-[14px]">{`Showing ${pageSize} of ${totalData} results`}</span>
       <div className="w-1/2 flex items-center justify-end gap-1 border-gray-200 relative">
         <IconButton
           onClick={() => handlePageChange(currentPage - 1)}

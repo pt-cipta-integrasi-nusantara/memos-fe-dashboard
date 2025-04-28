@@ -21,7 +21,6 @@ const tabList = [
 
 const MasterTarifTabs = () => {
   const { pathname } = useLocation();
-  console.log("pathname", pathname);
 
   const isActiveTab = (url: string) => pathname?.includes(url);
 

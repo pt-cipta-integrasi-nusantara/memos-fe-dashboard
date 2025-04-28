@@ -316,6 +316,8 @@ const TarifObatList = () => {
             pagination={{
               currentPage: 1,
               totalPages: 10,
+              pageSize: 10,
+              totalData: 10,
               onPageChange: (pageNumber) => {
                 console.log(pageNumber);
               },

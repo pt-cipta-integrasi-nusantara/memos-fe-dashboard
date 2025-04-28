@@ -372,6 +372,20 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
                         Master tarif
                       </span>
                     </div>
+                    <div
+                      onClick={() => navigate("/unit-pelayanan")}
+                      className="py-4 flex items-center w-full cursor-pointer"
+                    >
+                      <span
+                        className={`ml-16 font-bold ${
+                          asPath.includes("/unit-pelayanan")
+                            ? "text-primary-500"
+                            : "pl-1"
+                        }`}
+                      >
+                        Unit Pelayanan
+                      </span>
+                    </div>
                   </div>
                 </Disclosure.Panel>
               </>

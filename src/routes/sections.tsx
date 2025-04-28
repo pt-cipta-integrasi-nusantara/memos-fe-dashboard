@@ -160,6 +160,7 @@ export const TarifPaketFormPage = lazy(() =>
     default: mod.TarifPaketForm,
   }))
 );
+
 export const TarifPaketDetailPage = lazy(() =>
   import("../pages/master-tarif").then((mod) => ({
     default: mod.TarifPaketDetail,
@@ -175,6 +176,12 @@ export const TarifObatFormPage = lazy(() =>
 export const TarifAlkesFormPage = lazy(() =>
   import("../pages/master-tarif").then((mod) => ({
     default: mod.TarifAlkesForm,
+  }))
+);
+
+export const UnitPelayananPage = lazy(() =>
+  import("../pages/unit-pelayanan").then((mod) => ({
+    default: mod.UnitPelayananList,
   }))
 );
 
@@ -322,6 +329,10 @@ export function Router() {
               element: <TarifAlkesFormPage />,
             },
           ],
+        },
+        {
+          path: "/unit-pelayanan",
+          element: <UnitPelayananPage />,
         },
         {
           path: "/subscription",

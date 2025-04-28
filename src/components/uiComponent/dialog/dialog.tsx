@@ -3,6 +3,7 @@ import { cn } from "../../../utils/classnamesHelper";
 import { CloseIcon } from "../../iconsComponent";
 import { Button } from "../button";
 import IconButton from "../iconButton";
+import { ButtonLoading } from "../buttonLoading";
 
 type TActionProps = {
   cancelButtonProps: {
@@ -103,14 +104,12 @@ const Dialog = (props: DialogProps) => {
                   className={actionProps?.cancelButtonProps?.className}
                   onClick={onClose}
                 />
-                <Button
-                  title={actionProps?.submitButtonProps?.label ?? "Simpan"}
-                  className={cn(
-                    "text-white bg-primary-500",
-                    actionProps?.submitButtonProps?.className
-                  )}
-                  onClick={actionProps?.submitButtonProps?.onClick}
-                />
+                <ButtonLoading
+                  {...actionProps?.submitButtonProps}
+                  disabled={actionProps?.submitButtonProps?.isLoading}
+                >
+                  {actionProps?.submitButtonProps?.label ?? "Simpan"}
+                </ButtonLoading>
               </div>
             )}
           </div>

@@ -1,144 +1,157 @@
-import { Fragment, useState } from "react";
+import { useEffect, useState } from "react";
 import { ContentLayout } from "../../../components";
-import {
-  Button,
-  IconButton,
-  Table,
-  TTableColumn,
-} from "../../../components/uiComponent";
+import { Button, Table } from "../../../components/uiComponent";
 import { TextField } from "../../../components/uiComponent/textField";
-import {
-  CheckIcon,
-  DeleteIcon,
-  EditIcon,
-  FilterListIcon,
-  MoreHorizIcon,
-  SearchIcon,
-} from "../../../components/iconsComponent";
+import { FilterListIcon, SearchIcon } from "../../../components/iconsComponent";
 import { Dialog } from "../../../components/uiComponent/dialog";
 import { Checkbox } from "../../../components/uiComponent/checkbox";
 import { Toggle } from "../../../components/uiComponent/toggle";
-import { Menu, Transition } from "@headlessui/react";
-import { Chip } from "../../../components/uiComponent/chip";
-
-const itemPelayananData = [
-  { id: 93457, item: "Pasang Infus", isPackage: false, status: "Active" },
-  {
-    id: 10708,
-    item: "Paket SC (4 Hari 3 Malam)",
-    isPackage: true,
-    status: "Active",
-  },
-  {
-    id: 23340,
-    item: "Paket Curretage DENGAN PENYULIT / EMERGENCY (ODC / Langsung Pulang)",
-    isPackage: true,
-    status: "Active",
-  },
-  {
-    id: 39235,
-    item: "Paket Curretage TANPA PENYULIT (2 Hari 1 Malam)",
-    isPackage: true,
-    status: "Active",
-  },
-  {
-    id: 20796,
-    item: "PAKET JAHIT ULANG SC (ONE DAY CARE)",
-    isPackage: true,
-    status: "Active",
-  },
-  {
-    id: 50963,
-    item: "Paket Curretage TANPA PENYULIT (2 Hari 1 Malam)",
-    isPackage: true,
-    status: "Active",
-  },
-  { id: 61391, item: "POLIKLINIK THT", isPackage: false, status: "Active" },
-  { id: 45904, item: "IGD", isPackage: false, status: "Active" },
-  { id: 3398, item: "IGD PONEK", isPackage: false, status: "Active" },
-  { id: 4339, item: "RAWAT INAP", isPackage: false, status: "Active" },
-];
+import {
+  useItemPelayananCreate,
+  useItemPelayananDelete,
+  useItemPelayananList,
+} from "../../../services/master-items";
+import ItemPelayananColumns from "./itemPelayananColumns";
+import { useSearchParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  ItemPelayananDefaultValues,
+  ItemPelayananSchema,
+} from "../../../schemas";
+import { useItemPelayananUpdate } from "../../../services/master-items/item-pelayanan/use-item-pelayanan-update";
+import toast from "react-hot-toast";
+import useDebounce from "../../../helpers/hooks/useDebounce";
 
 const ItemPelayananList = () => {
   const [isFormDialog, setIsFormDialog] = useState(false);
-  const [isDeleteDialog, setIsDeleteDialog] = useState(false);
-  const columns: Array<TTableColumn<(typeof itemPelayananData)[number]>> = [
-    {
-      id: "id",
-      label: "ID",
-      setContent(data) {
-        return <span>{data.id}</span>;
-      },
-    },
-    {
-      id: "item",
-      label: "Item Pelayanan",
-      setContent(data) {
-        return <span>{data.item}</span>;
-      },
-    },
-    {
-      id: "isPackage",
-      label: "Is Package",
-      setContent(data) {
-        if (data.isPackage) return <CheckIcon />;
+  const [deleteDialog, setDeleteDialog] = useState<ItemPelayanan>();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const getAllParams = Object.fromEntries(searchParams.entries());
 
-        return <span>-</span>;
-      },
+  const getSearch = useDebounce(getAllParams.item_name, 1000);
+
+  const {
+    register,
+    watch,
+    setValue,
+    reset,
+    getValues,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ItemPelayananForm>({
+    resolver: zodResolver(ItemPelayananSchema),
+    defaultValues: ItemPelayananDefaultValues,
+  });
+
+  const {
+    data: itemPelayananList,
+    mutate: itemPelayananListMutation,
+    isLoading: itemPelayananListLoading,
+  } = useItemPelayananList();
+
+  const {
+    mutate: itemPelayananCreateMutation,
+    isLoading: itemPelayananCreateLoading,
+  } = useItemPelayananCreate();
+
+  const {
+    mutate: itemPelayananUpdateMutation,
+    isLoading: itemPelayananUpdateLoading,
+  } = useItemPelayananUpdate();
+
+  const {
+    mutate: itemPelayananDeleteMutation,
+    isLoading: itemPelayananDeleteLoading,
+  } = useItemPelayananDelete();
+
+  const {
+    page = 1,
+    pageSize = 0,
+    totalData = 1,
+    totalPage = 1,
+  } = itemPelayananList?.metadata ?? {};
+
+  const isUpdate = getValues("entity_id");
+
+  const columns = ItemPelayananColumns({
+    onUpdate: (data) => {
+      const getDataUpdate: ItemPelayananForm = {
+        ...data,
+        is_package: !!data.package[0],
+      };
+      reset(getDataUpdate);
+      setIsFormDialog(true);
     },
-    {
-      id: "status",
-      label: "Status",
-      setContent(data) {
-        return <Chip value={data.status} color={"success"} />;
+    onDelete: (data) => setDeleteDialog(data),
+  });
+
+  const fetctItemPelayananList = () => {
+    const { page, ...params } = getAllParams;
+    const filter = Object.entries(params)?.map(([key, value]) => {
+      return {
+        field: key,
+        operator: "contain",
+        value,
+      };
+    });
+
+    itemPelayananListMutation({
+      filter,
+      pagination: {
+        page: Number(page ?? 1),
+        pageSize: 10,
       },
-    },
-    {
-      id: "id",
-      label: "Aksi",
-      setContent() {
-        return (
-          <Menu as="div" className="relative inline-block text-left">
-            <Menu.Button>
-              <IconButton>
-                <MoreHorizIcon />
-              </IconButton>
-            </Menu.Button>
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-            >
-              <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-none z-30">
-                <Menu.Item>
-                  <div
-                    className="px-4 py-2 hover:bg-primary-200 flex gap-x-3 items-center cursor-pointer"
-                    onClick={() => setIsFormDialog(true)}
-                  >
-                    <EditIcon />
-                    Edit
-                  </div>
-                </Menu.Item>
-                <Menu.Item>
-                  <div
-                    className="px-4 py-2 hover:bg-primary-200 flex gap-x-3 items-center text-primary-500 cursor-pointer"
-                    onClick={() => setIsDeleteDialog(true)}
-                  >
-                    <DeleteIcon />
-                    Delete
-                  </div>
-                </Menu.Item>
-              </Menu.Items>
-            </Transition>
-          </Menu>
-        );
+    });
+  };
+  useEffect(fetctItemPelayananList, [getSearch, getAllParams.page]);
+
+  const handleOnSubmit = handleSubmit((data) => {
+    if (data?.entity_id) {
+      itemPelayananUpdateMutation(data, {
+        onSuccess: () => {
+          toast.success("Item Pelayanan Berasil di Ubah");
+          fetctItemPelayananList();
+          setIsFormDialog(false);
+        },
+        onError: () => {
+          toast.error("Terjadi kesalahan");
+          setIsFormDialog(false);
+        },
+      });
+
+      return;
+    }
+    itemPelayananCreateMutation(data, {
+      onSuccess: () => {
+        toast.success("Item Pelayanan Berasil di Tambah");
+        fetctItemPelayananList();
+        setIsFormDialog(false);
       },
-    },
-  ];
+      onError: () => {
+        toast.error("Terjadi kesalahan");
+        setIsFormDialog(false);
+      },
+    });
+  });
+
+  const handleOnClose = () => {
+    setIsFormDialog(false);
+  };
+
+  const handleOnDelete = () => {
+    itemPelayananDeleteMutation(deleteDialog?.entity_id ?? "", {
+      onSuccess: () => {
+        toast.success("Item Pelayanan Berasil di Hapus");
+        fetctItemPelayananList();
+        setDeleteDialog(undefined);
+      },
+      onError: () => {
+        toast.error("Terjadi kesalahan");
+        setDeleteDialog(undefined);
+      },
+    });
+  };
   return (
     <ContentLayout
       title="Item Pelayanan"
@@ -147,12 +160,18 @@ const ItemPelayananList = () => {
           <div className="relative">
             <SearchIcon className="absolute left-3 top-[10px]" />
             <TextField
-              placeholder="Cari Item"
+              placeholder="Cari Item Pelayanan..."
               className="pl-10 rounded-[99px]"
+              onChange={(event) =>
+                setSearchParams({
+                  ...Object.fromEntries(searchParams),
+                  item_name: event.target.value,
+                })
+              }
             />
           </div>
 
-          <button className="rounded-[99px] space-x-2 border border-subtle px-4 py-2 flex">
+          <button className="rounded-[99px] space-x-2 border border-subtle px-4 py-2 flex active:ring-primary-500 active:ring-1 transition-all">
             <FilterListIcon />
             <span className="text-default font-bold text-[14px]">Filter</span>
           </button>
@@ -160,45 +179,55 @@ const ItemPelayananList = () => {
           <Button
             title="Tambah Item Pelayanan"
             className="text-white bg-primary-500 min-h-0"
-            onClick={() => setIsFormDialog(true)}
+            onClick={() => {
+              reset(ItemPelayananDefaultValues);
+              setIsFormDialog(true);
+            }}
           />
         </div>
       }
     >
       <Table
-        data={itemPelayananData}
+        data={itemPelayananList?.data ?? []}
         columns={columns}
-        isLoading={false}
+        isLoading={itemPelayananListLoading}
         pagination={{
-          currentPage: 1,
-          totalPages: 10,
+          currentPage: page,
+          pageSize,
+          totalData,
+          totalPages: totalPage,
           onPageChange: (pageNumber) => {
-            console.log(pageNumber);
+            setSearchParams({
+              ...Object.fromEntries(searchParams),
+              page: String(pageNumber),
+            });
           },
         }}
       />
       <Dialog
         open={isFormDialog}
-        onClose={() => setIsFormDialog(false)}
-        title="Tambah Item Pelayanan"
+        onClose={handleOnClose}
+        title={!isUpdate ? "Tambah Item Pelayanan" : "Ubah Item Pelayanan"}
         actionProps={{
           cancelButtonProps: {
             className: "w-full",
           },
           submitButtonProps: {
-            label: "Tambahkan",
+            isLoading: itemPelayananCreateLoading || itemPelayananUpdateLoading,
+            label: !isUpdate ? "Tambahkan" : "Ubah",
             className: "w-full",
-            onClick() {
-              setIsFormDialog(false);
-            },
+            onClick: handleOnSubmit,
           },
         }}
       >
         <div className="w-ful py-3 flex flex-col gap-y-6">
           <TextField
+            {...register("item_name")}
             label="Nama Item Pelayanan"
             required
             placeholder="Pasang Infus"
+            error={!!errors?.item_name}
+            helperText={errors?.item_name?.message}
           />
           <div className="flex gap-6">
             <div className="w-full flex flex-col gap-y-3">
@@ -207,10 +236,14 @@ const ItemPelayananList = () => {
                 <span className="text-primary-500 ml-1">*</span>
               </label>
               <Checkbox
-                label="Yes"
+                label={watch("is_package") ? "Yes" : "No"}
                 labelProps={{
                   className: "text-[#ACB8C3]",
                 }}
+                checked={watch("is_package")}
+                onChange={(event) =>
+                  setValue("is_package", event.target.checked)
+                }
               />
             </div>
             <div className="w-full flex flex-col gap-y-3">
@@ -219,9 +252,15 @@ const ItemPelayananList = () => {
                 <span className="text-primary-500 ml-1">*</span>
               </label>
               <Toggle
-                label="Active"
+                label={watch("status") === "active" ? "Active" : "Inactive"}
                 labelProps={{
                   className: "text-[#ACB8C3]",
+                }}
+                checked={watch("status") === "active"}
+                onChange={(event) => {
+                  const { checked } = event.target;
+                  const value = checked ? "active" : "inactive";
+                  setValue("status", value);
                 }}
               />
             </div>
@@ -230,8 +269,8 @@ const ItemPelayananList = () => {
       </Dialog>
 
       <Dialog
-        open={isDeleteDialog}
-        onClose={() => setIsDeleteDialog(false)}
+        open={!!deleteDialog}
+        onClose={() => setDeleteDialog(undefined)}
         actionProps={{
           cancelButtonProps: {
             className: "w-full",
@@ -239,15 +278,14 @@ const ItemPelayananList = () => {
           submitButtonProps: {
             label: "Hapus",
             className: "w-full",
-            onClick() {
-              setIsDeleteDialog(false);
-            },
+            isLoading: itemPelayananDeleteLoading,
+            onClick: handleOnDelete,
           },
         }}
       >
         <div className="w-ful py-8 flex flex-col">
           <h5 className="text-[20px] font-bold text-[#31475E] text-center">
-            Apakah Anda yakin ingin menghapus item pelayanan ‘Pasang Infus’?
+            {`Apakah Anda yakin ingin menghapus item pelayanan ‘${deleteDialog?.item_name}’?`}
           </h5>
           <p className="text-[#677A8E] text-[16px] text-center">
             Klik 'Hapus' untuk mengonfirmasi tindakan ini. Perubahan tidak dapat

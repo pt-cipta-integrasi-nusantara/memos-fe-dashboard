@@ -139,6 +139,8 @@ const ItemObatDetailPriceList = () => {
         isLoading={false}
         pagination={{
           currentPage: 1,
+          pageSize: 10,
+          totalData: 10,
           totalPages: 10,
           onPageChange: (pageNumber) => {
             console.log(pageNumber);

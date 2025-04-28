@@ -304,6 +304,8 @@ const TarifTindakanList = () => {
         }
         isLoading={false}
         pagination={{
+          pageSize: 10,
+          totalData: 10,
           currentPage: 1,
           totalPages: 10,
           onPageChange: (pageNumber) => {

@@ -12,6 +12,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@headlessui/react": "1.7.19",
+    "@hookform/resolvers": "^5.0.1",
     "@tanstack/react-query": "^4.36.1",
     "@tanstack/react-table": "^8.20.5",
     "clsx": "^2.1.1",
@@ -26,6 +27,7 @@
     "react-select": "^5.10.1",
     "tailwind-merge": "^2.5.5",
     "ufo": "^1.5.4",
+    "zod": "^3.24.3",
     "zustand": "^5.0.3"
   },
   "devDependencies": {

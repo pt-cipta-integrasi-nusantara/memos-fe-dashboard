@@ -5,6 +5,7 @@ import { cn } from "../../../utils/classnamesHelper";
 import TablePagination, { PaginationProps } from "./tablePagination";
 import IconButton from "../iconButton";
 import { ArrowDownIcon } from "../../iconsComponent";
+import { Loader } from "../fallback";
 
 export interface TTableColumn<TData> {
   id: keyof TData;
@@ -56,7 +57,8 @@ const Table = <TData,>({
             <tr>
               <td colSpan={columns.length}>
                 <div className="min-h-[15rem] flex w-full justify-center items-center flex-col gap-y-2">
-                  Loading
+                  <Loader size={50} />
+                  <span className="text-[14px] font-semibold">Loading...</span>
                 </div>
               </td>
             </tr>
