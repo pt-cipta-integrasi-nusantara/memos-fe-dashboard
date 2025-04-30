@@ -14,7 +14,7 @@ const TarifTindakanForm = () => {
         <div className="rounded-lg w-full shadow-soft p-6 flex flex-col gap-y-6 bg-white">
           <h1 className="text-[20px] font-bold">Tambah Tarif Satuan</h1>
           <div className="border-b border-[#EAEDF1]" />
-          <h6 className="text-[16px] font-bold">Tarif</h6>
+          <h6 className="text-[16px] font-bold">Data Pelayanan</h6>
           <div className="flex gap-x-4">
             <div className="flex flex-col gap-y-4 w-full">
               <Select
@@ -91,6 +91,13 @@ const TarifTindakanForm = () => {
               />
             </div>
           </div>
+
+          <h6 className="text-[16px] font-bold">Tarif</h6>
+          <TextField
+            label="Masukan Tarif"
+            placeholder="0"
+            containerProps={{ className: "w-[370px]" }}
+          />
         </div>
 
         <div className="rounded-lg w-full shadow-soft p-6 gap-x-4 flex justify-end bg-white">

@@ -185,6 +185,18 @@ export const UnitPelayananPage = lazy(() =>
   }))
 );
 
+export const FixedAssetListPage = lazy(() =>
+  import("../pages/fixed-asset").then((mod) => ({
+    default: mod.FixedAssetList,
+  }))
+);
+
+export const FixedAssetFormPage = lazy(() =>
+  import("../pages/fixed-asset").then((mod) => ({
+    default: mod.FixedAssetForm,
+  }))
+);
+
 const renderFallback = (
   <div className="flex items-center justify-center h-full">
     <Loader />
@@ -333,6 +345,19 @@ export function Router() {
         {
           path: "/unit-pelayanan",
           element: <UnitPelayananPage />,
+        },
+
+        {
+          path: "fixed-asset",
+          element: <FixedAssetListPage />,
+        },
+        {
+          path: "fixed-asset/create",
+          element: <FixedAssetFormPage />,
+        },
+        {
+          path: "fixed-asset/:id",
+          element: <FixedAssetFormPage />,
         },
         {
           path: "/subscription",

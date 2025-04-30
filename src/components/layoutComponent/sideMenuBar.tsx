@@ -386,6 +386,20 @@ function Navmenu({ isExpandedMenubar }: { isExpandedMenubar: boolean }) {
                         Unit Pelayanan
                       </span>
                     </div>
+                    <div
+                      onClick={() => navigate("/fixed-asset")}
+                      className="py-4 flex items-center w-full cursor-pointer"
+                    >
+                      <span
+                        className={`ml-16 font-bold ${
+                          asPath.includes("/fixed-asset")
+                            ? "text-primary-500"
+                            : "pl-1"
+                        }`}
+                      >
+                        Fixed Asset
+                      </span>
+                    </div>
                   </div>
                 </Disclosure.Panel>
               </>

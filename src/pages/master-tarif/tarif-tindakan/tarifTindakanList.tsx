@@ -141,7 +141,7 @@ const TarifTindakanList = () => {
     },
     {
       id: "tarifPelayanan",
-      label: "Tarif Pelayanan",
+      label: "Tarif",
       setContent: (data) => (
         <span>
           {new Intl.NumberFormat("id-ID", {
